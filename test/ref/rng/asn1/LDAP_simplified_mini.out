@@ -1,0 +1,722 @@
+<?xml version='1.0'?>
+<grammar datatypeLibrary='http://www.w3.org/2001/XMLSchema-datatypes'
+         xmlns='http://relaxng.org/ns/structure/1.0'>
+
+  <start>
+    <element name='LDAPMessage'>
+      <ref name='LDAPMessage'/>
+    </element>
+  </start>
+
+  <define name='LDAPMessage'>
+    <element name='MessageID'>
+      <ref name='MessageID'/>
+    </element>
+    <element name='ProtocolOp'>
+      <ref name='ProtocolOp'/>
+    </element>
+    <optional>
+    <element name='Controls'>
+      <ref name='Controls'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='ProtocolOp'>
+    <choice>
+    <element name='BindRequest'>
+      <ref name='BindRequest'/>
+    </element>
+    <element name='BindResponse'>
+      <ref name='BindResponse'/>
+    </element>
+    <element name='UnbindRequest'>
+      <ref name='UnbindRequest'/>
+    </element>
+    <element name='SearchRequest'>
+      <ref name='SearchRequest'/>
+    </element>
+    <element name='SearchResultEntry'>
+      <ref name='SearchResultEntry'/>
+    </element>
+    <element name='SearchResultDone'>
+      <ref name='LDAPResult'/>
+    </element>
+    <element name='SearchResultReference'>
+      <ref name='SearchResultReference'/>
+    </element>
+    <element name='ModifyRequest'>
+      <ref name='ModifyRequest'/>
+    </element>
+    <element name='ModifyResponse'>
+      <ref name='LDAPResult'/>
+    </element>
+    <element name='AddRequest'>
+      <ref name='AddRequest'/>
+    </element>
+    <element name='AddResponse'>
+      <ref name='LDAPResult'/>
+    </element>
+    <element name='DelRequest'>
+      <ref name='DelRequest'/>
+    </element>
+    <element name='DelResponse'>
+      <ref name='LDAPResult'/>
+    </element>
+    <element name='ModifyDNRequest'>
+      <ref name='ModifyDNRequest'/>
+    </element>
+    <element name='ModifyDNResponse'>
+      <ref name='LDAPResult'/>
+    </element>
+    <element name='CompareRequest'>
+      <ref name='CompareRequest'/>
+    </element>
+    <element name='CompareResponse'>
+      <ref name='LDAPResult'/>
+    </element>
+    <element name='AbandonRequest'>
+      <ref name='AbandonRequest'/>
+    </element>
+    <element name='ExtendedRequest'>
+      <ref name='ExtendedRequest'/>
+    </element>
+    <element name='ExtendedResponse'>
+      <ref name='ExtendedResponse'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='MessageID'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='LDAPString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='LDAPOID'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='LDAPDN'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='RelativeLDAPDN'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='AttributeType'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='AttributeDescription'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='AttributeDescriptionList'>
+    <oneOrMore>
+    <element name='AttributeDescription'>
+      <ref name='AttributeDescription'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='AttributeValue'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='AttributeValueAssertion'>
+    <element name='AttributeDescription'>
+      <ref name='AttributeDescription'/>
+    </element>
+    <element name='AssertionValue'>
+      <ref name='AssertionValue'/>
+    </element>
+  </define>
+
+  <define name='AssertionValue'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='Attribute'>
+    <element name='AttributeDescription'>
+      <ref name='AttributeDescription'/>
+    </element>
+    <element name='AttributeValues'>
+      <ref name='AttributeValues'/>
+    </element>
+  </define>
+
+  <define name='AttributeValues'>
+    <oneOrMore>
+    <element name='AttributeValue'>
+      <ref name='AttributeValue'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='MatchingRuleId'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='LDAPResult'>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    <element name='LDAPDN'>
+      <ref name='LDAPDN'/>
+    </element>
+    <element name='LDAPString'>
+      <ref name='LDAPString'/>
+    </element>
+    <optional>
+    <element name='Referral'>
+      <ref name='Referral'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='Referral'>
+    <oneOrMore>
+    <element name='LDAPURL'>
+      <ref name='LDAPURL'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='LDAPURL'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='Controls'>
+    <oneOrMore>
+    <element name='Control'>
+      <ref name='Control'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='Control'>
+    <element name='LDAPOID'>
+      <ref name='LDAPOID'/>
+    </element>
+    <element name='BOOLEAN'>
+      <ref name='BOOLEAN'/>
+    </element>
+    <optional>
+    <element name='OCTET_STRING'>
+      <ref name='OCTET_STRING'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='BindRequest'>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    <element name='LDAPDN'>
+      <ref name='LDAPDN'/>
+    </element>
+    <element name='AuthenticationChoice'>
+      <ref name='AuthenticationChoice'/>
+    </element>
+  </define>
+
+  <define name='AuthenticationChoice'>
+    <choice>
+    <element name='OCTET_STRING'>
+      <ref name='OCTET_STRING'/>
+    </element>
+    <element name='SaslCredentials'>
+      <ref name='SaslCredentials'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='SaslCredentials'>
+    <element name='LDAPString'>
+      <ref name='LDAPString'/>
+    </element>
+    <optional>
+    <element name='OCTET_STRING'>
+      <ref name='OCTET_STRING'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='BindResponse'>
+    <optional>
+    <element name='OCTET_STRING'>
+      <ref name='OCTET_STRING'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='UnbindRequest'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='SearchRequest'>
+    <element name='LDAPDN'>
+      <ref name='LDAPDN'/>
+    </element>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    <element name='BOOLEAN'>
+      <ref name='BOOLEAN'/>
+    </element>
+    <element name='Filter'>
+      <ref name='Filter'/>
+    </element>
+    <element name='AttributeDescriptionList'>
+      <ref name='AttributeDescriptionList'/>
+    </element>
+  </define>
+
+  <define name='Filter'>
+    <choice>
+    <element name='FilterSet'>
+      <ref name='FilterSet'/>
+    </element>
+    <element name='FilterSet'>
+      <ref name='FilterSet'/>
+    </element>
+    <element name='Filter'>
+      <ref name='Filter'/>
+    </element>
+    <element name='AttributeValueAssertion'>
+      <ref name='AttributeValueAssertion'/>
+    </element>
+    <element name='SubstringFilter'>
+      <ref name='SubstringFilter'/>
+    </element>
+    <element name='AttributeValueAssertion'>
+      <ref name='AttributeValueAssertion'/>
+    </element>
+    <element name='AttributeValueAssertion'>
+      <ref name='AttributeValueAssertion'/>
+    </element>
+    <element name='AttributeDescription'>
+      <ref name='AttributeDescription'/>
+    </element>
+    <element name='AttributeValueAssertion'>
+      <ref name='AttributeValueAssertion'/>
+    </element>
+    <element name='MatchingRuleAssertion'>
+      <ref name='MatchingRuleAssertion'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='FilterSet'>
+    <oneOrMore>
+      <ref name='Filter'/>
+    </oneOrMore>
+  </define>
+
+  <define name='SubstringFilter'>
+    <element name='AttributeDescription'>
+      <ref name='AttributeDescription'/>
+    </element>
+    <element name='Substrings'>
+      <ref name='Substrings'/>
+    </element>
+  </define>
+
+  <define name='Substrings'>
+    <oneOrMore>
+      <ref name='SubstringChoice'/>
+    </oneOrMore>
+  </define>
+
+  <define name='SubstringChoice'>
+    <choice>
+    <element name='LDAPString'>
+      <ref name='LDAPString'/>
+    </element>
+    <element name='LDAPString'>
+      <ref name='LDAPString'/>
+    </element>
+    <element name='LDAPString'>
+      <ref name='LDAPString'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='MatchingRuleAssertion'>
+    <optional>
+    <element name='MatchingRuleId'>
+      <ref name='MatchingRuleId'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='AttributeDescription'>
+      <ref name='AttributeDescription'/>
+    </element>
+    </optional>
+    <element name='AssertionValue'>
+      <ref name='AssertionValue'/>
+    </element>
+    <element name='BOOLEAN'>
+      <ref name='BOOLEAN'/>
+    </element>
+  </define>
+
+  <define name='SearchResultEntry'>
+    <element name='LDAPDN'>
+      <ref name='LDAPDN'/>
+    </element>
+    <element name='PartialAttributeList'>
+      <ref name='PartialAttributeList'/>
+    </element>
+  </define>
+
+  <define name='PartialAttributeList'>
+    <element name='AttributeDescription'>
+      <ref name='AttributeDescription'/>
+    </element>
+    <element name='AttributeValues'>
+      <ref name='AttributeValues'/>
+    </element>
+  </define>
+
+  <define name='SearchResultReference'>
+    <oneOrMore>
+    <element name='LDAPURL'>
+      <ref name='LDAPURL'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='SearchResultDone'>
+    <element name='LDAPResult'>
+      <ref name='LDAPResult'/>
+    </element>
+  </define>
+
+  <define name='ModifyRequest'>
+    <element name='LDAPDN'>
+      <ref name='LDAPDN'/>
+    </element>
+    <element name='AttributeTypeAndValues'>
+      <ref name='AttributeTypeAndValues'/>
+    </element>
+  </define>
+
+  <define name='AttributeTypeAndValues'>
+    <element name='AttributeDescription'>
+      <ref name='AttributeDescription'/>
+    </element>
+    <element name='AttributeValues'>
+      <ref name='AttributeValues'/>
+    </element>
+  </define>
+
+  <define name='ModifyResponse'>
+    <element name='LDAPResult'>
+      <ref name='LDAPResult'/>
+    </element>
+  </define>
+
+  <define name='AddRequest'>
+    <element name='LDAPDN'>
+      <ref name='LDAPDN'/>
+    </element>
+    <element name='AttributeList'>
+      <ref name='AttributeList'/>
+    </element>
+  </define>
+
+  <define name='AttributeList'>
+    <element name='AttributeDescription'>
+      <ref name='AttributeDescription'/>
+    </element>
+    <element name='AttributeValues'>
+      <ref name='AttributeValues'/>
+    </element>
+  </define>
+
+  <define name='AddResponse'>
+    <element name='LDAPResult'>
+      <ref name='LDAPResult'/>
+    </element>
+  </define>
+
+  <define name='DelRequest'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='DelResponse'>
+    <element name='LDAPResult'>
+      <ref name='LDAPResult'/>
+    </element>
+  </define>
+
+  <define name='ModifyDNRequest'>
+    <element name='LDAPDN'>
+      <ref name='LDAPDN'/>
+    </element>
+    <element name='RelativeLDAPDN'>
+      <ref name='RelativeLDAPDN'/>
+    </element>
+    <element name='BOOLEAN'>
+      <ref name='BOOLEAN'/>
+    </element>
+    <optional>
+    <element name='LDAPDN'>
+      <ref name='LDAPDN'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='ModifyDNResponse'>
+    <element name='LDAPResult'>
+      <ref name='LDAPResult'/>
+    </element>
+  </define>
+
+  <define name='CompareRequest'>
+    <element name='LDAPDN'>
+      <ref name='LDAPDN'/>
+    </element>
+    <element name='AttributeValueAssertion'>
+      <ref name='AttributeValueAssertion'/>
+    </element>
+  </define>
+
+  <define name='CompareResponse'>
+    <element name='LDAPResult'>
+      <ref name='LDAPResult'/>
+    </element>
+  </define>
+
+  <define name='AbandonRequest'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ExtendedRequest'>
+    <element name='LDAPOID'>
+      <ref name='LDAPOID'/>
+    </element>
+    <optional>
+    <element name='OCTET_STRING'>
+      <ref name='OCTET_STRING'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='ExtendedResponse'>
+    <optional>
+    <element name='LDAPOID'>
+      <ref name='LDAPOID'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='OCTET_STRING'>
+      <ref name='OCTET_STRING'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='BOOLEAN'>
+    <data type='boolean'>
+    </data>
+  </define>
+
+  <define name='INTEGER'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='BIT_STRING'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='OCTET_STRING'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='NULL'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='OBJECT_IDENTIFIER'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ObjectDescriptor'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='EXTERNAL'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='REAL'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ENUMERATED'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='EMBEDDED_PDV'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='UTF8String'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='RELATIVE-OID'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='TIME'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='SEQUENCE'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='SET'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='NumericString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='PrintableString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='TeletexString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='VideotexString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='IA5String'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='UTCTime'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='GeneralizedTime'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='GraphicString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='VisibleString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='GeneralString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='UniversalString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='CHARACTER_STRING'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='BMPString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='DATE'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='TIME-OF-DAY'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='DATE-TIME'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='DURATION'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='OID-IRI'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='RELATIVE-OID-IRI'>
+    <data type='string'>
+    </data>
+  </define>
+
+</grammar>

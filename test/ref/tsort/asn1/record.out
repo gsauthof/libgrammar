@@ -1,0 +1,42 @@
+Document ::= [APPLICATION 1] SEQUENCE
+{
+  header Header,
+  records Records,
+  footer Footer OPTIONAL
+}
+
+Footer ::= [APPLICATION 5] SEQUENCE
+{
+  recordCount RecordCount
+}
+
+RecordCount ::= INTEGER
+
+Records ::= [APPLICATION 2] SEQUENCE OF Record
+
+Record ::= [APPLICATION 3] SEQUENCE
+{
+  number Number,
+  date Date,
+  location Location SIZE(1..10)
+}
+
+Location ::= [APPLICATION 123] String
+
+Number ::= INTEGER
+
+Header ::= [APPLICATION 4] SEQUENCE
+{
+  from From SIZE(6),
+  to To SIZE(6)
+}
+
+To ::= [APPLICATION 125] String
+
+From ::= [APPLICATION 124] String
+
+String ::= OCTET STRING
+
+Date ::= OCTET STRING
+
+

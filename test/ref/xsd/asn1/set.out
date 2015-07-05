@@ -1,0 +1,253 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema
+  xmlns:xs='http://www.w3.org/2001/XMLSchema'
+  elementFormDefault='qualified'>
+  <xs:element name='Document' type='Document'>
+  </xs:element>
+  <xs:complexType name='Document'>
+    <xs:sequence>
+      <xs:element name='Header' type='Header'/>
+      <xs:element name='Records' type='Records'/>
+      <xs:element name='Footer' type='Footer' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='Header'>
+    <xs:sequence>
+      <xs:element name='From' type='From'/>
+      <xs:element name='To' type='To'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='Footer'>
+    <xs:sequence>
+      <xs:element name='RecordCount' type='RecordCount'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='Records'>
+    <xs:sequence>
+      <xs:element name='Record' type='Record' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='Record'>
+      <xs:all>
+      <xs:element name='Number' type='Number'/>
+      <xs:element name='Date' type='Date'/>
+      <xs:element name='Location' type='Location'/>
+      </xs:all>
+  </xs:complexType>
+
+  <xs:simpleType name='Number'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='Date'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='From'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='To'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='String'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='RecordCount'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='Location'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='BOOLEAN'>
+    <xs:restriction base='xs:boolean'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='INTEGER'>
+    <xs:restriction base='xs:integer'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='BIT_STRING'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='OCTET_STRING'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='NULL'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='OBJECT_IDENTIFIER'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ObjectDescriptor'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='EXTERNAL'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='REAL'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ENUMERATED'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='EMBEDDED_PDV'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='UTF8String'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='RELATIVE-OID'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TIME'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='SEQUENCE'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='SET'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='NumericString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='PrintableString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TeletexString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='VideotexString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='IA5String'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='UTCTime'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='GeneralizedTime'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='GraphicString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='VisibleString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='GeneralString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='UniversalString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='CHARACTER_STRING'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='BMPString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='DATE'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TIME-OF-DAY'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='DATE-TIME'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='DURATION'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='OID-IRI'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='RELATIVE-OID-IRI'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>
+

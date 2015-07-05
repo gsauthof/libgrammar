@@ -1,0 +1,726 @@
+MegacoMessage ::= SEQUENCE
+{
+  authHeader AuthenticationHeader OPTIONAL,
+  mess Message
+}
+
+Message ::= SEQUENCE
+{
+  version INTEGER,
+  mId MId,
+  messageBody MessageBody,
+  ...
+}
+
+MessageBody ::= CHOICE
+{
+  messageError ErrorDescriptor,
+  transactions Transactions
+}
+
+Transactions ::= SEQUENCE OF Transaction
+
+Transaction ::= CHOICE
+{
+  transactionRequest TransactionRequest,
+  transactionPending TransactionPending,
+  transactionReply TransactionReply,
+  transactionResponseAck TransactionResponseAck,
+  ...
+}
+
+TransactionResponseAck ::= SEQUENCE OF TransactionAck
+
+TransactionAck ::= SEQUENCE
+{
+  firstAck TransactionId,
+  lastAck TransactionId OPTIONAL
+}
+
+TransactionReply ::= SEQUENCE
+{
+  transactionId TransactionId,
+  immAckRequired NULL OPTIONAL,
+  transactionResult TransactionResult,
+  ...
+}
+
+TransactionResult ::= CHOICE
+{
+  transactionError ErrorDescriptor,
+  actionReplies ActionReplies
+}
+
+TransactionPending ::= SEQUENCE
+{
+  transactionId TransactionId,
+  ...
+}
+
+TransactionRequest ::= SEQUENCE
+{
+  transactionId TransactionId,
+  actions Actions,
+  ...
+}
+
+TransactionId ::= INTEGER
+
+AuthenticationHeader ::= SEQUENCE
+{
+  secParmIndex SecurityParmIndex,
+  seqNum SequenceNum,
+  ad AuthData
+}
+
+SequenceNum ::= OCTET STRING
+
+SecurityParmIndex ::= OCTET STRING
+
+AuthData ::= OCTET STRING
+
+Actions ::= SEQUENCE OF ActionRequest
+
+ActionRequest ::= SEQUENCE
+{
+  contextId ContextID,
+  contextRequest ContextRequest OPTIONAL,
+  contextAttrAuditReq ContextAttrAuditRequest OPTIONAL,
+  commandRequests CommandRequests
+}
+
+CommandRequests ::= SEQUENCE OF CommandRequest
+
+CommandRequest ::= SEQUENCE
+{
+  command Command,
+  optional NULL OPTIONAL,
+  wildcardReturn NULL OPTIONAL,
+  ...
+}
+
+Command ::= CHOICE
+{
+  addReq AmmRequest,
+  moveReq AmmRequest,
+  modReq AmmRequest,
+  subtractReq SubtractRequest,
+  auditCapRequest AuditRequest,
+  auditValueRequest AuditRequest,
+  notifyReq NotifyRequest,
+  serviceChangeReq ServiceChangeRequest,
+  ...
+}
+
+ServiceChangeRequest ::= SEQUENCE
+{
+  terminationID TerminationIDList,
+  serviceChangeParms ServiceChangeParm,
+  ...
+}
+
+ServiceChangeParm ::= SEQUENCE
+{
+  serviceChangeMethod ServiceChangeMethod,
+  serviceChangeAddress ServiceChangeAddress OPTIONAL,
+  serviceChangeVersion INTEGER OPTIONAL,
+  serviceChangeProfile ServiceChangeProfile OPTIONAL,
+  serviceChangeReason Value,
+  serviceChangeDelay INTEGER OPTIONAL,
+  serviceChangeMgcId MId OPTIONAL,
+  timeStamp TimeNotation OPTIONAL,
+  nonStandardData NonStandardData OPTIONAL,
+  ...
+}
+
+ServiceChangeMethod ::= INTEGER
+
+NotifyRequest ::= SEQUENCE
+{
+  terminationID TerminationIDList,
+  observedEventsDescriptor ObservedEventsDescriptor,
+  errorDescriptor ErrorDescriptor OPTIONAL,
+  ...
+}
+
+AuditRequest ::= SEQUENCE
+{
+  terminationID TerminationID,
+  auditDescriptor AuditDescriptor,
+  ...
+}
+
+SubtractRequest ::= SEQUENCE
+{
+  terminationID TerminationIDList,
+  auditDescriptor AuditDescriptor OPTIONAL,
+  ...
+}
+
+AmmRequest ::= SEQUENCE
+{
+  terminationID TerminationIDList,
+  descriptors Descriptors,
+  ...
+}
+
+Descriptors ::= SEQUENCE OF AmmDescriptor
+
+AmmDescriptor ::= CHOICE
+{
+  mediaDescriptor MediaDescriptor,
+  modemDescriptor ModemDescriptor,
+  muxDescriptor MuxDescriptor,
+  eventsDescriptor EventsDescriptor,
+  eventBufferDescriptor EventBufferDescriptor,
+  signalsDescriptor SignalsDescriptor,
+  digitMapDescriptor DigitMapDescriptor,
+  auditDescriptor AuditDescriptor,
+  ...
+}
+
+ContextAttrAuditRequest ::= SEQUENCE
+{
+  topology NULL OPTIONAL,
+  emergency NULL OPTIONAL,
+  priority NULL OPTIONAL,
+  ...
+}
+
+ActionReplies ::= SEQUENCE OF ActionReply
+
+ActionReply ::= SEQUENCE
+{
+  contextId ContextID,
+  errorDescriptor ErrorDescriptor OPTIONAL,
+  contextReply ContextRequest OPTIONAL,
+  commandReply CommandReplies
+}
+
+CommandReplies ::= SEQUENCE OF CommandReply
+
+CommandReply ::= CHOICE
+{
+  addReply AmmsReply,
+  moveReply AmmsReply,
+  modReply AmmsReply,
+  subtractReply AmmsReply,
+  auditCapReply AuditReply,
+  auditValueReply AuditReply,
+  notifyReply NotifyReply,
+  serviceChangeReply ServiceChangeReply,
+  ...
+}
+
+ServiceChangeReply ::= SEQUENCE
+{
+  terminationID TerminationIDList,
+  serviceChangeResult ServiceChangeResult,
+  ...
+}
+
+ServiceChangeResult ::= CHOICE
+{
+  errorDescriptor ErrorDescriptor,
+  serviceChangeResParms ServiceChangeResParm
+}
+
+ServiceChangeResParm ::= SEQUENCE
+{
+  serviceChangeMgcId MId OPTIONAL,
+  serviceChangeAddress ServiceChangeAddress OPTIONAL,
+  serviceChangeVersion INTEGER OPTIONAL,
+  serviceChangeProfile ServiceChangeProfile OPTIONAL,
+  timestamp TimeNotation OPTIONAL,
+  ...
+}
+
+ServiceChangeProfile ::= SEQUENCE
+{
+  profileName IA5String SIZE(1..67)
+}
+
+ServiceChangeAddress ::= CHOICE
+{
+  portNumber INTEGER,
+  ip4Address IP4Address,
+  ip6Address IP6Address,
+  domainName DomainName,
+  deviceName PathName,
+  mtpAddress OCTET STRING SIZE(2..4),
+  ...
+}
+
+MId ::= CHOICE
+{
+  ip4Address IP4Address,
+  ip6Address IP6Address,
+  domainName DomainName,
+  deviceName PathName,
+  mtpAddress OCTET STRING SIZE(2..4),
+  ...
+}
+
+PathName ::= IA5String
+
+DomainName ::= SEQUENCE
+{
+  name IA5String,
+  portNumber INTEGER OPTIONAL
+}
+
+IP6Address ::= SEQUENCE
+{
+  address OCTET STRING SIZE(16),
+  portNumber INTEGER OPTIONAL
+}
+
+IP4Address ::= SEQUENCE
+{
+  address OCTET STRING SIZE(4),
+  portNumber INTEGER OPTIONAL
+}
+
+NotifyReply ::= SEQUENCE
+{
+  terminationID TerminationIDList,
+  errorDescriptor ErrorDescriptor OPTIONAL,
+  ...
+}
+
+AuditReply ::= CHOICE
+{
+  contextAuditResult TerminationIDList,
+  error ErrorDescriptor,
+  auditResult AuditResult,
+  ...
+}
+
+AuditResult ::= SEQUENCE
+{
+  terminationID TerminationID,
+  terminationAuditResult TerminationAudit
+}
+
+AmmsReply ::= SEQUENCE
+{
+  terminationID TerminationIDList,
+  terminationAudit TerminationAudit OPTIONAL,
+  ...
+}
+
+TerminationAudit ::= SEQUENCE OF AuditReturnParameter
+
+AuditReturnParameter ::= CHOICE
+{
+  errorDescriptor ErrorDescriptor,
+  mediaDescriptor MediaDescriptor,
+  modemDescriptor ModemDescriptor,
+  muxDescriptor MuxDescriptor,
+  eventsDescriptor EventsDescriptor,
+  eventBufferDescriptor EventBufferDescriptor,
+  signalsDescriptor SignalsDescriptor,
+  digitMapDescriptor DigitMapDescriptor,
+  observedEventsDescriptor ObservedEventsDescriptor,
+  statisticsDescriptor StatisticsDescriptor,
+  packagesDescriptor PackagesDescriptor,
+  emptyDescriptors AuditDescriptor,
+  ...
+}
+
+AuditDescriptor ::= SEQUENCE
+{
+  auditToken BIT STRING OPTIONAL,
+  ...
+}
+
+PackagesDescriptor ::= SEQUENCE OF PackagesItem
+
+PackagesItem ::= SEQUENCE
+{
+  packageName Name,
+  packageVersion INTEGER,
+  ...
+}
+
+StatisticsDescriptor ::= SEQUENCE OF StatisticsParameter
+
+StatisticsParameter ::= SEQUENCE
+{
+  statName PkgdName,
+  statValue Value OPTIONAL
+}
+
+ObservedEventsDescriptor ::= SEQUENCE
+{
+  requestId RequestID,
+  observedEventLst ObservedEventLst
+}
+
+ObservedEventLst ::= SEQUENCE OF ObservedEvent
+
+ObservedEvent ::= SEQUENCE
+{
+  eventName EventName,
+  streamID StreamID OPTIONAL,
+  eventParList EventParList,
+  timeNotation TimeNotation OPTIONAL,
+  ...
+}
+
+TimeNotation ::= SEQUENCE
+{
+  date IA5String SIZE(8),
+  time IA5String SIZE(8)
+}
+
+EventParList ::= SEQUENCE OF EventParameter
+
+DigitMapDescriptor ::= SEQUENCE
+{
+  digitMapName DigitMapName OPTIONAL,
+  digitMapValue DigitMapValue OPTIONAL
+}
+
+EventBufferDescriptor ::= SEQUENCE OF EventSpec
+
+EventSpec ::= SEQUENCE
+{
+  eventName EventName,
+  streamID StreamID OPTIONAL,
+  eventParList ESEventParList,
+  ...
+}
+
+ESEventParList ::= SEQUENCE OF EventParameter
+
+EventName ::= PkgdName
+
+EventsDescriptor ::= SEQUENCE
+{
+  requestID RequestID OPTIONAL,
+  eventList EventList,
+  ...
+}
+
+EventList ::= SEQUENCE OF RequestedEvent
+
+RequestedEvent ::= SEQUENCE
+{
+  pkgdName PkgdName,
+  streamID StreamID OPTIONAL,
+  eventAction RequestedActions OPTIONAL,
+  evParList EvParList,
+  ...
+}
+
+EvParList ::= SEQUENCE OF EventParameter
+
+RequestedActions ::= SEQUENCE
+{
+  keepActive BOOLEAN OPTIONAL,
+  eventDM EventDM OPTIONAL,
+  secondEvent SecondEventsDescriptor OPTIONAL,
+  signalsDescriptor SignalsDescriptor OPTIONAL,
+  ...
+}
+
+SecondEventsDescriptor ::= SEQUENCE
+{
+  requestID RequestID OPTIONAL,
+  eventList SEDEventList,
+  ...
+}
+
+SEDEventList ::= SEQUENCE OF SecondRequestedEvent
+
+SecondRequestedEvent ::= SEQUENCE
+{
+  pkgdName PkgdName,
+  streamID StreamID OPTIONAL,
+  eventAction SecondRequestedActions OPTIONAL,
+  evParList SREEvParList,
+  ...
+}
+
+SREEvParList ::= SEQUENCE OF EventParameter
+
+EventParameter ::= SEQUENCE
+{
+  eventParameterName Name,
+  value Value,
+  extraInfo ExtraInfo OPTIONAL,
+  ...
+}
+
+ExtraInfo ::= CHOICE
+{
+  relation Relation,
+  range BOOLEAN,
+  sublist BOOLEAN
+}
+
+SecondRequestedActions ::= SEQUENCE
+{
+  keepActive BOOLEAN OPTIONAL,
+  eventDM EventDM OPTIONAL,
+  signalsDescriptor SignalsDescriptor OPTIONAL,
+  ...
+}
+
+SignalsDescriptor ::= SEQUENCE OF SignalRequest
+
+SignalRequest ::= CHOICE
+{
+  signal Signal,
+  seqSigList SeqSigList,
+  ...
+}
+
+SeqSigList ::= SEQUENCE
+{
+  id INTEGER,
+  signalList SignalList
+}
+
+SignalList ::= SEQUENCE OF Signal
+
+Signal ::= SEQUENCE
+{
+  signalName SignalName,
+  streamID StreamID OPTIONAL,
+  sigType SignalType OPTIONAL,
+  duration INTEGER OPTIONAL,
+  notifyCompletion NotifyCompletion OPTIONAL,
+  keepActive BOOLEAN OPTIONAL,
+  sigParList SigParList,
+  ...
+}
+
+SigParList ::= SEQUENCE OF SigParameter
+
+SigParameter ::= SEQUENCE
+{
+  sigParameterName Name,
+  value Value,
+  extraInfo SPExtraInfo OPTIONAL,
+  ...
+}
+
+SPExtraInfo ::= CHOICE
+{
+  relation Relation,
+  range BOOLEAN,
+  sublist BOOLEAN
+}
+
+Value ::= SEQUENCE OF OCTET STRING
+
+NotifyCompletion ::= BIT STRING
+
+SignalType ::= INTEGER
+
+SignalName ::= PkgdName
+
+EventDM ::= CHOICE
+{
+  digitMapName DigitMapName,
+  digitMapValue DigitMapValue
+}
+
+DigitMapValue ::= SEQUENCE
+{
+  startTimer INTEGER OPTIONAL,
+  shortTimer INTEGER OPTIONAL,
+  longTimer INTEGER OPTIONAL,
+  digitMapBody IA5String,
+  ...
+}
+
+DigitMapName ::= Name
+
+Name ::= OCTET STRING
+
+RequestID ::= INTEGER
+
+MuxDescriptor ::= SEQUENCE
+{
+  muxType MuxType,
+  termList TermList,
+  nonStandardData NonStandardData OPTIONAL,
+  ...
+}
+
+TermList ::= SEQUENCE OF TerminationID
+
+MuxType ::= INTEGER
+
+ModemDescriptor ::= SEQUENCE
+{
+  mtl MTL,
+  mpl MPL,
+  nonStandardData NonStandardData OPTIONAL
+}
+
+NonStandardData ::= SEQUENCE
+{
+  nonStandardIdentifier NonStandardIdentifier,
+  data OCTET STRING
+}
+
+NonStandardIdentifier ::= CHOICE
+{
+  object OBJECT IDENTIFIER,
+  h221NonStandard H221NonStandard,
+  experimental IA5String SIZE(8),
+  ...
+}
+
+H221NonStandard ::= SEQUENCE
+{
+  t35CountryCode1 INTEGER,
+  t35CountryCode2 INTEGER,
+  t35Extension INTEGER,
+  manufacturerCode INTEGER,
+  ...
+}
+
+MPL ::= SEQUENCE OF PropertyParm
+
+MTL ::= SEQUENCE OF ModemType
+
+ModemType ::= INTEGER
+
+MediaDescriptor ::= SEQUENCE
+{
+  termStateDescr TerminationStateDescriptor OPTIONAL,
+  streams Streams OPTIONAL,
+  ...
+}
+
+Streams ::= CHOICE
+{
+  oneStream StreamParms,
+  multiStream MultiStream
+}
+
+MultiStream ::= SEQUENCE OF StreamDescriptor
+
+StreamDescriptor ::= SEQUENCE
+{
+  streamID StreamID,
+  streamParms StreamParms
+}
+
+StreamID ::= INTEGER
+
+StreamParms ::= SEQUENCE
+{
+  localControlDescriptor LocalControlDescriptor OPTIONAL,
+  localDescriptor LocalRemoteDescriptor OPTIONAL,
+  remoteDescriptor LocalRemoteDescriptor OPTIONAL,
+  ...
+}
+
+LocalRemoteDescriptor ::= SEQUENCE
+{
+  propGrps PropGrps,
+  ...
+}
+
+PropGrps ::= SEQUENCE OF PropertyGroup
+
+PropertyGroup ::= SEQUENCE OF PropertyParm
+
+LocalControlDescriptor ::= SEQUENCE
+{
+  streamMode StreamMode OPTIONAL,
+  reserveValue BOOLEAN OPTIONAL,
+  reserveGroup BOOLEAN OPTIONAL,
+  propertyParms PropertyParms,
+  ...
+}
+
+PropertyParms ::= SEQUENCE OF PropertyParm
+
+StreamMode ::= INTEGER
+
+TerminationStateDescriptor ::= SEQUENCE
+{
+  propertyParms TSDPropertyParms,
+  eventBufferControl EventBufferControl OPTIONAL,
+  serviceState ServiceState OPTIONAL,
+  ...
+}
+
+ServiceState ::= INTEGER
+
+EventBufferControl ::= INTEGER
+
+TSDPropertyParms ::= SEQUENCE OF PropertyParm
+
+PropertyParm ::= SEQUENCE
+{
+  name PkgdName,
+  value PPValue,
+  extraInfo PPExtraInfo OPTIONAL,
+  ...
+}
+
+PPExtraInfo ::= CHOICE
+{
+  relation Relation,
+  range BOOLEAN,
+  sublist BOOLEAN
+}
+
+Relation ::= INTEGER
+
+PPValue ::= SEQUENCE OF OCTET STRING
+
+PkgdName ::= OCTET STRING
+
+TerminationIDList ::= SEQUENCE OF TerminationID
+
+ContextRequest ::= SEQUENCE
+{
+  priority INTEGER OPTIONAL,
+  emergency BOOLEAN OPTIONAL,
+  topologyReq TopologyReq OPTIONAL,
+  ...
+}
+
+TopologyReq ::= SEQUENCE OF TopologyRequest
+
+TopologyRequest ::= SEQUENCE
+{
+  terminationFrom TerminationID,
+  terminationTo TerminationID,
+  topologyDirection INTEGER,
+  ...
+}
+
+TerminationID ::= SEQUENCE
+{
+  wildcard Wildcard,
+  id OCTET STRING SIZE(1..8),
+  ...
+}
+
+Wildcard ::= SEQUENCE OF WildcardField
+
+WildcardField ::= OCTET STRING
+
+ErrorDescriptor ::= SEQUENCE
+{
+  errorCode ErrorCode,
+  errorText ErrorText OPTIONAL
+}
+
+ErrorText ::= IA5String
+
+ErrorCode ::= INTEGER
+
+ContextID ::= INTEGER
+
+

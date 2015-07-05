@@ -1,0 +1,1355 @@
+DataInterChange ::= CHOICE
+{
+  transferBatch TransferBatch,
+  notification Notification,
+  ...
+}
+
+Notification ::= [APPLICATION 2] SEQUENCE
+{
+  sender Sender,
+  recipient Recipient,
+  fileSequenceNumber FileSequenceNumber,
+  rapFileSequenceNumber RapFileSequenceNumber OPTIONAL,
+  fileCreationTimeStamp FileCreationTimeStamp OPTIONAL,
+  fileAvailableTimeStamp FileAvailableTimeStamp,
+  transferCutOffTimeStamp TransferCutOffTimeStamp,
+  specificationVersionNumber SpecificationVersionNumber,
+  releaseVersionNumber ReleaseVersionNumber,
+  fileTypeIndicator FileTypeIndicator OPTIONAL,
+  operatorSpecInformation OperatorSpecInfoList OPTIONAL,
+  ...
+}
+
+TransferBatch ::= [APPLICATION 1] SEQUENCE
+{
+  batchControlInfo BatchControlInfo,
+  accountingInfo AccountingInfo OPTIONAL,
+  networkInfo NetworkInfo,
+  messageDescriptionInfo MessageDescriptionInfoList OPTIONAL,
+  callEventDetails CallEventDetailList,
+  auditControlInfo AuditControlInfo,
+  ...
+}
+
+MessageDescriptionInfoList ::= [APPLICATION 8] SEQUENCE OF MessageDescriptionInformation
+
+MessageDescriptionInformation ::= [APPLICATION 143] SEQUENCE
+{
+  messageDescriptionCode MessageDescriptionCode,
+  messageDescription MessageDescription,
+  ...
+}
+
+MessageDescription ::= [APPLICATION 142] AsciiString
+
+NetworkInfo ::= [APPLICATION 6] SEQUENCE
+{
+  utcTimeOffsetInfo UtcTimeOffsetInfoList,
+  recEntityInfo RecEntityInfoList OPTIONAL,
+  ...
+}
+
+RecEntityInfoList ::= [APPLICATION 188] SEQUENCE OF RecEntityInformation
+
+RecEntityInformation ::= [APPLICATION 183] SEQUENCE
+{
+  recEntityCode RecEntityCode,
+  recEntityType RecEntityType,
+  recEntityId RecEntityId,
+  ...
+}
+
+RecEntityId ::= [APPLICATION 400] AsciiString
+
+RecEntityType ::= [APPLICATION 186] INTEGER
+
+UtcTimeOffsetInfoList ::= [APPLICATION 234] SEQUENCE OF UtcTimeOffsetInfo
+
+UtcTimeOffsetInfo ::= [APPLICATION 233] SEQUENCE
+{
+  utcTimeOffsetCode UtcTimeOffsetCode,
+  utcTimeOffset UtcTimeOffset,
+  ...
+}
+
+CallEventDetailList ::= [APPLICATION 3] SEQUENCE OF CallEventDetail
+
+CallEventDetail ::= CHOICE
+{
+  mobileOriginatedCall MobileOriginatedCall,
+  mobileTerminatedCall MobileTerminatedCall,
+  supplServiceEvent SupplServiceEvent,
+  serviceCentreUsage ServiceCentreUsage,
+  gprsCall GprsCall,
+  contentTransaction ContentTransaction,
+  locationService LocationService,
+  messagingEvent MessagingEvent,
+  mobileSession MobileSession,
+  ...
+}
+
+MobileSession ::= [APPLICATION 434] SEQUENCE
+{
+  mobileSessionService MobileSessionService,
+  chargedParty ChargedParty,
+  rapFileSequenceNumber RapFileSequenceNumber OPTIONAL,
+  simToolkitIndicator SimToolkitIndicator OPTIONAL,
+  geographicalLocation GeographicalLocation OPTIONAL,
+  locationArea LocationArea OPTIONAL,
+  cellId CellId OPTIONAL,
+  eventReference EventReference,
+  recEntityCodeList RecEntityCodeList,
+  serviceStartTimestamp ServiceStartTimestamp,
+  causeForTerm CauseForTerm OPTIONAL,
+  totalCallEventDuration TotalCallEventDuration,
+  nonChargedParty NonChargedParty OPTIONAL,
+  requestedDestination RequestedDestination OPTIONAL,
+  sessionChargeInfoList SessionChargeInfoList,
+  operatorSpecInformation OperatorSpecInfoList OPTIONAL,
+  ...
+}
+
+SessionChargeInfoList ::= [APPLICATION 448] SEQUENCE OF SessionChargeInformation
+
+SessionChargeInformation ::= [APPLICATION 449] SEQUENCE
+{
+  chargedItem ChargedItem,
+  exchangeRateCode ExchangeRateCode OPTIONAL,
+  callTypeGroup CallTypeGroup,
+  chargeDetailList ChargeDetailList,
+  taxInformationList TaxInformationList OPTIONAL,
+  ...
+}
+
+RequestedDestination ::= [APPLICATION 450] SEQUENCE
+{
+  requestedNumber RequestedNumber OPTIONAL,
+  requestedPublicUserId RequestedPublicUserId OPTIONAL,
+  ...
+}
+
+RequestedPublicUserId ::= [APPLICATION 452] AsciiString
+
+RequestedNumber ::= [APPLICATION 451] AddressStringDigits
+
+MobileSessionService ::= [APPLICATION 440] INTEGER
+
+MessagingEvent ::= [APPLICATION 433] SEQUENCE
+{
+  messagingEventService MessagingEventService,
+  chargedParty ChargedParty,
+  rapFileSequenceNumber RapFileSequenceNumber OPTIONAL,
+  simToolkitIndicator SimToolkitIndicator OPTIONAL,
+  geographicalLocation GeographicalLocation OPTIONAL,
+  eventReference EventReference,
+  recEntityCodeList RecEntityCodeList,
+  networkElementList NetworkElementList OPTIONAL,
+  locationArea LocationArea OPTIONAL,
+  cellId CellId OPTIONAL,
+  serviceStartTimestamp ServiceStartTimestamp,
+  nonChargedParty NonChargedParty OPTIONAL,
+  exchangeRateCode ExchangeRateCode OPTIONAL,
+  callTypeGroup CallTypeGroup,
+  charge Charge,
+  taxInformationList TaxInformationList OPTIONAL,
+  operatorSpecInformation OperatorSpecInfoList OPTIONAL,
+  ...
+}
+
+NonChargedParty ::= [APPLICATION 443] SEQUENCE
+{
+  nonChargedPartyNumber NonChargedPartyNumber OPTIONAL,
+  nonChargedPublicUserId NonChargedPublicUserId OPTIONAL,
+  ...
+}
+
+NonChargedPublicUserId ::= [APPLICATION 445] AsciiString
+
+NonChargedPartyNumber ::= [APPLICATION 444] AddressStringDigits
+
+ServiceStartTimestamp ::= [APPLICATION 447] DateTime
+
+NetworkElementList ::= [APPLICATION 442] SEQUENCE OF NetworkElement
+
+NetworkElement ::= [APPLICATION 441] SEQUENCE
+{
+  elementType ElementType,
+  elementId ElementId,
+  ...
+}
+
+ElementId ::= [APPLICATION 437] AsciiString
+
+ElementType ::= [APPLICATION 438] INTEGER
+
+EventReference ::= [APPLICATION 435] AsciiString
+
+ChargedParty ::= [APPLICATION 436] SEQUENCE
+{
+  imsi Imsi,
+  msisdn Msisdn OPTIONAL,
+  publicUserId PublicUserId OPTIONAL,
+  homeBid HomeBid OPTIONAL,
+  homeLocationDescription HomeLocationDescription OPTIONAL,
+  imei Imei OPTIONAL,
+  ...
+}
+
+PublicUserId ::= [APPLICATION 446] AsciiString
+
+MessagingEventService ::= [APPLICATION 439] INTEGER
+
+LocationService ::= [APPLICATION 297] SEQUENCE
+{
+  rapFileSequenceNumber RapFileSequenceNumber OPTIONAL,
+  recEntityCode RecEntityCode,
+  callReference CallReference OPTIONAL,
+  trackingCustomerInformation TrackingCustomerInformation OPTIONAL,
+  lCSSPInformation LCSSPInformation OPTIONAL,
+  trackedCustomerInformation TrackedCustomerInformation OPTIONAL,
+  locationServiceUsage LocationServiceUsage,
+  operatorSpecInformation OperatorSpecInfoList OPTIONAL,
+  ...
+}
+
+LocationServiceUsage ::= [APPLICATION 382] SEQUENCE
+{
+  lCSQosRequested LCSQosRequested,
+  lCSQosDelivered LCSQosDelivered OPTIONAL,
+  chargingTimeStamp ChargingTimeStamp OPTIONAL,
+  chargeInformationList ChargeInformationList,
+  ...
+}
+
+LCSQosDelivered ::= [APPLICATION 390] SEQUENCE
+{
+  lCSTransactionStatus LCSTransactionStatus OPTIONAL,
+  horizontalAccuracyDelivered HorizontalAccuracyDelivered OPTIONAL,
+  verticalAccuracyDelivered VerticalAccuracyDelivered OPTIONAL,
+  responseTime ResponseTime OPTIONAL,
+  positioningMethod PositioningMethod OPTIONAL,
+  trackingPeriod TrackingPeriod OPTIONAL,
+  trackingFrequency TrackingFrequency OPTIONAL,
+  ageOfLocation AgeOfLocation OPTIONAL,
+  ...
+}
+
+PositioningMethod ::= [APPLICATION 395] INTEGER
+
+ResponseTime ::= [APPLICATION 394] INTEGER
+
+VerticalAccuracyDelivered ::= [APPLICATION 393] INTEGER
+
+HorizontalAccuracyDelivered ::= [APPLICATION 392] INTEGER
+
+LCSTransactionStatus ::= [APPLICATION 391] INTEGER
+
+LCSQosRequested ::= [APPLICATION 383] SEQUENCE
+{
+  lCSRequestTimestamp LCSRequestTimestamp,
+  horizontalAccuracyRequested HorizontalAccuracyRequested OPTIONAL,
+  verticalAccuracyRequested VerticalAccuracyRequested OPTIONAL,
+  responseTimeCategory ResponseTimeCategory OPTIONAL,
+  trackingPeriod TrackingPeriod OPTIONAL,
+  trackingFrequency TrackingFrequency OPTIONAL,
+  ...
+}
+
+TrackingFrequency ::= [APPLICATION 389] INTEGER
+
+TrackingPeriod ::= [APPLICATION 388] INTEGER
+
+ResponseTimeCategory ::= [APPLICATION 387] INTEGER
+
+VerticalAccuracyRequested ::= [APPLICATION 386] INTEGER
+
+HorizontalAccuracyRequested ::= [APPLICATION 385] INTEGER
+
+LCSRequestTimestamp ::= [APPLICATION 384] DateTime
+
+TrackedCustomerInformation ::= [APPLICATION 367] SEQUENCE
+{
+  trackedCustomerIdList TrackedCustomerIdList,
+  trackedCustomerHomeIdList TrackedCustomerHomeIdList OPTIONAL,
+  trackedCustomerLocList TrackedCustomerLocList OPTIONAL,
+  trackedCustomerEquipment TrackedCustomerEquipment OPTIONAL,
+  ...
+}
+
+TrackedCustomerEquipment ::= [APPLICATION 381] SEQUENCE
+{
+  equipmentIdType EquipmentIdType,
+  equipmentId EquipmentId,
+  ...
+}
+
+TrackedCustomerLocList ::= [APPLICATION 379] SEQUENCE OF TrackedCustomerLocation
+
+TrackedCustomerLocation ::= [APPLICATION 380] SEQUENCE
+{
+  locationIdType LocationIdType,
+  locationIdentifier LocationIdentifier,
+  ...
+}
+
+TrackedCustomerHomeIdList ::= [APPLICATION 376] SEQUENCE OF TrackedCustomerHomeId
+
+TrackedCustomerHomeId ::= [APPLICATION 377] SEQUENCE
+{
+  homeIdType HomeIdType,
+  homeIdentifier HomeIdentifier,
+  ...
+}
+
+TrackedCustomerIdList ::= [APPLICATION 370] SEQUENCE OF TrackedCustomerIdentification
+
+TrackedCustomerIdentification ::= [APPLICATION 372] SEQUENCE
+{
+  customerIdType CustomerIdType,
+  customerIdentifier CustomerIdentifier,
+  ...
+}
+
+LCSSPInformation ::= [APPLICATION 373] SEQUENCE
+{
+  lCSSPIdentificationList LCSSPIdentificationList,
+  iSPList ISPList OPTIONAL,
+  networkList NetworkList OPTIONAL,
+  ...
+}
+
+ISPList ::= [APPLICATION 378] SEQUENCE OF InternetServiceProvider
+
+LCSSPIdentificationList ::= [APPLICATION 374] SEQUENCE OF LCSSPIdentification
+
+LCSSPIdentification ::= [APPLICATION 375] SEQUENCE
+{
+  contentProviderIdType ContentProviderIdType,
+  contentProviderIdentifier ContentProviderIdentifier,
+  ...
+}
+
+TrackingCustomerInformation ::= [APPLICATION 298] SEQUENCE
+{
+  trackingCustomerIdList TrackingCustomerIdList,
+  trackingCustomerHomeIdList TrackingCustomerHomeIdList OPTIONAL,
+  trackingCustomerLocList TrackingCustomerLocList OPTIONAL,
+  trackingCustomerEquipment TrackingCustomerEquipment OPTIONAL,
+  ...
+}
+
+TrackingCustomerEquipment ::= [APPLICATION 371] SEQUENCE
+{
+  equipmentIdType EquipmentIdType,
+  equipmentId EquipmentId,
+  ...
+}
+
+TrackingCustomerLocList ::= [APPLICATION 368] SEQUENCE OF TrackingCustomerLocation
+
+TrackingCustomerLocation ::= [APPLICATION 369] SEQUENCE
+{
+  locationIdType LocationIdType,
+  locationIdentifier LocationIdentifier,
+  ...
+}
+
+TrackingCustomerHomeIdList ::= [APPLICATION 365] SEQUENCE OF TrackingCustomerHomeId
+
+TrackingCustomerHomeId ::= [APPLICATION 366] SEQUENCE
+{
+  homeIdType HomeIdType,
+  homeIdentifier HomeIdentifier,
+  ...
+}
+
+TrackingCustomerIdList ::= [APPLICATION 299] SEQUENCE OF TrackingCustomerIdentification
+
+TrackingCustomerIdentification ::= [APPLICATION 362] SEQUENCE
+{
+  customerIdType CustomerIdType,
+  customerIdentifier CustomerIdentifier,
+  ...
+}
+
+CustomerIdentifier ::= [APPLICATION 364] AsciiString
+
+CustomerIdType ::= [APPLICATION 363] INTEGER
+
+ContentTransaction ::= [APPLICATION 17] SEQUENCE
+{
+  contentTransactionBasicInfo ContentTransactionBasicInfo,
+  chargedPartyInformation ChargedPartyInformation,
+  servingPartiesInformation ServingPartiesInformation,
+  contentServiceUsed ContentServiceUsedList,
+  operatorSpecInformation OperatorSpecInfoList OPTIONAL,
+  ...
+}
+
+ContentServiceUsedList ::= [APPLICATION 285] SEQUENCE OF ContentServiceUsed
+
+ContentServiceUsed ::= [APPLICATION 352] SEQUENCE
+{
+  contentTransactionCode ContentTransactionCode,
+  contentTransactionType ContentTransactionType,
+  objectType ObjectType OPTIONAL,
+  transactionDescriptionSupp TransactionDescriptionSupp OPTIONAL,
+  transactionShortDescription TransactionShortDescription,
+  transactionDetailDescription TransactionDetailDescription OPTIONAL,
+  transactionIdentifier TransactionIdentifier,
+  transactionAuthCode TransactionAuthCode OPTIONAL,
+  dataVolumeIncoming DataVolumeIncoming OPTIONAL,
+  dataVolumeOutgoing DataVolumeOutgoing OPTIONAL,
+  totalDataVolume TotalDataVolume OPTIONAL,
+  chargeRefundIndicator ChargeRefundIndicator OPTIONAL,
+  contentChargingPoint ContentChargingPoint OPTIONAL,
+  chargeInformationList ChargeInformationList OPTIONAL,
+  advisedChargeInformation AdvisedChargeInformation OPTIONAL,
+  ...
+}
+
+ContentChargingPoint ::= [APPLICATION 345] INTEGER
+
+ChargeRefundIndicator ::= [APPLICATION 344] INTEGER
+
+TotalDataVolume ::= [APPLICATION 343] DataVolume
+
+TransactionAuthCode ::= [APPLICATION 342] AsciiString
+
+TransactionIdentifier ::= [APPLICATION 341] AsciiString
+
+TransactionDetailDescription ::= [APPLICATION 339] AsciiString
+
+TransactionShortDescription ::= [APPLICATION 340] AsciiString
+
+TransactionDescriptionSupp ::= [APPLICATION 338] INTEGER
+
+ObjectType ::= [APPLICATION 281] INTEGER
+
+ContentTransactionType ::= [APPLICATION 337] INTEGER
+
+ContentTransactionCode ::= [APPLICATION 336] INTEGER
+
+ServingPartiesInformation ::= [APPLICATION 335] SEQUENCE
+{
+  contentProviderName ContentProviderName,
+  contentProviderIdList ContentProviderIdList OPTIONAL,
+  internetServiceProviderIdList InternetServiceProviderIdList OPTIONAL,
+  networkList NetworkList OPTIONAL,
+  ...
+}
+
+NetworkList ::= [APPLICATION 333] SEQUENCE OF Network
+
+Network ::= [APPLICATION 332] SEQUENCE
+{
+  networkIdType NetworkIdType,
+  networkIdentifier NetworkIdentifier,
+  ...
+}
+
+NetworkIdentifier ::= [APPLICATION 295] AsciiString
+
+NetworkIdType ::= [APPLICATION 331] INTEGER
+
+InternetServiceProviderIdList ::= [APPLICATION 330] SEQUENCE OF InternetServiceProvider
+
+InternetServiceProvider ::= [APPLICATION 329] SEQUENCE
+{
+  ispIdType IspIdType,
+  ispIdentifier IspIdentifier,
+  ...
+}
+
+IspIdentifier ::= [APPLICATION 294] AsciiString
+
+IspIdType ::= [APPLICATION 293] INTEGER
+
+ContentProviderIdList ::= [APPLICATION 328] SEQUENCE OF ContentProvider
+
+ContentProvider ::= [APPLICATION 327] SEQUENCE
+{
+  contentProviderIdType ContentProviderIdType,
+  contentProviderIdentifier ContentProviderIdentifier,
+  ...
+}
+
+ContentProviderIdentifier ::= [APPLICATION 292] AsciiString
+
+ContentProviderIdType ::= [APPLICATION 291] INTEGER
+
+ContentProviderName ::= [APPLICATION 334] AsciiString
+
+ChargedPartyInformation ::= [APPLICATION 324] SEQUENCE
+{
+  chargedPartyIdList ChargedPartyIdList,
+  chargedPartyHomeIdList ChargedPartyHomeIdList OPTIONAL,
+  chargedPartyLocationList ChargedPartyLocationList OPTIONAL,
+  chargedPartyEquipment ChargedPartyEquipment OPTIONAL,
+  ...
+}
+
+ChargedPartyEquipment ::= [APPLICATION 323] SEQUENCE
+{
+  equipmentIdType EquipmentIdType,
+  equipmentId EquipmentId,
+  ...
+}
+
+EquipmentId ::= [APPLICATION 290] AsciiString
+
+EquipmentIdType ::= [APPLICATION 322] INTEGER
+
+ChargedPartyLocationList ::= [APPLICATION 321] SEQUENCE OF ChargedPartyLocation
+
+ChargedPartyLocation ::= [APPLICATION 320] SEQUENCE
+{
+  locationIdType LocationIdType,
+  locationIdentifier LocationIdentifier,
+  ...
+}
+
+LocationIdentifier ::= [APPLICATION 289] AsciiString
+
+LocationIdType ::= [APPLICATION 315] INTEGER
+
+ChargedPartyHomeIdList ::= [APPLICATION 314] SEQUENCE OF ChargedPartyHomeIdentification
+
+ChargedPartyHomeIdentification ::= [APPLICATION 313] SEQUENCE
+{
+  homeIdType HomeIdType,
+  homeIdentifier HomeIdentifier,
+  ...
+}
+
+HomeIdentifier ::= [APPLICATION 288] AsciiString
+
+HomeIdType ::= [APPLICATION 311] INTEGER
+
+ChargedPartyIdList ::= [APPLICATION 310] SEQUENCE OF ChargedPartyIdentification
+
+ChargedPartyIdentification ::= [APPLICATION 309] SEQUENCE
+{
+  chargedPartyIdType ChargedPartyIdType,
+  chargedPartyIdentifier ChargedPartyIdentifier,
+  ...
+}
+
+ChargedPartyIdentifier ::= [APPLICATION 287] AsciiString
+
+ChargedPartyIdType ::= [APPLICATION 305] INTEGER
+
+ContentTransactionBasicInfo ::= [APPLICATION 304] SEQUENCE
+{
+  rapFileSequenceNumber RapFileSequenceNumber OPTIONAL,
+  orderPlacedTimeStamp OrderPlacedTimeStamp OPTIONAL,
+  requestedDeliveryTimeStamp RequestedDeliveryTimeStamp OPTIONAL,
+  actualDeliveryTimeStamp ActualDeliveryTimeStamp OPTIONAL,
+  totalTransactionDuration TotalTransactionDuration OPTIONAL,
+  transactionStatus TransactionStatus OPTIONAL,
+  ...
+}
+
+TransactionStatus ::= [APPLICATION 303] INTEGER
+
+TotalTransactionDuration ::= [APPLICATION 416] TotalCallEventDuration
+
+RequestedDeliveryTimeStamp ::= [APPLICATION 301] DateTime
+
+OrderPlacedTimeStamp ::= [APPLICATION 300] DateTime
+
+GprsCall ::= [APPLICATION 14] SEQUENCE
+{
+  gprsBasicCallInformation GprsBasicCallInformation,
+  gprsLocationInformation GprsLocationInformation,
+  equipmentIdentifier ImeiOrEsn OPTIONAL,
+  gprsServiceUsed GprsServiceUsed,
+  camelServiceUsed CamelServiceUsed OPTIONAL,
+  operatorSpecInformation OperatorSpecInfoList OPTIONAL,
+  ...
+}
+
+GprsServiceUsed ::= [APPLICATION 121] SEQUENCE
+{
+  iMSSignallingContext IMSSignallingContext OPTIONAL,
+  dataVolumeIncoming DataVolumeIncoming,
+  dataVolumeOutgoing DataVolumeOutgoing,
+  chargeInformationList ChargeInformationList,
+  ...
+}
+
+DataVolumeOutgoing ::= [APPLICATION 251] DataVolume
+
+DataVolumeIncoming ::= [APPLICATION 250] DataVolume
+
+DataVolume ::= INTEGER
+
+IMSSignallingContext ::= [APPLICATION 418] INTEGER
+
+GprsLocationInformation ::= [APPLICATION 117] SEQUENCE
+{
+  gprsNetworkLocation GprsNetworkLocation,
+  homeLocationInformation HomeLocationInformation OPTIONAL,
+  geographicalLocation GeographicalLocation OPTIONAL,
+  ...
+}
+
+GprsNetworkLocation ::= [APPLICATION 118] SEQUENCE
+{
+  recEntity RecEntityCodeList,
+  locationArea LocationArea OPTIONAL,
+  cellId CellId OPTIONAL,
+  ...
+}
+
+RecEntityCodeList ::= [APPLICATION 185] SEQUENCE OF RecEntityCode
+
+GprsBasicCallInformation ::= [APPLICATION 114] SEQUENCE
+{
+  gprsChargeableSubscriber GprsChargeableSubscriber,
+  rapFileSequenceNumber RapFileSequenceNumber OPTIONAL,
+  gprsDestination GprsDestination,
+  callEventStartTimeStamp CallEventStartTimeStamp,
+  totalCallEventDuration TotalCallEventDuration,
+  causeForTerm CauseForTerm OPTIONAL,
+  partialTypeIndicator PartialTypeIndicator OPTIONAL,
+  pDPContextStartTimestamp PDPContextStartTimestamp OPTIONAL,
+  networkInitPDPContext NetworkInitPDPContext OPTIONAL,
+  chargingId ChargingId,
+  ...
+}
+
+ChargingId ::= [APPLICATION 72] INTEGER
+
+NetworkInitPDPContext ::= [APPLICATION 245] INTEGER
+
+PDPContextStartTimestamp ::= [APPLICATION 260] DateTime
+
+PartialTypeIndicator ::= [APPLICATION 166] AsciiString (SIZE(1))
+
+GprsChargeableSubscriber ::= [APPLICATION 115] SEQUENCE
+{
+  chargeableSubscriber ChargeableSubscriber OPTIONAL,
+  pdpAddress PdpAddress OPTIONAL,
+  networkAccessIdentifier NetworkAccessIdentifier OPTIONAL,
+  ...
+}
+
+NetworkAccessIdentifier ::= [APPLICATION 417] AsciiString
+
+PdpAddress ::= [APPLICATION 167] PacketDataProtocolAddress
+
+PacketDataProtocolAddress ::= [APPLICATION 165] AsciiString
+
+ServiceCentreUsage ::= [APPLICATION 12] SEQUENCE
+{
+  basicInformation ScuBasicInformation,
+  rapFileSequenceNumber RapFileSequenceNumber OPTIONAL,
+  servingNetwork ServingNetwork OPTIONAL,
+  recEntityCode RecEntityCode,
+  chargeInformation ChargeInformation,
+  scuChargeType ScuChargeType,
+  scuTimeStamps ScuTimeStamps,
+  operatorSpecInformation OperatorSpecInfoList OPTIONAL,
+  ...
+}
+
+ScuTimeStamps ::= [APPLICATION 193] SEQUENCE
+{
+  depositTimeStamp DepositTimeStamp,
+  completionTimeStamp CompletionTimeStamp,
+  chargingPoint ChargingPoint,
+  ...
+}
+
+ChargingPoint ::= [APPLICATION 73] AsciiString (SIZE(1))
+
+CompletionTimeStamp ::= [APPLICATION 76] DateTime
+
+DepositTimeStamp ::= [APPLICATION 88] DateTime
+
+ScuChargeType ::= [APPLICATION 192] SEQUENCE
+{
+  messageStatus MessageStatus,
+  priorityCode PriorityCode,
+  distanceChargeBandCode DistanceChargeBandCode OPTIONAL,
+  messageType MessageType,
+  messageDescriptionCode MessageDescriptionCode,
+  ...
+}
+
+MessageDescriptionCode ::= [APPLICATION 141] Code
+
+MessageType ::= [APPLICATION 145] INTEGER
+
+DistanceChargeBandCode ::= [APPLICATION 98] AsciiString (SIZE(1))
+
+PriorityCode ::= [APPLICATION 170] INTEGER
+
+MessageStatus ::= [APPLICATION 144] INTEGER
+
+ScuBasicInformation ::= [APPLICATION 191] SEQUENCE
+{
+  chargeableSubscriber ScuChargeableSubscriber,
+  chargedPartyStatus ChargedPartyStatus,
+  nonChargedNumber NonChargedNumber,
+  clirIndicator ClirIndicator OPTIONAL,
+  originatingNetwork OriginatingNetwork OPTIONAL,
+  destinationNetwork DestinationNetwork OPTIONAL,
+  ...
+}
+
+NonChargedNumber ::= [APPLICATION 402] AsciiString
+
+ChargedPartyStatus ::= [APPLICATION 67] INTEGER
+
+ScuChargeableSubscriber ::= [APPLICATION 430] CHOICE
+{
+  gsmChargeableSubscriber GsmChargeableSubscriber,
+  minChargeableSubscriber MinChargeableSubscriber,
+  ...
+}
+
+GsmChargeableSubscriber ::= [APPLICATION 286] SEQUENCE
+{
+  imsi Imsi OPTIONAL,
+  msisdn Msisdn OPTIONAL,
+  ...
+}
+
+SupplServiceEvent ::= [APPLICATION 11] SEQUENCE
+{
+  chargeableSubscriber ChargeableSubscriber,
+  rapFileSequenceNumber RapFileSequenceNumber OPTIONAL,
+  locationInformation LocationInformation,
+  equipmentIdentifier ImeiOrEsn OPTIONAL,
+  supplServiceUsed SupplServiceUsed,
+  operatorSpecInformation OperatorSpecInfoList OPTIONAL,
+  ...
+}
+
+SupplServiceUsed ::= [APPLICATION 206] SEQUENCE
+{
+  supplServiceCode SupplServiceCode,
+  supplServiceActionCode SupplServiceActionCode,
+  ssParameters SsParameters OPTIONAL,
+  chargingTimeStamp ChargingTimeStamp,
+  chargeInformation ChargeInformation OPTIONAL,
+  basicServiceCodeList BasicServiceCodeList OPTIONAL,
+  ...
+}
+
+SsParameters ::= [APPLICATION 204] AsciiString (SIZE(1..40))
+
+SupplServiceActionCode ::= [APPLICATION 208] INTEGER
+
+MobileTerminatedCall ::= [APPLICATION 10] SEQUENCE
+{
+  basicCallInformation MtBasicCallInformation,
+  locationInformation LocationInformation,
+  equipmentIdentifier ImeiOrEsn OPTIONAL,
+  basicServiceUsedList BasicServiceUsedList,
+  camelServiceUsed CamelServiceUsed OPTIONAL,
+  operatorSpecInformation OperatorSpecInfoList OPTIONAL,
+  ...
+}
+
+MtBasicCallInformation ::= [APPLICATION 153] SEQUENCE
+{
+  chargeableSubscriber ChargeableSubscriber,
+  rapFileSequenceNumber RapFileSequenceNumber OPTIONAL,
+  callOriginator CallOriginator OPTIONAL,
+  originatingNetwork OriginatingNetwork OPTIONAL,
+  callEventStartTimeStamp CallEventStartTimeStamp,
+  totalCallEventDuration TotalCallEventDuration,
+  simToolkitIndicator SimToolkitIndicator OPTIONAL,
+  causeForTerm CauseForTerm OPTIONAL,
+  ...
+}
+
+OriginatingNetwork ::= [APPLICATION 164] NetworkId
+
+CallOriginator ::= [APPLICATION 41] SEQUENCE
+{
+  callingNumber CallingNumber OPTIONAL,
+  clirIndicator ClirIndicator OPTIONAL,
+  sMSOriginator SMSOriginator OPTIONAL,
+  ...
+}
+
+SMSOriginator ::= [APPLICATION 425] AsciiString
+
+CallingNumber ::= [APPLICATION 405] AddressStringDigits
+
+MobileOriginatedCall ::= [APPLICATION 9] SEQUENCE
+{
+  basicCallInformation MoBasicCallInformation,
+  locationInformation LocationInformation,
+  equipmentIdentifier ImeiOrEsn OPTIONAL,
+  basicServiceUsedList BasicServiceUsedList,
+  supplServiceCode SupplServiceCode OPTIONAL,
+  thirdPartyInformation ThirdPartyInformation OPTIONAL,
+  camelServiceUsed CamelServiceUsed OPTIONAL,
+  operatorSpecInformation OperatorSpecInfoList OPTIONAL,
+  ...
+}
+
+CamelServiceUsed ::= [APPLICATION 57] SEQUENCE
+{
+  camelServiceLevel CamelServiceLevel OPTIONAL,
+  camelServiceKey CamelServiceKey,
+  defaultCallHandling DefaultCallHandlingIndicator OPTIONAL,
+  exchangeRateCode ExchangeRateCode OPTIONAL,
+  taxInformation TaxInformationList OPTIONAL,
+  discountInformation DiscountInformation OPTIONAL,
+  camelInvocationFee CamelInvocationFee OPTIONAL,
+  threeGcamelDestination ThreeGcamelDestination OPTIONAL,
+  cseInformation CseInformation OPTIONAL,
+  ...
+}
+
+CseInformation ::= [APPLICATION 79] OCTET STRING (SIZE(1..40))
+
+ThreeGcamelDestination ::= [APPLICATION 431] CHOICE
+{
+  camelDestinationNumber CamelDestinationNumber,
+  gprsDestination GprsDestination,
+  ...
+}
+
+GprsDestination ::= [APPLICATION 116] SEQUENCE
+{
+  accessPointNameNI AccessPointNameNI,
+  accessPointNameOI AccessPointNameOI OPTIONAL,
+  ...
+}
+
+CamelDestinationNumber ::= [APPLICATION 404] AddressStringDigits
+
+CamelInvocationFee ::= [APPLICATION 422] AbsoluteAmount
+
+DefaultCallHandlingIndicator ::= [APPLICATION 87] INTEGER
+
+CamelServiceKey ::= [APPLICATION 55] INTEGER
+
+CamelServiceLevel ::= [APPLICATION 56] INTEGER
+
+ThirdPartyInformation ::= [APPLICATION 219] SEQUENCE
+{
+  thirdPartyNumber ThirdPartyNumber OPTIONAL,
+  clirIndicator ClirIndicator OPTIONAL,
+  ...
+}
+
+ClirIndicator ::= [APPLICATION 75] INTEGER
+
+ThirdPartyNumber ::= [APPLICATION 403] AddressStringDigits
+
+SupplServiceCode ::= [APPLICATION 209] HexString (SIZE(2))
+
+ImeiOrEsn ::= [APPLICATION 429] CHOICE
+{
+  imei Imei,
+  esn Esn,
+  ...
+}
+
+Esn ::= [APPLICATION 103] NumberString
+
+Imei ::= [APPLICATION 128] BCDString (SIZE(7..8))
+
+LocationInformation ::= [APPLICATION 138] SEQUENCE
+{
+  networkLocation NetworkLocation,
+  homeLocationInformation HomeLocationInformation OPTIONAL,
+  geographicalLocation GeographicalLocation OPTIONAL,
+  ...
+}
+
+GeographicalLocation ::= [APPLICATION 113] SEQUENCE
+{
+  servingNetwork ServingNetwork OPTIONAL,
+  servingBid ServingBid OPTIONAL,
+  servingLocationDescription ServingLocationDescription OPTIONAL,
+  ...
+}
+
+ServingLocationDescription ::= [APPLICATION 414] LocationDescription
+
+ServingBid ::= [APPLICATION 198] Bid
+
+ServingNetwork ::= [APPLICATION 195] AsciiString
+
+HomeLocationInformation ::= [APPLICATION 123] SEQUENCE
+{
+  homeBid HomeBid,
+  homeLocationDescription HomeLocationDescription,
+  ...
+}
+
+HomeLocationDescription ::= [APPLICATION 413] LocationDescription
+
+LocationDescription ::= AsciiString
+
+HomeBid ::= [APPLICATION 122] Bid
+
+NetworkLocation ::= [APPLICATION 156] SEQUENCE
+{
+  recEntityCode RecEntityCode,
+  callReference CallReference OPTIONAL,
+  locationArea LocationArea OPTIONAL,
+  cellId CellId OPTIONAL,
+  ...
+}
+
+CellId ::= [APPLICATION 59] INTEGER
+
+LocationArea ::= [APPLICATION 136] INTEGER
+
+CallReference ::= [APPLICATION 45] OCTET STRING (SIZE(1..8))
+
+RecEntityCode ::= [APPLICATION 184] Code
+
+MoBasicCallInformation ::= [APPLICATION 147] SEQUENCE
+{
+  chargeableSubscriber ChargeableSubscriber,
+  rapFileSequenceNumber RapFileSequenceNumber OPTIONAL,
+  destination Destination OPTIONAL,
+  destinationNetwork DestinationNetwork OPTIONAL,
+  callEventStartTimeStamp CallEventStartTimeStamp,
+  totalCallEventDuration TotalCallEventDuration,
+  simToolkitIndicator SimToolkitIndicator OPTIONAL,
+  causeForTerm CauseForTerm OPTIONAL,
+  ...
+}
+
+CauseForTerm ::= [APPLICATION 58] INTEGER
+
+SimToolkitIndicator ::= [APPLICATION 200] AsciiString (SIZE(1))
+
+TotalCallEventDuration ::= [APPLICATION 223] INTEGER
+
+CallEventStartTimeStamp ::= [APPLICATION 44] DateTime
+
+DestinationNetwork ::= [APPLICATION 90] NetworkId
+
+NetworkId ::= AsciiString (SIZE(1..6))
+
+Destination ::= [APPLICATION 89] SEQUENCE
+{
+  calledNumber CalledNumber OPTIONAL,
+  dialledDigits DialledDigits OPTIONAL,
+  calledPlace CalledPlace OPTIONAL,
+  calledRegion CalledRegion OPTIONAL,
+  sMSDestinationNumber SMSDestinationNumber OPTIONAL,
+  ...
+}
+
+SMSDestinationNumber ::= [APPLICATION 419] AsciiString
+
+CalledRegion ::= [APPLICATION 46] AsciiString
+
+CalledPlace ::= [APPLICATION 42] AsciiString
+
+DialledDigits ::= [APPLICATION 279] AsciiString
+
+CalledNumber ::= [APPLICATION 407] AddressStringDigits
+
+ChargeableSubscriber ::= [APPLICATION 427] CHOICE
+{
+  simChargeableSubscriber SimChargeableSubscriber,
+  minChargeableSubscriber MinChargeableSubscriber,
+  ...
+}
+
+MinChargeableSubscriber ::= [APPLICATION 254] SEQUENCE
+{
+  min Min,
+  mdn Mdn OPTIONAL,
+  ...
+}
+
+Mdn ::= [APPLICATION 253] NumberString
+
+Min ::= [APPLICATION 146] NumberString (SIZE(2..15))
+
+SimChargeableSubscriber ::= [APPLICATION 199] SEQUENCE
+{
+  imsi Imsi,
+  msisdn Msisdn OPTIONAL,
+  ...
+}
+
+Msisdn ::= [APPLICATION 152] BCDString (SIZE(1..9))
+
+Imsi ::= [APPLICATION 129] BCDString (SIZE(3..8))
+
+Bid ::= AsciiString (SIZE(5))
+
+BatchControlInfo ::= [APPLICATION 4] SEQUENCE
+{
+  sender Sender,
+  recipient Recipient,
+  fileSequenceNumber FileSequenceNumber,
+  fileCreationTimeStamp FileCreationTimeStamp OPTIONAL,
+  transferCutOffTimeStamp TransferCutOffTimeStamp,
+  fileAvailableTimeStamp FileAvailableTimeStamp,
+  specificationVersionNumber SpecificationVersionNumber,
+  releaseVersionNumber ReleaseVersionNumber,
+  fileTypeIndicator FileTypeIndicator OPTIONAL,
+  rapFileSequenceNumber RapFileSequenceNumber OPTIONAL,
+  operatorSpecInformation OperatorSpecInfoList OPTIONAL,
+  ...
+}
+
+RapFileSequenceNumber ::= [APPLICATION 181] FileSequenceNumber
+
+FileTypeIndicator ::= [APPLICATION 110] AsciiString (SIZE(1))
+
+ReleaseVersionNumber ::= [APPLICATION 189] INTEGER
+
+SpecificationVersionNumber ::= [APPLICATION 201] INTEGER
+
+FileAvailableTimeStamp ::= [APPLICATION 107] DateTimeLong
+
+TransferCutOffTimeStamp ::= [APPLICATION 227] DateTimeLong
+
+FileCreationTimeStamp ::= [APPLICATION 108] DateTimeLong
+
+FileSequenceNumber ::= [APPLICATION 109] NumberString (SIZE(5))
+
+Recipient ::= [APPLICATION 182] PlmnId
+
+Sender ::= [APPLICATION 196] PlmnId
+
+PlmnId ::= [APPLICATION 169] AsciiString (SIZE(5))
+
+BasicServiceUsedList ::= [APPLICATION 38] SEQUENCE OF BasicServiceUsed
+
+BasicServiceUsed ::= [APPLICATION 39] SEQUENCE
+{
+  basicService BasicService,
+  chargingTimeStamp ChargingTimeStamp OPTIONAL,
+  chargeInformationList ChargeInformationList,
+  hSCSDIndicator HSCSDIndicator OPTIONAL,
+  ...
+}
+
+HSCSDIndicator ::= [APPLICATION 424] AsciiString (SIZE(1))
+
+ChargeInformationList ::= [APPLICATION 70] SEQUENCE OF ChargeInformation
+
+ChargeInformation ::= [APPLICATION 69] SEQUENCE
+{
+  chargedItem ChargedItem,
+  exchangeRateCode ExchangeRateCode OPTIONAL,
+  callTypeGroup CallTypeGroup OPTIONAL,
+  chargeDetailList ChargeDetailList,
+  taxInformation TaxInformationList OPTIONAL,
+  discountInformation DiscountInformation OPTIONAL,
+  ...
+}
+
+DiscountInformation ::= [APPLICATION 96] SEQUENCE
+{
+  discountCode DiscountCode,
+  discount Discount OPTIONAL,
+  discountableAmount DiscountableAmount OPTIONAL,
+  ...
+}
+
+DiscountableAmount ::= [APPLICATION 423] AbsoluteAmount
+
+Discount ::= [APPLICATION 412] DiscountValue
+
+TaxInformationList ::= [APPLICATION 214] SEQUENCE OF TaxInformation
+
+TaxInformation ::= [APPLICATION 213] SEQUENCE
+{
+  taxCode TaxCode,
+  taxValue TaxValue,
+  taxableAmount TaxableAmount OPTIONAL,
+  ...
+}
+
+TaxableAmount ::= [APPLICATION 398] AbsoluteAmount
+
+TaxValue ::= [APPLICATION 397] AbsoluteAmount
+
+ChargeDetailList ::= [APPLICATION 64] SEQUENCE OF ChargeDetail
+
+ChargeDetail ::= [APPLICATION 63] SEQUENCE
+{
+  chargeType ChargeType,
+  charge Charge,
+  chargeableUnits ChargeableUnits OPTIONAL,
+  chargedUnits ChargedUnits OPTIONAL,
+  chargeDetailTimeStamp ChargeDetailTimeStamp OPTIONAL,
+  ...
+}
+
+ChargeDetailTimeStamp ::= [APPLICATION 410] ChargingTimeStamp
+
+ChargedUnits ::= [APPLICATION 68] INTEGER
+
+ChargeableUnits ::= [APPLICATION 65] INTEGER
+
+CallTypeGroup ::= [APPLICATION 258] SEQUENCE
+{
+  callTypeLevel1 CallTypeLevel1,
+  callTypeLevel2 CallTypeLevel2,
+  callTypeLevel3 CallTypeLevel3,
+  ...
+}
+
+CallTypeLevel3 ::= [APPLICATION 256] INTEGER
+
+CallTypeLevel2 ::= [APPLICATION 255] INTEGER
+
+CallTypeLevel1 ::= [APPLICATION 259] INTEGER
+
+ChargedItem ::= [APPLICATION 66] AsciiString (SIZE(1))
+
+ChargingTimeStamp ::= [APPLICATION 74] DateTime
+
+BasicServiceCodeList ::= [APPLICATION 37] SEQUENCE OF BasicServiceCode
+
+BasicService ::= [APPLICATION 36] SEQUENCE
+{
+  serviceCode BasicServiceCode,
+  transparencyIndicator TransparencyIndicator OPTIONAL,
+  fnur Fnur OPTIONAL,
+  userProtocolIndicator UserProtocolIndicator OPTIONAL,
+  guaranteedBitRate GuaranteedBitRate OPTIONAL,
+  maximumBitRate MaximumBitRate OPTIONAL,
+  ...
+}
+
+MaximumBitRate ::= [APPLICATION 421] OCTET STRING (SIZE(1))
+
+GuaranteedBitRate ::= [APPLICATION 420] OCTET STRING (SIZE(1))
+
+UserProtocolIndicator ::= [APPLICATION 280] INTEGER
+
+Fnur ::= [APPLICATION 111] INTEGER
+
+TransparencyIndicator ::= [APPLICATION 228] INTEGER
+
+BasicServiceCode ::= [APPLICATION 426] CHOICE
+{
+  teleServiceCode TeleServiceCode,
+  bearerServiceCode BearerServiceCode,
+  ...
+}
+
+BearerServiceCode ::= [APPLICATION 40] HexString (SIZE(2))
+
+TeleServiceCode ::= [APPLICATION 218] HexString (SIZE(2))
+
+HexString ::= OCTET STRING
+
+AuditControlInfo ::= [APPLICATION 15] SEQUENCE
+{
+  earliestCallTimeStamp EarliestCallTimeStamp OPTIONAL,
+  latestCallTimeStamp LatestCallTimeStamp OPTIONAL,
+  totalCharge TotalCharge,
+  totalChargeRefund TotalChargeRefund OPTIONAL,
+  totalTaxRefund TotalTaxRefund OPTIONAL,
+  totalTaxValue TotalTaxValue,
+  totalDiscountValue TotalDiscountValue,
+  totalDiscountRefund TotalDiscountRefund OPTIONAL,
+  totalAdvisedChargeValueList TotalAdvisedChargeValueList OPTIONAL,
+  callEventDetailsCount CallEventDetailsCount,
+  operatorSpecInformation OperatorSpecInfoList OPTIONAL,
+  ...
+}
+
+OperatorSpecInfoList ::= [APPLICATION 162] SEQUENCE OF OperatorSpecInformation
+
+OperatorSpecInformation ::= [APPLICATION 163] AsciiString
+
+CallEventDetailsCount ::= [APPLICATION 43] INTEGER
+
+TotalAdvisedChargeValueList ::= [APPLICATION 361] SEQUENCE OF TotalAdvisedChargeValue
+
+TotalAdvisedChargeValue ::= [APPLICATION 360] SEQUENCE
+{
+  advisedChargeCurrency AdvisedChargeCurrency OPTIONAL,
+  totalAdvisedCharge TotalAdvisedCharge,
+  totalAdvisedChargeRefund TotalAdvisedChargeRefund OPTIONAL,
+  totalCommission TotalCommission OPTIONAL,
+  totalCommissionRefund TotalCommissionRefund OPTIONAL,
+  ...
+}
+
+TotalCommissionRefund ::= [APPLICATION 359] AbsoluteAmount
+
+TotalCommission ::= [APPLICATION 358] AbsoluteAmount
+
+TotalAdvisedChargeRefund ::= [APPLICATION 357] AbsoluteAmount
+
+TotalAdvisedCharge ::= [APPLICATION 356] AbsoluteAmount
+
+TotalDiscountRefund ::= [APPLICATION 354] AbsoluteAmount
+
+TotalDiscountValue ::= [APPLICATION 225] AbsoluteAmount
+
+TotalTaxValue ::= [APPLICATION 226] AbsoluteAmount
+
+TotalTaxRefund ::= [APPLICATION 353] AbsoluteAmount
+
+TotalChargeRefund ::= [APPLICATION 355] AbsoluteAmount
+
+TotalCharge ::= [APPLICATION 415] AbsoluteAmount
+
+LatestCallTimeStamp ::= [APPLICATION 133] DateTimeLong
+
+EarliestCallTimeStamp ::= [APPLICATION 101] DateTimeLong
+
+DateTimeLong ::= SEQUENCE
+{
+  localTimeStamp LocalTimeStamp,
+  utcTimeOffset UtcTimeOffset,
+  ...
+}
+
+UtcTimeOffset ::= [APPLICATION 231] AsciiString (SIZE(5))
+
+AgeOfLocation ::= [APPLICATION 396] INTEGER
+
+AdvisedChargeInformation ::= [APPLICATION 351] SEQUENCE
+{
+  paidIndicator PaidIndicator OPTIONAL,
+  paymentMethod PaymentMethod OPTIONAL,
+  advisedChargeCurrency AdvisedChargeCurrency OPTIONAL,
+  advisedCharge AdvisedCharge,
+  commission Commission OPTIONAL,
+  ...
+}
+
+Commission ::= [APPLICATION 350] Charge
+
+PaymentMethod ::= [APPLICATION 347] INTEGER
+
+PaidIndicator ::= [APPLICATION 346] INTEGER
+
+AdvisedChargeCurrency ::= [APPLICATION 348] Currency
+
+AdvisedCharge ::= [APPLICATION 349] Charge
+
+Charge ::= [APPLICATION 62] AbsoluteAmount
+
+AddressStringDigits ::= BCDString
+
+BCDString ::= OCTET STRING
+
+ActualDeliveryTimeStamp ::= [APPLICATION 302] DateTime
+
+DateTime ::= SEQUENCE
+{
+  localTimeStamp LocalTimeStamp,
+  utcTimeOffsetCode UtcTimeOffsetCode,
+  ...
+}
+
+UtcTimeOffsetCode ::= [APPLICATION 232] Code
+
+LocalTimeStamp ::= [APPLICATION 16] NumberString (SIZE(14))
+
+AccountingInfo ::= [APPLICATION 5] SEQUENCE
+{
+  taxation TaxationList OPTIONAL,
+  discounting DiscountingList OPTIONAL,
+  localCurrency LocalCurrency,
+  tapCurrency TapCurrency OPTIONAL,
+  currencyConversionInfo CurrencyConversionList OPTIONAL,
+  tapDecimalPlaces TapDecimalPlaces,
+  ...
+}
+
+TapDecimalPlaces ::= [APPLICATION 244] INTEGER
+
+CurrencyConversionList ::= [APPLICATION 80] SEQUENCE OF CurrencyConversion
+
+CurrencyConversion ::= [APPLICATION 106] SEQUENCE
+{
+  exchangeRateCode ExchangeRateCode,
+  numberOfDecimalPlaces NumberOfDecimalPlaces,
+  exchangeRate ExchangeRate,
+  ...
+}
+
+ExchangeRate ::= [APPLICATION 104] INTEGER
+
+NumberOfDecimalPlaces ::= [APPLICATION 159] INTEGER
+
+ExchangeRateCode ::= [APPLICATION 105] Code
+
+Code ::= INTEGER
+
+TapCurrency ::= [APPLICATION 210] Currency
+
+LocalCurrency ::= [APPLICATION 135] Currency
+
+Currency ::= OCTET STRING
+
+DiscountingList ::= [APPLICATION 95] SEQUENCE OF Discounting
+
+Discounting ::= [APPLICATION 94] SEQUENCE
+{
+  discountCode DiscountCode,
+  discountApplied DiscountApplied,
+  ...
+}
+
+DiscountApplied ::= [APPLICATION 428] CHOICE
+{
+  fixedDiscountValue FixedDiscountValue,
+  discountRate DiscountRate,
+  ...
+}
+
+DiscountRate ::= [APPLICATION 92] PercentageRate
+
+PercentageRate ::= INTEGER
+
+FixedDiscountValue ::= [APPLICATION 411] DiscountValue
+
+DiscountValue ::= AbsoluteAmount
+
+DiscountCode ::= [APPLICATION 91] INTEGER
+
+TaxationList ::= [APPLICATION 211] SEQUENCE OF Taxation
+
+Taxation ::= [APPLICATION 216] SEQUENCE
+{
+  taxCode TaxCode,
+  taxType TaxType,
+  taxRate TaxRate OPTIONAL,
+  chargeType ChargeType OPTIONAL,
+  taxIndicator TaxIndicator OPTIONAL,
+  ...
+}
+
+TaxIndicator ::= [APPLICATION 432] AsciiString (SIZE(1))
+
+ChargeType ::= [APPLICATION 71] NumberString (SIZE(2..3))
+
+TaxRate ::= [APPLICATION 215] NumberString (SIZE(7))
+
+NumberString ::= OCTET STRING
+
+TaxType ::= [APPLICATION 217] AsciiString (SIZE(2))
+
+TaxCode ::= [APPLICATION 212] INTEGER
+
+AccessPointNameOI ::= [APPLICATION 262] AsciiString (SIZE(1..37))
+
+AccessPointNameNI ::= [APPLICATION 261] AsciiString (SIZE(1..63))
+
+AsciiString ::= OCTET STRING
+
+AbsoluteAmount ::= INTEGER
+
+

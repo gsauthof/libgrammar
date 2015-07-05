@@ -1,0 +1,1146 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema
+  xmlns:xs='http://www.w3.org/2001/XMLSchema'
+  elementFormDefault='qualified'>
+  <xs:element name='MegacoMessage' type='MegacoMessage'>
+  </xs:element>
+  <xs:complexType name='MegacoMessage'>
+    <xs:sequence>
+      <xs:element name='AuthenticationHeader' type='AuthenticationHeader' minOccurs='0'/>
+      <xs:element name='Message' type='Message'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='AuthenticationHeader'>
+    <xs:sequence>
+      <xs:element name='SecurityParmIndex' type='SecurityParmIndex'/>
+      <xs:element name='SequenceNum' type='SequenceNum'/>
+      <xs:element name='AuthData' type='AuthData'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='SecurityParmIndex'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='SequenceNum'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='AuthData'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='Message'>
+    <xs:sequence>
+      <xs:element name='INTEGER' type='INTEGER'/>
+      <xs:element name='MId' type='MId'/>
+      <xs:element name='MessageBody' type='MessageBody'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='MessageBody'>
+      <xs:choice>
+      <xs:element name='ErrorDescriptor' type='ErrorDescriptor'/>
+      <xs:element name='Transactions' type='Transactions'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:complexType name='Transactions'>
+    <xs:sequence>
+      <xs:group ref='Transaction' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='MId'>
+      <xs:choice>
+      <xs:element name='IP4Address' type='IP4Address'/>
+      <xs:element name='IP6Address' type='IP6Address'/>
+      <xs:element name='DomainName' type='DomainName'/>
+      <xs:element name='PathName' type='PathName'/>
+      <xs:element name='OCTET_STRING' type='OCTET_STRING'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:complexType name='DomainName'>
+    <xs:sequence>
+      <xs:element name='IA5String' type='IA5String'/>
+      <xs:element name='INTEGER' type='INTEGER' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='IP4Address'>
+    <xs:sequence>
+      <xs:element name='OCTET_STRING' type='OCTET_STRING'/>
+      <xs:element name='INTEGER' type='INTEGER' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='IP6Address'>
+    <xs:sequence>
+      <xs:element name='OCTET_STRING' type='OCTET_STRING'/>
+      <xs:element name='INTEGER' type='INTEGER' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='PathName'>
+    <xs:restriction base='IA5String'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:group name='Transaction'>
+      <xs:choice>
+      <xs:element name='TransactionRequest' type='TransactionRequest'/>
+      <xs:element name='TransactionPending' type='TransactionPending'/>
+      <xs:element name='TransactionReply' type='TransactionReply'/>
+      <xs:element name='TransactionResponseAck' type='TransactionResponseAck'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:simpleType name='TransactionId'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='TransactionRequest'>
+    <xs:sequence>
+      <xs:element name='TransactionId' type='TransactionId'/>
+      <xs:element name='Actions' type='Actions'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='Actions'>
+    <xs:sequence>
+      <xs:element name='ActionRequest' type='ActionRequest' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TransactionPending'>
+    <xs:sequence>
+      <xs:element name='TransactionId' type='TransactionId'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TransactionReply'>
+    <xs:sequence>
+      <xs:element name='TransactionId' type='TransactionId'/>
+      <xs:element name='NULL' type='NULL' minOccurs='0'/>
+      <xs:element name='TransactionResult' type='TransactionResult'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='TransactionResult'>
+      <xs:choice>
+      <xs:element name='ErrorDescriptor' type='ErrorDescriptor'/>
+      <xs:element name='ActionReplies' type='ActionReplies'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:complexType name='ActionReplies'>
+    <xs:sequence>
+      <xs:element name='ActionReply' type='ActionReply' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TransactionResponseAck'>
+    <xs:sequence>
+      <xs:element name='TransactionAck' type='TransactionAck' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TransactionAck'>
+    <xs:sequence>
+      <xs:element name='TransactionId' type='TransactionId'/>
+      <xs:element name='TransactionId' type='TransactionId' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ErrorDescriptor'>
+    <xs:sequence>
+      <xs:element name='ErrorCode' type='ErrorCode'/>
+      <xs:element name='ErrorText' type='ErrorText' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='ErrorCode'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ErrorText'>
+    <xs:restriction base='IA5String'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ContextID'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ActionRequest'>
+    <xs:sequence>
+      <xs:element name='ContextID' type='ContextID'/>
+      <xs:element name='ContextRequest' type='ContextRequest' minOccurs='0'/>
+      <xs:element name='ContextAttrAuditRequest' type='ContextAttrAuditRequest' minOccurs='0'/>
+      <xs:element name='CommandRequests' type='CommandRequests'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='CommandRequests'>
+    <xs:sequence>
+      <xs:element name='CommandRequest' type='CommandRequest' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ActionReply'>
+    <xs:sequence>
+      <xs:element name='ContextID' type='ContextID'/>
+      <xs:element name='ErrorDescriptor' type='ErrorDescriptor' minOccurs='0'/>
+      <xs:element name='ContextRequest' type='ContextRequest' minOccurs='0'/>
+      <xs:element name='CommandReplies' type='CommandReplies'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='CommandReplies'>
+    <xs:sequence>
+      <xs:group ref='CommandReply' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ContextRequest'>
+    <xs:sequence>
+      <xs:element name='INTEGER' type='INTEGER' minOccurs='0'/>
+      <xs:element name='BOOLEAN' type='BOOLEAN' minOccurs='0'/>
+      <xs:element name='TopologyReq' type='TopologyReq' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TopologyReq'>
+    <xs:sequence>
+      <xs:element name='TopologyRequest' type='TopologyRequest' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ContextAttrAuditRequest'>
+    <xs:sequence>
+      <xs:element name='NULL' type='NULL' minOccurs='0'/>
+      <xs:element name='NULL' type='NULL' minOccurs='0'/>
+      <xs:element name='NULL' type='NULL' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='CommandRequest'>
+    <xs:sequence>
+      <xs:element name='Command' type='Command'/>
+      <xs:element name='NULL' type='NULL' minOccurs='0'/>
+      <xs:element name='NULL' type='NULL' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='Command'>
+      <xs:choice>
+      <xs:element name='AmmRequest' type='AmmRequest'/>
+      <xs:element name='AmmRequest' type='AmmRequest'/>
+      <xs:element name='AmmRequest' type='AmmRequest'/>
+      <xs:element name='SubtractRequest' type='SubtractRequest'/>
+      <xs:element name='AuditRequest' type='AuditRequest'/>
+      <xs:element name='AuditRequest' type='AuditRequest'/>
+      <xs:element name='NotifyRequest' type='NotifyRequest'/>
+      <xs:element name='ServiceChangeRequest' type='ServiceChangeRequest'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:group name='CommandReply'>
+      <xs:choice>
+      <xs:element name='AmmsReply' type='AmmsReply'/>
+      <xs:element name='AmmsReply' type='AmmsReply'/>
+      <xs:element name='AmmsReply' type='AmmsReply'/>
+      <xs:element name='AmmsReply' type='AmmsReply'/>
+      <xs:element name='AuditReply' type='AuditReply'/>
+      <xs:element name='AuditReply' type='AuditReply'/>
+      <xs:element name='NotifyReply' type='NotifyReply'/>
+      <xs:element name='ServiceChangeReply' type='ServiceChangeReply'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:complexType name='TopologyRequest'>
+    <xs:sequence>
+      <xs:element name='TerminationID' type='TerminationID'/>
+      <xs:element name='TerminationID' type='TerminationID'/>
+      <xs:element name='INTEGER' type='INTEGER'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='AmmRequest'>
+    <xs:sequence>
+      <xs:element name='TerminationIDList' type='TerminationIDList'/>
+      <xs:element name='Descriptors' type='Descriptors'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='Descriptors'>
+    <xs:sequence>
+      <xs:group ref='AmmDescriptor' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='AmmDescriptor'>
+      <xs:choice>
+      <xs:element name='MediaDescriptor' type='MediaDescriptor'/>
+      <xs:element name='ModemDescriptor' type='ModemDescriptor'/>
+      <xs:element name='MuxDescriptor' type='MuxDescriptor'/>
+      <xs:element name='EventsDescriptor' type='EventsDescriptor'/>
+      <xs:element name='EventBufferDescriptor' type='EventBufferDescriptor'/>
+      <xs:element name='SignalsDescriptor' type='SignalsDescriptor'/>
+      <xs:element name='DigitMapDescriptor' type='DigitMapDescriptor'/>
+      <xs:element name='AuditDescriptor' type='AuditDescriptor'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:complexType name='AmmsReply'>
+    <xs:sequence>
+      <xs:element name='TerminationIDList' type='TerminationIDList'/>
+      <xs:element name='TerminationAudit' type='TerminationAudit' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='SubtractRequest'>
+    <xs:sequence>
+      <xs:element name='TerminationIDList' type='TerminationIDList'/>
+      <xs:element name='AuditDescriptor' type='AuditDescriptor' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='AuditRequest'>
+    <xs:sequence>
+      <xs:element name='TerminationID' type='TerminationID'/>
+      <xs:element name='AuditDescriptor' type='AuditDescriptor'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='AuditReply'>
+      <xs:choice>
+      <xs:element name='TerminationIDList' type='TerminationIDList'/>
+      <xs:element name='ErrorDescriptor' type='ErrorDescriptor'/>
+      <xs:element name='AuditResult' type='AuditResult'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:complexType name='AuditResult'>
+    <xs:sequence>
+      <xs:element name='TerminationID' type='TerminationID'/>
+      <xs:element name='TerminationAudit' type='TerminationAudit'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TerminationAudit'>
+    <xs:sequence>
+      <xs:group ref='AuditReturnParameter' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='AuditReturnParameter'>
+      <xs:choice>
+      <xs:element name='ErrorDescriptor' type='ErrorDescriptor'/>
+      <xs:element name='MediaDescriptor' type='MediaDescriptor'/>
+      <xs:element name='ModemDescriptor' type='ModemDescriptor'/>
+      <xs:element name='MuxDescriptor' type='MuxDescriptor'/>
+      <xs:element name='EventsDescriptor' type='EventsDescriptor'/>
+      <xs:element name='EventBufferDescriptor' type='EventBufferDescriptor'/>
+      <xs:element name='SignalsDescriptor' type='SignalsDescriptor'/>
+      <xs:element name='DigitMapDescriptor' type='DigitMapDescriptor'/>
+      <xs:element name='ObservedEventsDescriptor' type='ObservedEventsDescriptor'/>
+      <xs:element name='StatisticsDescriptor' type='StatisticsDescriptor'/>
+      <xs:element name='PackagesDescriptor' type='PackagesDescriptor'/>
+      <xs:element name='AuditDescriptor' type='AuditDescriptor'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:complexType name='AuditDescriptor'>
+    <xs:sequence>
+      <xs:element name='BIT_STRING' type='BIT_STRING' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='NotifyRequest'>
+    <xs:sequence>
+      <xs:element name='TerminationIDList' type='TerminationIDList'/>
+      <xs:element name='ObservedEventsDescriptor' type='ObservedEventsDescriptor'/>
+      <xs:element name='ErrorDescriptor' type='ErrorDescriptor' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='NotifyReply'>
+    <xs:sequence>
+      <xs:element name='TerminationIDList' type='TerminationIDList'/>
+      <xs:element name='ErrorDescriptor' type='ErrorDescriptor' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ObservedEventsDescriptor'>
+    <xs:sequence>
+      <xs:element name='RequestID' type='RequestID'/>
+      <xs:element name='ObservedEventLst' type='ObservedEventLst'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ObservedEventLst'>
+    <xs:sequence>
+      <xs:element name='ObservedEvent' type='ObservedEvent' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ObservedEvent'>
+    <xs:sequence>
+      <xs:element name='EventName' type='EventName'/>
+      <xs:element name='StreamID' type='StreamID' minOccurs='0'/>
+      <xs:element name='EventParList' type='EventParList'/>
+      <xs:element name='TimeNotation' type='TimeNotation' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='EventParList'>
+    <xs:sequence>
+      <xs:element name='EventParameter' type='EventParameter' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='EventName'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='EventParameter'>
+    <xs:sequence>
+      <xs:element name='Name' type='Name'/>
+      <xs:element name='Value' type='Value'/>
+      <xs:element name='ExtraInfo' type='ExtraInfo' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='ExtraInfo'>
+      <xs:choice>
+      <xs:element name='Relation' type='Relation'/>
+      <xs:element name='BOOLEAN' type='BOOLEAN'/>
+      <xs:element name='BOOLEAN' type='BOOLEAN'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:complexType name='ServiceChangeRequest'>
+    <xs:sequence>
+      <xs:element name='TerminationIDList' type='TerminationIDList'/>
+      <xs:element name='ServiceChangeParm' type='ServiceChangeParm'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ServiceChangeReply'>
+    <xs:sequence>
+      <xs:element name='TerminationIDList' type='TerminationIDList'/>
+      <xs:element name='ServiceChangeResult' type='ServiceChangeResult'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='ServiceChangeResult'>
+      <xs:choice>
+      <xs:element name='ErrorDescriptor' type='ErrorDescriptor'/>
+      <xs:element name='ServiceChangeResParm' type='ServiceChangeResParm'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:simpleType name='WildcardField'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='TerminationID'>
+    <xs:sequence>
+      <xs:element name='Wildcard' type='Wildcard'/>
+      <xs:element name='OCTET_STRING' type='OCTET_STRING'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='Wildcard'>
+    <xs:sequence>
+      <xs:element name='WildcardField' type='WildcardField' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TerminationIDList'>
+    <xs:sequence>
+      <xs:element name='TerminationID' type='TerminationID' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='MediaDescriptor'>
+    <xs:sequence>
+      <xs:element name='TerminationStateDescriptor' type='TerminationStateDescriptor' minOccurs='0'/>
+      <xs:element name='Streams' type='Streams' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='Streams'>
+      <xs:choice>
+      <xs:element name='StreamParms' type='StreamParms'/>
+      <xs:element name='MultiStream' type='MultiStream'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:complexType name='MultiStream'>
+    <xs:sequence>
+      <xs:element name='StreamDescriptor' type='StreamDescriptor' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='StreamDescriptor'>
+    <xs:sequence>
+      <xs:element name='StreamID' type='StreamID'/>
+      <xs:element name='StreamParms' type='StreamParms'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='StreamParms'>
+    <xs:sequence>
+      <xs:element name='LocalControlDescriptor' type='LocalControlDescriptor' minOccurs='0'/>
+      <xs:element name='LocalRemoteDescriptor' type='LocalRemoteDescriptor' minOccurs='0'/>
+      <xs:element name='LocalRemoteDescriptor' type='LocalRemoteDescriptor' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='LocalControlDescriptor'>
+    <xs:sequence>
+      <xs:element name='StreamMode' type='StreamMode' minOccurs='0'/>
+      <xs:element name='BOOLEAN' type='BOOLEAN' minOccurs='0'/>
+      <xs:element name='BOOLEAN' type='BOOLEAN' minOccurs='0'/>
+      <xs:element name='PropertyParms' type='PropertyParms'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='PropertyParms'>
+    <xs:sequence>
+      <xs:element name='PropertyParm' type='PropertyParm' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='StreamMode'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='PropertyParm'>
+    <xs:sequence>
+      <xs:element name='PkgdName' type='PkgdName'/>
+      <xs:element name='PPValue' type='PPValue'/>
+      <xs:element name='PPExtraInfo' type='PPExtraInfo' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='PPValue'>
+    <xs:sequence>
+      <xs:element name='OCTET_STRING' type='OCTET_STRING' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='PPExtraInfo'>
+      <xs:choice>
+      <xs:element name='Relation' type='Relation'/>
+      <xs:element name='BOOLEAN' type='BOOLEAN'/>
+      <xs:element name='BOOLEAN' type='BOOLEAN'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:simpleType name='Name'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='PkgdName'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='Relation'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='LocalRemoteDescriptor'>
+    <xs:sequence>
+      <xs:element name='PropGrps' type='PropGrps'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='PropGrps'>
+    <xs:sequence>
+      <xs:element name='PropertyGroup' type='PropertyGroup' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='PropertyGroup'>
+    <xs:sequence>
+      <xs:element name='PropertyParm' type='PropertyParm' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TerminationStateDescriptor'>
+    <xs:sequence>
+      <xs:element name='TSDPropertyParms' type='TSDPropertyParms'/>
+      <xs:element name='EventBufferControl' type='EventBufferControl' minOccurs='0'/>
+      <xs:element name='ServiceState' type='ServiceState' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TSDPropertyParms'>
+    <xs:sequence>
+      <xs:element name='PropertyParm' type='PropertyParm' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='EventBufferControl'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ServiceState'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='MuxDescriptor'>
+    <xs:sequence>
+      <xs:element name='MuxType' type='MuxType'/>
+      <xs:element name='TermList' type='TermList'/>
+      <xs:element name='NonStandardData' type='NonStandardData' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TermList'>
+    <xs:sequence>
+      <xs:element name='TerminationID' type='TerminationID' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='MuxType'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='StreamID'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='EventsDescriptor'>
+    <xs:sequence>
+      <xs:element name='RequestID' type='RequestID' minOccurs='0'/>
+      <xs:element name='EventList' type='EventList'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='EventList'>
+    <xs:sequence>
+      <xs:element name='RequestedEvent' type='RequestedEvent' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='RequestedEvent'>
+    <xs:sequence>
+      <xs:element name='PkgdName' type='PkgdName'/>
+      <xs:element name='StreamID' type='StreamID' minOccurs='0'/>
+      <xs:element name='RequestedActions' type='RequestedActions' minOccurs='0'/>
+      <xs:element name='EvParList' type='EvParList'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='EvParList'>
+    <xs:sequence>
+      <xs:element name='EventParameter' type='EventParameter' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='RequestedActions'>
+    <xs:sequence>
+      <xs:element name='BOOLEAN' type='BOOLEAN' minOccurs='0'/>
+      <xs:element name='EventDM' type='EventDM' minOccurs='0'/>
+      <xs:element name='SecondEventsDescriptor' type='SecondEventsDescriptor' minOccurs='0'/>
+      <xs:element name='SignalsDescriptor' type='SignalsDescriptor' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='EventDM'>
+      <xs:choice>
+      <xs:element name='DigitMapName' type='DigitMapName'/>
+      <xs:element name='DigitMapValue' type='DigitMapValue'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:complexType name='SecondEventsDescriptor'>
+    <xs:sequence>
+      <xs:element name='RequestID' type='RequestID' minOccurs='0'/>
+      <xs:element name='SEDEventList' type='SEDEventList'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='SEDEventList'>
+    <xs:sequence>
+      <xs:element name='SecondRequestedEvent' type='SecondRequestedEvent' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='SecondRequestedEvent'>
+    <xs:sequence>
+      <xs:element name='PkgdName' type='PkgdName'/>
+      <xs:element name='StreamID' type='StreamID' minOccurs='0'/>
+      <xs:element name='SecondRequestedActions' type='SecondRequestedActions' minOccurs='0'/>
+      <xs:element name='SREEvParList' type='SREEvParList'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='SREEvParList'>
+    <xs:sequence>
+      <xs:element name='EventParameter' type='EventParameter' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='SecondRequestedActions'>
+    <xs:sequence>
+      <xs:element name='BOOLEAN' type='BOOLEAN' minOccurs='0'/>
+      <xs:element name='EventDM' type='EventDM' minOccurs='0'/>
+      <xs:element name='SignalsDescriptor' type='SignalsDescriptor' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='EventBufferDescriptor'>
+    <xs:sequence>
+      <xs:element name='EventSpec' type='EventSpec' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='EventSpec'>
+    <xs:sequence>
+      <xs:element name='EventName' type='EventName'/>
+      <xs:element name='StreamID' type='StreamID' minOccurs='0'/>
+      <xs:element name='ESEventParList' type='ESEventParList'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ESEventParList'>
+    <xs:sequence>
+      <xs:element name='EventParameter' type='EventParameter' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='SignalsDescriptor'>
+    <xs:sequence>
+      <xs:group ref='SignalRequest' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='SignalRequest'>
+      <xs:choice>
+      <xs:element name='Signal' type='Signal'/>
+      <xs:element name='SeqSigList' type='SeqSigList'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:complexType name='SeqSigList'>
+    <xs:sequence>
+      <xs:element name='INTEGER' type='INTEGER'/>
+      <xs:element name='SignalList' type='SignalList'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='SignalList'>
+    <xs:sequence>
+      <xs:element name='Signal' type='Signal' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='Signal'>
+    <xs:sequence>
+      <xs:element name='SignalName' type='SignalName'/>
+      <xs:element name='StreamID' type='StreamID' minOccurs='0'/>
+      <xs:element name='SignalType' type='SignalType' minOccurs='0'/>
+      <xs:element name='INTEGER' type='INTEGER' minOccurs='0'/>
+      <xs:element name='NotifyCompletion' type='NotifyCompletion' minOccurs='0'/>
+      <xs:element name='BOOLEAN' type='BOOLEAN' minOccurs='0'/>
+      <xs:element name='SigParList' type='SigParList'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='SigParList'>
+    <xs:sequence>
+      <xs:element name='SigParameter' type='SigParameter' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='SignalType'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='SignalName'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='NotifyCompletion'>
+    <xs:restriction base='BIT_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='SigParameter'>
+    <xs:sequence>
+      <xs:element name='Name' type='Name'/>
+      <xs:element name='Value' type='Value'/>
+      <xs:element name='SPExtraInfo' type='SPExtraInfo' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='SPExtraInfo'>
+      <xs:choice>
+      <xs:element name='Relation' type='Relation'/>
+      <xs:element name='BOOLEAN' type='BOOLEAN'/>
+      <xs:element name='BOOLEAN' type='BOOLEAN'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:simpleType name='RequestID'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ModemDescriptor'>
+    <xs:sequence>
+      <xs:element name='MTL' type='MTL'/>
+      <xs:element name='MPL' type='MPL'/>
+      <xs:element name='NonStandardData' type='NonStandardData' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='MTL'>
+    <xs:sequence>
+      <xs:element name='ModemType' type='ModemType' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='MPL'>
+    <xs:sequence>
+      <xs:element name='PropertyParm' type='PropertyParm' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='ModemType'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='DigitMapDescriptor'>
+    <xs:sequence>
+      <xs:element name='DigitMapName' type='DigitMapName' minOccurs='0'/>
+      <xs:element name='DigitMapValue' type='DigitMapValue' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='DigitMapName'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='DigitMapValue'>
+    <xs:sequence>
+      <xs:element name='INTEGER' type='INTEGER' minOccurs='0'/>
+      <xs:element name='INTEGER' type='INTEGER' minOccurs='0'/>
+      <xs:element name='INTEGER' type='INTEGER' minOccurs='0'/>
+      <xs:element name='IA5String' type='IA5String'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ServiceChangeParm'>
+    <xs:sequence>
+      <xs:element name='ServiceChangeMethod' type='ServiceChangeMethod'/>
+      <xs:element name='ServiceChangeAddress' type='ServiceChangeAddress' minOccurs='0'/>
+      <xs:element name='INTEGER' type='INTEGER' minOccurs='0'/>
+      <xs:element name='ServiceChangeProfile' type='ServiceChangeProfile' minOccurs='0'/>
+      <xs:element name='Value' type='Value'/>
+      <xs:element name='INTEGER' type='INTEGER' minOccurs='0'/>
+      <xs:element name='MId' type='MId' minOccurs='0'/>
+      <xs:element name='TimeNotation' type='TimeNotation' minOccurs='0'/>
+      <xs:element name='NonStandardData' type='NonStandardData' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='ServiceChangeAddress'>
+      <xs:choice>
+      <xs:element name='INTEGER' type='INTEGER'/>
+      <xs:element name='IP4Address' type='IP4Address'/>
+      <xs:element name='IP6Address' type='IP6Address'/>
+      <xs:element name='DomainName' type='DomainName'/>
+      <xs:element name='PathName' type='PathName'/>
+      <xs:element name='OCTET_STRING' type='OCTET_STRING'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:complexType name='ServiceChangeResParm'>
+    <xs:sequence>
+      <xs:element name='MId' type='MId' minOccurs='0'/>
+      <xs:element name='ServiceChangeAddress' type='ServiceChangeAddress' minOccurs='0'/>
+      <xs:element name='INTEGER' type='INTEGER' minOccurs='0'/>
+      <xs:element name='ServiceChangeProfile' type='ServiceChangeProfile' minOccurs='0'/>
+      <xs:element name='TimeNotation' type='TimeNotation' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='ServiceChangeMethod'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ServiceChangeProfile'>
+    <xs:sequence>
+      <xs:element name='IA5String' type='IA5String'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='PackagesDescriptor'>
+    <xs:sequence>
+      <xs:element name='PackagesItem' type='PackagesItem' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='PackagesItem'>
+    <xs:sequence>
+      <xs:element name='Name' type='Name'/>
+      <xs:element name='INTEGER' type='INTEGER'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='StatisticsDescriptor'>
+    <xs:sequence>
+      <xs:element name='StatisticsParameter' type='StatisticsParameter' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='StatisticsParameter'>
+    <xs:sequence>
+      <xs:element name='PkgdName' type='PkgdName'/>
+      <xs:element name='Value' type='Value' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='NonStandardData'>
+    <xs:sequence>
+      <xs:element name='NonStandardIdentifier' type='NonStandardIdentifier'/>
+      <xs:element name='OCTET_STRING' type='OCTET_STRING'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='NonStandardIdentifier'>
+      <xs:choice>
+      <xs:element name='OBJECT_IDENTIFIER' type='OBJECT_IDENTIFIER'/>
+      <xs:element name='H221NonStandard' type='H221NonStandard'/>
+      <xs:element name='IA5String' type='IA5String'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:complexType name='H221NonStandard'>
+    <xs:sequence>
+      <xs:element name='INTEGER' type='INTEGER'/>
+      <xs:element name='INTEGER' type='INTEGER'/>
+      <xs:element name='INTEGER' type='INTEGER'/>
+      <xs:element name='INTEGER' type='INTEGER'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TimeNotation'>
+    <xs:sequence>
+      <xs:element name='IA5String' type='IA5String'/>
+      <xs:element name='IA5String' type='IA5String'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='Value'>
+    <xs:sequence>
+      <xs:element name='OCTET_STRING' type='OCTET_STRING' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='BOOLEAN'>
+    <xs:restriction base='xs:boolean'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='INTEGER'>
+    <xs:restriction base='xs:integer'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='BIT_STRING'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='OCTET_STRING'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='NULL'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='OBJECT_IDENTIFIER'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ObjectDescriptor'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='EXTERNAL'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='REAL'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ENUMERATED'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='EMBEDDED_PDV'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='UTF8String'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='RELATIVE-OID'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TIME'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='SEQUENCE'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='SET'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='NumericString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='PrintableString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TeletexString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='VideotexString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='IA5String'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='UTCTime'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='GeneralizedTime'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='GraphicString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='VisibleString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='GeneralString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='UniversalString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='CHARACTER_STRING'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='BMPString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='DATE'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TIME-OF-DAY'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='DATE-TIME'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='DURATION'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='OID-IRI'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='RELATIVE-OID-IRI'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>
+

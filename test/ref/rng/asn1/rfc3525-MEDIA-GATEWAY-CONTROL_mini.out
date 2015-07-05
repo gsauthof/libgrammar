@@ -1,0 +1,1731 @@
+<?xml version='1.0'?>
+<grammar datatypeLibrary='http://www.w3.org/2001/XMLSchema-datatypes'
+         xmlns='http://relaxng.org/ns/structure/1.0'>
+
+  <start>
+    <element name='MegacoMessage'>
+      <ref name='MegacoMessage'/>
+    </element>
+  </start>
+
+  <define name='MegacoMessage'>
+    <optional>
+    <element name='AuthenticationHeader'>
+      <ref name='AuthenticationHeader'/>
+    </element>
+    </optional>
+    <element name='Message'>
+      <ref name='Message'/>
+    </element>
+  </define>
+
+  <define name='AuthenticationHeader'>
+    <element name='SecurityParmIndex'>
+      <ref name='SecurityParmIndex'/>
+    </element>
+    <element name='SequenceNum'>
+      <ref name='SequenceNum'/>
+    </element>
+    <element name='AuthData'>
+      <ref name='AuthData'/>
+    </element>
+  </define>
+
+  <define name='SecurityParmIndex'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='SequenceNum'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='AuthData'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='Message'>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    <element name='MId'>
+      <ref name='MId'/>
+    </element>
+    <element name='MessageBody'>
+      <ref name='MessageBody'/>
+    </element>
+  </define>
+
+  <define name='MessageBody'>
+    <choice>
+    <element name='ErrorDescriptor'>
+      <ref name='ErrorDescriptor'/>
+    </element>
+    <element name='Transactions'>
+      <ref name='Transactions'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='Transactions'>
+    <oneOrMore>
+      <ref name='Transaction'/>
+    </oneOrMore>
+  </define>
+
+  <define name='MId'>
+    <choice>
+    <element name='IP4Address'>
+      <ref name='IP4Address'/>
+    </element>
+    <element name='IP6Address'>
+      <ref name='IP6Address'/>
+    </element>
+    <element name='DomainName'>
+      <ref name='DomainName'/>
+    </element>
+    <element name='PathName'>
+      <ref name='PathName'/>
+    </element>
+    <element name='OCTET_STRING'>
+      <ref name='OCTET_STRING'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='DomainName'>
+    <element name='IA5String'>
+      <ref name='IA5String'/>
+    </element>
+    <optional>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='IP4Address'>
+    <element name='OCTET_STRING'>
+      <ref name='OCTET_STRING'/>
+    </element>
+    <optional>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='IP6Address'>
+    <element name='OCTET_STRING'>
+      <ref name='OCTET_STRING'/>
+    </element>
+    <optional>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='PathName'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='Transaction'>
+    <choice>
+    <element name='TransactionRequest'>
+      <ref name='TransactionRequest'/>
+    </element>
+    <element name='TransactionPending'>
+      <ref name='TransactionPending'/>
+    </element>
+    <element name='TransactionReply'>
+      <ref name='TransactionReply'/>
+    </element>
+    <element name='TransactionResponseAck'>
+      <ref name='TransactionResponseAck'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='TransactionId'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TransactionRequest'>
+    <element name='TransactionId'>
+      <ref name='TransactionId'/>
+    </element>
+    <element name='Actions'>
+      <ref name='Actions'/>
+    </element>
+  </define>
+
+  <define name='Actions'>
+    <oneOrMore>
+    <element name='ActionRequest'>
+      <ref name='ActionRequest'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='TransactionPending'>
+    <element name='TransactionId'>
+      <ref name='TransactionId'/>
+    </element>
+  </define>
+
+  <define name='TransactionReply'>
+    <element name='TransactionId'>
+      <ref name='TransactionId'/>
+    </element>
+    <optional>
+    <element name='NULL'>
+      <ref name='NULL'/>
+    </element>
+    </optional>
+    <element name='TransactionResult'>
+      <ref name='TransactionResult'/>
+    </element>
+  </define>
+
+  <define name='TransactionResult'>
+    <choice>
+    <element name='ErrorDescriptor'>
+      <ref name='ErrorDescriptor'/>
+    </element>
+    <element name='ActionReplies'>
+      <ref name='ActionReplies'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='ActionReplies'>
+    <oneOrMore>
+    <element name='ActionReply'>
+      <ref name='ActionReply'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='TransactionResponseAck'>
+    <oneOrMore>
+    <element name='TransactionAck'>
+      <ref name='TransactionAck'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='TransactionAck'>
+    <element name='TransactionId'>
+      <ref name='TransactionId'/>
+    </element>
+    <optional>
+    <element name='TransactionId'>
+      <ref name='TransactionId'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='ErrorDescriptor'>
+    <element name='ErrorCode'>
+      <ref name='ErrorCode'/>
+    </element>
+    <optional>
+    <element name='ErrorText'>
+      <ref name='ErrorText'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='ErrorCode'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ErrorText'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ContextID'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ActionRequest'>
+    <element name='ContextID'>
+      <ref name='ContextID'/>
+    </element>
+    <optional>
+    <element name='ContextRequest'>
+      <ref name='ContextRequest'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ContextAttrAuditRequest'>
+      <ref name='ContextAttrAuditRequest'/>
+    </element>
+    </optional>
+    <element name='CommandRequests'>
+      <ref name='CommandRequests'/>
+    </element>
+  </define>
+
+  <define name='CommandRequests'>
+    <oneOrMore>
+    <element name='CommandRequest'>
+      <ref name='CommandRequest'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='ActionReply'>
+    <element name='ContextID'>
+      <ref name='ContextID'/>
+    </element>
+    <optional>
+    <element name='ErrorDescriptor'>
+      <ref name='ErrorDescriptor'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ContextRequest'>
+      <ref name='ContextRequest'/>
+    </element>
+    </optional>
+    <element name='CommandReplies'>
+      <ref name='CommandReplies'/>
+    </element>
+  </define>
+
+  <define name='CommandReplies'>
+    <oneOrMore>
+      <ref name='CommandReply'/>
+    </oneOrMore>
+  </define>
+
+  <define name='ContextRequest'>
+    <optional>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='BOOLEAN'>
+      <ref name='BOOLEAN'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TopologyReq'>
+      <ref name='TopologyReq'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='TopologyReq'>
+    <oneOrMore>
+    <element name='TopologyRequest'>
+      <ref name='TopologyRequest'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='ContextAttrAuditRequest'>
+    <optional>
+    <element name='NULL'>
+      <ref name='NULL'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='NULL'>
+      <ref name='NULL'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='NULL'>
+      <ref name='NULL'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='CommandRequest'>
+    <element name='Command'>
+      <ref name='Command'/>
+    </element>
+    <optional>
+    <element name='NULL'>
+      <ref name='NULL'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='NULL'>
+      <ref name='NULL'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='Command'>
+    <choice>
+    <element name='AmmRequest'>
+      <ref name='AmmRequest'/>
+    </element>
+    <element name='AmmRequest'>
+      <ref name='AmmRequest'/>
+    </element>
+    <element name='AmmRequest'>
+      <ref name='AmmRequest'/>
+    </element>
+    <element name='SubtractRequest'>
+      <ref name='SubtractRequest'/>
+    </element>
+    <element name='AuditRequest'>
+      <ref name='AuditRequest'/>
+    </element>
+    <element name='AuditRequest'>
+      <ref name='AuditRequest'/>
+    </element>
+    <element name='NotifyRequest'>
+      <ref name='NotifyRequest'/>
+    </element>
+    <element name='ServiceChangeRequest'>
+      <ref name='ServiceChangeRequest'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='CommandReply'>
+    <choice>
+    <element name='AmmsReply'>
+      <ref name='AmmsReply'/>
+    </element>
+    <element name='AmmsReply'>
+      <ref name='AmmsReply'/>
+    </element>
+    <element name='AmmsReply'>
+      <ref name='AmmsReply'/>
+    </element>
+    <element name='AmmsReply'>
+      <ref name='AmmsReply'/>
+    </element>
+    <element name='AuditReply'>
+      <ref name='AuditReply'/>
+    </element>
+    <element name='AuditReply'>
+      <ref name='AuditReply'/>
+    </element>
+    <element name='NotifyReply'>
+      <ref name='NotifyReply'/>
+    </element>
+    <element name='ServiceChangeReply'>
+      <ref name='ServiceChangeReply'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='TopologyRequest'>
+    <element name='TerminationID'>
+      <ref name='TerminationID'/>
+    </element>
+    <element name='TerminationID'>
+      <ref name='TerminationID'/>
+    </element>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+  </define>
+
+  <define name='AmmRequest'>
+    <element name='TerminationIDList'>
+      <ref name='TerminationIDList'/>
+    </element>
+    <element name='Descriptors'>
+      <ref name='Descriptors'/>
+    </element>
+  </define>
+
+  <define name='Descriptors'>
+    <oneOrMore>
+      <ref name='AmmDescriptor'/>
+    </oneOrMore>
+  </define>
+
+  <define name='AmmDescriptor'>
+    <choice>
+    <element name='MediaDescriptor'>
+      <ref name='MediaDescriptor'/>
+    </element>
+    <element name='ModemDescriptor'>
+      <ref name='ModemDescriptor'/>
+    </element>
+    <element name='MuxDescriptor'>
+      <ref name='MuxDescriptor'/>
+    </element>
+    <element name='EventsDescriptor'>
+      <ref name='EventsDescriptor'/>
+    </element>
+    <element name='EventBufferDescriptor'>
+      <ref name='EventBufferDescriptor'/>
+    </element>
+    <element name='SignalsDescriptor'>
+      <ref name='SignalsDescriptor'/>
+    </element>
+    <element name='DigitMapDescriptor'>
+      <ref name='DigitMapDescriptor'/>
+    </element>
+    <element name='AuditDescriptor'>
+      <ref name='AuditDescriptor'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='AmmsReply'>
+    <element name='TerminationIDList'>
+      <ref name='TerminationIDList'/>
+    </element>
+    <optional>
+    <element name='TerminationAudit'>
+      <ref name='TerminationAudit'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='SubtractRequest'>
+    <element name='TerminationIDList'>
+      <ref name='TerminationIDList'/>
+    </element>
+    <optional>
+    <element name='AuditDescriptor'>
+      <ref name='AuditDescriptor'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='AuditRequest'>
+    <element name='TerminationID'>
+      <ref name='TerminationID'/>
+    </element>
+    <element name='AuditDescriptor'>
+      <ref name='AuditDescriptor'/>
+    </element>
+  </define>
+
+  <define name='AuditReply'>
+    <choice>
+    <element name='TerminationIDList'>
+      <ref name='TerminationIDList'/>
+    </element>
+    <element name='ErrorDescriptor'>
+      <ref name='ErrorDescriptor'/>
+    </element>
+    <element name='AuditResult'>
+      <ref name='AuditResult'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='AuditResult'>
+    <element name='TerminationID'>
+      <ref name='TerminationID'/>
+    </element>
+    <element name='TerminationAudit'>
+      <ref name='TerminationAudit'/>
+    </element>
+  </define>
+
+  <define name='TerminationAudit'>
+    <oneOrMore>
+      <ref name='AuditReturnParameter'/>
+    </oneOrMore>
+  </define>
+
+  <define name='AuditReturnParameter'>
+    <choice>
+    <element name='ErrorDescriptor'>
+      <ref name='ErrorDescriptor'/>
+    </element>
+    <element name='MediaDescriptor'>
+      <ref name='MediaDescriptor'/>
+    </element>
+    <element name='ModemDescriptor'>
+      <ref name='ModemDescriptor'/>
+    </element>
+    <element name='MuxDescriptor'>
+      <ref name='MuxDescriptor'/>
+    </element>
+    <element name='EventsDescriptor'>
+      <ref name='EventsDescriptor'/>
+    </element>
+    <element name='EventBufferDescriptor'>
+      <ref name='EventBufferDescriptor'/>
+    </element>
+    <element name='SignalsDescriptor'>
+      <ref name='SignalsDescriptor'/>
+    </element>
+    <element name='DigitMapDescriptor'>
+      <ref name='DigitMapDescriptor'/>
+    </element>
+    <element name='ObservedEventsDescriptor'>
+      <ref name='ObservedEventsDescriptor'/>
+    </element>
+    <element name='StatisticsDescriptor'>
+      <ref name='StatisticsDescriptor'/>
+    </element>
+    <element name='PackagesDescriptor'>
+      <ref name='PackagesDescriptor'/>
+    </element>
+    <element name='AuditDescriptor'>
+      <ref name='AuditDescriptor'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='AuditDescriptor'>
+    <optional>
+    <element name='BIT_STRING'>
+      <ref name='BIT_STRING'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='NotifyRequest'>
+    <element name='TerminationIDList'>
+      <ref name='TerminationIDList'/>
+    </element>
+    <element name='ObservedEventsDescriptor'>
+      <ref name='ObservedEventsDescriptor'/>
+    </element>
+    <optional>
+    <element name='ErrorDescriptor'>
+      <ref name='ErrorDescriptor'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='NotifyReply'>
+    <element name='TerminationIDList'>
+      <ref name='TerminationIDList'/>
+    </element>
+    <optional>
+    <element name='ErrorDescriptor'>
+      <ref name='ErrorDescriptor'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='ObservedEventsDescriptor'>
+    <element name='RequestID'>
+      <ref name='RequestID'/>
+    </element>
+    <element name='ObservedEventLst'>
+      <ref name='ObservedEventLst'/>
+    </element>
+  </define>
+
+  <define name='ObservedEventLst'>
+    <oneOrMore>
+    <element name='ObservedEvent'>
+      <ref name='ObservedEvent'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='ObservedEvent'>
+    <element name='EventName'>
+      <ref name='EventName'/>
+    </element>
+    <optional>
+    <element name='StreamID'>
+      <ref name='StreamID'/>
+    </element>
+    </optional>
+    <element name='EventParList'>
+      <ref name='EventParList'/>
+    </element>
+    <optional>
+    <element name='TimeNotation'>
+      <ref name='TimeNotation'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='EventParList'>
+    <oneOrMore>
+    <element name='EventParameter'>
+      <ref name='EventParameter'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='EventName'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='EventParameter'>
+    <element name='Name'>
+      <ref name='Name'/>
+    </element>
+    <element name='Value'>
+      <ref name='Value'/>
+    </element>
+    <optional>
+    <element name='ExtraInfo'>
+      <ref name='ExtraInfo'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='ExtraInfo'>
+    <choice>
+    <element name='Relation'>
+      <ref name='Relation'/>
+    </element>
+    <element name='BOOLEAN'>
+      <ref name='BOOLEAN'/>
+    </element>
+    <element name='BOOLEAN'>
+      <ref name='BOOLEAN'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='ServiceChangeRequest'>
+    <element name='TerminationIDList'>
+      <ref name='TerminationIDList'/>
+    </element>
+    <element name='ServiceChangeParm'>
+      <ref name='ServiceChangeParm'/>
+    </element>
+  </define>
+
+  <define name='ServiceChangeReply'>
+    <element name='TerminationIDList'>
+      <ref name='TerminationIDList'/>
+    </element>
+    <element name='ServiceChangeResult'>
+      <ref name='ServiceChangeResult'/>
+    </element>
+  </define>
+
+  <define name='ServiceChangeResult'>
+    <choice>
+    <element name='ErrorDescriptor'>
+      <ref name='ErrorDescriptor'/>
+    </element>
+    <element name='ServiceChangeResParm'>
+      <ref name='ServiceChangeResParm'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='WildcardField'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='TerminationID'>
+    <element name='Wildcard'>
+      <ref name='Wildcard'/>
+    </element>
+    <element name='OCTET_STRING'>
+      <ref name='OCTET_STRING'/>
+    </element>
+  </define>
+
+  <define name='Wildcard'>
+    <oneOrMore>
+    <element name='WildcardField'>
+      <ref name='WildcardField'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='TerminationIDList'>
+    <oneOrMore>
+    <element name='TerminationID'>
+      <ref name='TerminationID'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='MediaDescriptor'>
+    <optional>
+    <element name='TerminationStateDescriptor'>
+      <ref name='TerminationStateDescriptor'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='Streams'>
+      <ref name='Streams'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='Streams'>
+    <choice>
+    <element name='StreamParms'>
+      <ref name='StreamParms'/>
+    </element>
+    <element name='MultiStream'>
+      <ref name='MultiStream'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='MultiStream'>
+    <oneOrMore>
+    <element name='StreamDescriptor'>
+      <ref name='StreamDescriptor'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='StreamDescriptor'>
+    <element name='StreamID'>
+      <ref name='StreamID'/>
+    </element>
+    <element name='StreamParms'>
+      <ref name='StreamParms'/>
+    </element>
+  </define>
+
+  <define name='StreamParms'>
+    <optional>
+    <element name='LocalControlDescriptor'>
+      <ref name='LocalControlDescriptor'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='LocalRemoteDescriptor'>
+      <ref name='LocalRemoteDescriptor'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='LocalRemoteDescriptor'>
+      <ref name='LocalRemoteDescriptor'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='LocalControlDescriptor'>
+    <optional>
+    <element name='StreamMode'>
+      <ref name='StreamMode'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='BOOLEAN'>
+      <ref name='BOOLEAN'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='BOOLEAN'>
+      <ref name='BOOLEAN'/>
+    </element>
+    </optional>
+    <element name='PropertyParms'>
+      <ref name='PropertyParms'/>
+    </element>
+  </define>
+
+  <define name='PropertyParms'>
+    <oneOrMore>
+    <element name='PropertyParm'>
+      <ref name='PropertyParm'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='StreamMode'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='PropertyParm'>
+    <element name='PkgdName'>
+      <ref name='PkgdName'/>
+    </element>
+    <element name='PPValue'>
+      <ref name='PPValue'/>
+    </element>
+    <optional>
+    <element name='PPExtraInfo'>
+      <ref name='PPExtraInfo'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='PPValue'>
+    <oneOrMore>
+    <element name='OCTET_STRING'>
+      <ref name='OCTET_STRING'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='PPExtraInfo'>
+    <choice>
+    <element name='Relation'>
+      <ref name='Relation'/>
+    </element>
+    <element name='BOOLEAN'>
+      <ref name='BOOLEAN'/>
+    </element>
+    <element name='BOOLEAN'>
+      <ref name='BOOLEAN'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='Name'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='PkgdName'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='Relation'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='LocalRemoteDescriptor'>
+    <element name='PropGrps'>
+      <ref name='PropGrps'/>
+    </element>
+  </define>
+
+  <define name='PropGrps'>
+    <oneOrMore>
+    <element name='PropertyGroup'>
+      <ref name='PropertyGroup'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='PropertyGroup'>
+    <oneOrMore>
+    <element name='PropertyParm'>
+      <ref name='PropertyParm'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='TerminationStateDescriptor'>
+    <element name='TSDPropertyParms'>
+      <ref name='TSDPropertyParms'/>
+    </element>
+    <optional>
+    <element name='EventBufferControl'>
+      <ref name='EventBufferControl'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ServiceState'>
+      <ref name='ServiceState'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='TSDPropertyParms'>
+    <oneOrMore>
+    <element name='PropertyParm'>
+      <ref name='PropertyParm'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='EventBufferControl'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ServiceState'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='MuxDescriptor'>
+    <element name='MuxType'>
+      <ref name='MuxType'/>
+    </element>
+    <element name='TermList'>
+      <ref name='TermList'/>
+    </element>
+    <optional>
+    <element name='NonStandardData'>
+      <ref name='NonStandardData'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='TermList'>
+    <oneOrMore>
+    <element name='TerminationID'>
+      <ref name='TerminationID'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='MuxType'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='StreamID'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='EventsDescriptor'>
+    <optional>
+    <element name='RequestID'>
+      <ref name='RequestID'/>
+    </element>
+    </optional>
+    <element name='EventList'>
+      <ref name='EventList'/>
+    </element>
+  </define>
+
+  <define name='EventList'>
+    <oneOrMore>
+    <element name='RequestedEvent'>
+      <ref name='RequestedEvent'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='RequestedEvent'>
+    <element name='PkgdName'>
+      <ref name='PkgdName'/>
+    </element>
+    <optional>
+    <element name='StreamID'>
+      <ref name='StreamID'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='RequestedActions'>
+      <ref name='RequestedActions'/>
+    </element>
+    </optional>
+    <element name='EvParList'>
+      <ref name='EvParList'/>
+    </element>
+  </define>
+
+  <define name='EvParList'>
+    <oneOrMore>
+    <element name='EventParameter'>
+      <ref name='EventParameter'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='RequestedActions'>
+    <optional>
+    <element name='BOOLEAN'>
+      <ref name='BOOLEAN'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='EventDM'>
+      <ref name='EventDM'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='SecondEventsDescriptor'>
+      <ref name='SecondEventsDescriptor'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='SignalsDescriptor'>
+      <ref name='SignalsDescriptor'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='EventDM'>
+    <choice>
+    <element name='DigitMapName'>
+      <ref name='DigitMapName'/>
+    </element>
+    <element name='DigitMapValue'>
+      <ref name='DigitMapValue'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='SecondEventsDescriptor'>
+    <optional>
+    <element name='RequestID'>
+      <ref name='RequestID'/>
+    </element>
+    </optional>
+    <element name='SEDEventList'>
+      <ref name='SEDEventList'/>
+    </element>
+  </define>
+
+  <define name='SEDEventList'>
+    <oneOrMore>
+    <element name='SecondRequestedEvent'>
+      <ref name='SecondRequestedEvent'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='SecondRequestedEvent'>
+    <element name='PkgdName'>
+      <ref name='PkgdName'/>
+    </element>
+    <optional>
+    <element name='StreamID'>
+      <ref name='StreamID'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='SecondRequestedActions'>
+      <ref name='SecondRequestedActions'/>
+    </element>
+    </optional>
+    <element name='SREEvParList'>
+      <ref name='SREEvParList'/>
+    </element>
+  </define>
+
+  <define name='SREEvParList'>
+    <oneOrMore>
+    <element name='EventParameter'>
+      <ref name='EventParameter'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='SecondRequestedActions'>
+    <optional>
+    <element name='BOOLEAN'>
+      <ref name='BOOLEAN'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='EventDM'>
+      <ref name='EventDM'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='SignalsDescriptor'>
+      <ref name='SignalsDescriptor'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='EventBufferDescriptor'>
+    <oneOrMore>
+    <element name='EventSpec'>
+      <ref name='EventSpec'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='EventSpec'>
+    <element name='EventName'>
+      <ref name='EventName'/>
+    </element>
+    <optional>
+    <element name='StreamID'>
+      <ref name='StreamID'/>
+    </element>
+    </optional>
+    <element name='ESEventParList'>
+      <ref name='ESEventParList'/>
+    </element>
+  </define>
+
+  <define name='ESEventParList'>
+    <oneOrMore>
+    <element name='EventParameter'>
+      <ref name='EventParameter'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='SignalsDescriptor'>
+    <oneOrMore>
+      <ref name='SignalRequest'/>
+    </oneOrMore>
+  </define>
+
+  <define name='SignalRequest'>
+    <choice>
+    <element name='Signal'>
+      <ref name='Signal'/>
+    </element>
+    <element name='SeqSigList'>
+      <ref name='SeqSigList'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='SeqSigList'>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    <element name='SignalList'>
+      <ref name='SignalList'/>
+    </element>
+  </define>
+
+  <define name='SignalList'>
+    <oneOrMore>
+    <element name='Signal'>
+      <ref name='Signal'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='Signal'>
+    <element name='SignalName'>
+      <ref name='SignalName'/>
+    </element>
+    <optional>
+    <element name='StreamID'>
+      <ref name='StreamID'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='SignalType'>
+      <ref name='SignalType'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='NotifyCompletion'>
+      <ref name='NotifyCompletion'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='BOOLEAN'>
+      <ref name='BOOLEAN'/>
+    </element>
+    </optional>
+    <element name='SigParList'>
+      <ref name='SigParList'/>
+    </element>
+  </define>
+
+  <define name='SigParList'>
+    <oneOrMore>
+    <element name='SigParameter'>
+      <ref name='SigParameter'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='SignalType'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='SignalName'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='NotifyCompletion'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='SigParameter'>
+    <element name='Name'>
+      <ref name='Name'/>
+    </element>
+    <element name='Value'>
+      <ref name='Value'/>
+    </element>
+    <optional>
+    <element name='SPExtraInfo'>
+      <ref name='SPExtraInfo'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='SPExtraInfo'>
+    <choice>
+    <element name='Relation'>
+      <ref name='Relation'/>
+    </element>
+    <element name='BOOLEAN'>
+      <ref name='BOOLEAN'/>
+    </element>
+    <element name='BOOLEAN'>
+      <ref name='BOOLEAN'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='RequestID'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ModemDescriptor'>
+    <element name='MTL'>
+      <ref name='MTL'/>
+    </element>
+    <element name='MPL'>
+      <ref name='MPL'/>
+    </element>
+    <optional>
+    <element name='NonStandardData'>
+      <ref name='NonStandardData'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='MTL'>
+    <oneOrMore>
+    <element name='ModemType'>
+      <ref name='ModemType'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='MPL'>
+    <oneOrMore>
+    <element name='PropertyParm'>
+      <ref name='PropertyParm'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='ModemType'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='DigitMapDescriptor'>
+    <optional>
+    <element name='DigitMapName'>
+      <ref name='DigitMapName'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='DigitMapValue'>
+      <ref name='DigitMapValue'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='DigitMapName'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='DigitMapValue'>
+    <optional>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    </optional>
+    <element name='IA5String'>
+      <ref name='IA5String'/>
+    </element>
+  </define>
+
+  <define name='ServiceChangeParm'>
+    <element name='ServiceChangeMethod'>
+      <ref name='ServiceChangeMethod'/>
+    </element>
+    <optional>
+    <element name='ServiceChangeAddress'>
+      <ref name='ServiceChangeAddress'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ServiceChangeProfile'>
+      <ref name='ServiceChangeProfile'/>
+    </element>
+    </optional>
+    <element name='Value'>
+      <ref name='Value'/>
+    </element>
+    <optional>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='MId'>
+      <ref name='MId'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TimeNotation'>
+      <ref name='TimeNotation'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='NonStandardData'>
+      <ref name='NonStandardData'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='ServiceChangeAddress'>
+    <choice>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    <element name='IP4Address'>
+      <ref name='IP4Address'/>
+    </element>
+    <element name='IP6Address'>
+      <ref name='IP6Address'/>
+    </element>
+    <element name='DomainName'>
+      <ref name='DomainName'/>
+    </element>
+    <element name='PathName'>
+      <ref name='PathName'/>
+    </element>
+    <element name='OCTET_STRING'>
+      <ref name='OCTET_STRING'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='ServiceChangeResParm'>
+    <optional>
+    <element name='MId'>
+      <ref name='MId'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ServiceChangeAddress'>
+      <ref name='ServiceChangeAddress'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ServiceChangeProfile'>
+      <ref name='ServiceChangeProfile'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TimeNotation'>
+      <ref name='TimeNotation'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='ServiceChangeMethod'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ServiceChangeProfile'>
+    <element name='IA5String'>
+      <ref name='IA5String'/>
+    </element>
+  </define>
+
+  <define name='PackagesDescriptor'>
+    <oneOrMore>
+    <element name='PackagesItem'>
+      <ref name='PackagesItem'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='PackagesItem'>
+    <element name='Name'>
+      <ref name='Name'/>
+    </element>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+  </define>
+
+  <define name='StatisticsDescriptor'>
+    <oneOrMore>
+    <element name='StatisticsParameter'>
+      <ref name='StatisticsParameter'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='StatisticsParameter'>
+    <element name='PkgdName'>
+      <ref name='PkgdName'/>
+    </element>
+    <optional>
+    <element name='Value'>
+      <ref name='Value'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='NonStandardData'>
+    <element name='NonStandardIdentifier'>
+      <ref name='NonStandardIdentifier'/>
+    </element>
+    <element name='OCTET_STRING'>
+      <ref name='OCTET_STRING'/>
+    </element>
+  </define>
+
+  <define name='NonStandardIdentifier'>
+    <choice>
+    <element name='OBJECT_IDENTIFIER'>
+      <ref name='OBJECT_IDENTIFIER'/>
+    </element>
+    <element name='H221NonStandard'>
+      <ref name='H221NonStandard'/>
+    </element>
+    <element name='IA5String'>
+      <ref name='IA5String'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='H221NonStandard'>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+    <element name='INTEGER'>
+      <ref name='INTEGER'/>
+    </element>
+  </define>
+
+  <define name='TimeNotation'>
+    <element name='IA5String'>
+      <ref name='IA5String'/>
+    </element>
+    <element name='IA5String'>
+      <ref name='IA5String'/>
+    </element>
+  </define>
+
+  <define name='Value'>
+    <oneOrMore>
+    <element name='OCTET_STRING'>
+      <ref name='OCTET_STRING'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='BOOLEAN'>
+    <data type='boolean'>
+    </data>
+  </define>
+
+  <define name='INTEGER'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='BIT_STRING'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='OCTET_STRING'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='NULL'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='OBJECT_IDENTIFIER'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ObjectDescriptor'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='EXTERNAL'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='REAL'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ENUMERATED'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='EMBEDDED_PDV'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='UTF8String'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='RELATIVE-OID'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='TIME'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='SEQUENCE'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='SET'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='NumericString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='PrintableString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='TeletexString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='VideotexString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='IA5String'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='UTCTime'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='GeneralizedTime'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='GraphicString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='VisibleString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='GeneralString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='UniversalString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='CHARACTER_STRING'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='BMPString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='DATE'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='TIME-OF-DAY'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='DATE-TIME'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='DURATION'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='OID-IRI'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='RELATIVE-OID-IRI'>
+    <data type='string'>
+    </data>
+  </define>
+
+</grammar>

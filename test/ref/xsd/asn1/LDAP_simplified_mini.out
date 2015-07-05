@@ -1,0 +1,547 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema
+  xmlns:xs='http://www.w3.org/2001/XMLSchema'
+  elementFormDefault='qualified'>
+  <xs:element name='LDAPMessage' type='LDAPMessage'>
+  </xs:element>
+  <xs:complexType name='LDAPMessage'>
+    <xs:sequence>
+      <xs:element name='MessageID' type='MessageID'/>
+      <xs:element name='ProtocolOp' type='ProtocolOp'/>
+      <xs:element name='Controls' type='Controls' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='ProtocolOp'>
+      <xs:choice>
+      <xs:element name='BindRequest' type='BindRequest'/>
+      <xs:element name='BindResponse' type='BindResponse'/>
+      <xs:element name='UnbindRequest' type='UnbindRequest'/>
+      <xs:element name='SearchRequest' type='SearchRequest'/>
+      <xs:element name='SearchResultEntry' type='SearchResultEntry'/>
+      <xs:element name='SearchResultDone' type='LDAPResult'/>
+      <xs:element name='SearchResultReference' type='SearchResultReference'/>
+      <xs:element name='ModifyRequest' type='ModifyRequest'/>
+      <xs:element name='ModifyResponse' type='LDAPResult'/>
+      <xs:element name='AddRequest' type='AddRequest'/>
+      <xs:element name='AddResponse' type='LDAPResult'/>
+      <xs:element name='DelRequest' type='DelRequest'/>
+      <xs:element name='DelResponse' type='LDAPResult'/>
+      <xs:element name='ModifyDNRequest' type='ModifyDNRequest'/>
+      <xs:element name='ModifyDNResponse' type='LDAPResult'/>
+      <xs:element name='CompareRequest' type='CompareRequest'/>
+      <xs:element name='CompareResponse' type='LDAPResult'/>
+      <xs:element name='AbandonRequest' type='AbandonRequest'/>
+      <xs:element name='ExtendedRequest' type='ExtendedRequest'/>
+      <xs:element name='ExtendedResponse' type='ExtendedResponse'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:simpleType name='MessageID'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='LDAPString'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='LDAPOID'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='LDAPDN'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='RelativeLDAPDN'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='AttributeType'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='AttributeDescription'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='AttributeDescriptionList'>
+    <xs:sequence>
+      <xs:element name='AttributeDescription' type='AttributeDescription' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='AttributeValue'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='AttributeValueAssertion'>
+    <xs:sequence>
+      <xs:element name='AttributeDescription' type='AttributeDescription'/>
+      <xs:element name='AssertionValue' type='AssertionValue'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='AssertionValue'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='Attribute'>
+    <xs:sequence>
+      <xs:element name='AttributeDescription' type='AttributeDescription'/>
+      <xs:element name='AttributeValues' type='AttributeValues'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='AttributeValues'>
+    <xs:sequence>
+      <xs:element name='AttributeValue' type='AttributeValue' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='MatchingRuleId'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='LDAPResult'>
+    <xs:sequence>
+      <xs:element name='INTEGER' type='INTEGER'/>
+      <xs:element name='LDAPDN' type='LDAPDN'/>
+      <xs:element name='LDAPString' type='LDAPString'/>
+      <xs:element name='Referral' type='Referral' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='Referral'>
+    <xs:sequence>
+      <xs:element name='LDAPURL' type='LDAPURL' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='LDAPURL'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='Controls'>
+    <xs:sequence>
+      <xs:element name='Control' type='Control' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='Control'>
+    <xs:sequence>
+      <xs:element name='LDAPOID' type='LDAPOID'/>
+      <xs:element name='BOOLEAN' type='BOOLEAN'/>
+      <xs:element name='OCTET_STRING' type='OCTET_STRING' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='BindRequest'>
+    <xs:sequence>
+      <xs:element name='INTEGER' type='INTEGER'/>
+      <xs:element name='LDAPDN' type='LDAPDN'/>
+      <xs:element name='AuthenticationChoice' type='AuthenticationChoice'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='AuthenticationChoice'>
+      <xs:choice>
+      <xs:element name='OCTET_STRING' type='OCTET_STRING'/>
+      <xs:element name='SaslCredentials' type='SaslCredentials'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:complexType name='SaslCredentials'>
+    <xs:sequence>
+      <xs:element name='LDAPString' type='LDAPString'/>
+      <xs:element name='OCTET_STRING' type='OCTET_STRING' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='BindResponse'>
+    <xs:sequence>
+      <xs:element name='OCTET_STRING' type='OCTET_STRING' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='UnbindRequest'>
+    <xs:restriction base='NULL'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='SearchRequest'>
+    <xs:sequence>
+      <xs:element name='LDAPDN' type='LDAPDN'/>
+      <xs:element name='INTEGER' type='INTEGER'/>
+      <xs:element name='INTEGER' type='INTEGER'/>
+      <xs:element name='INTEGER' type='INTEGER'/>
+      <xs:element name='INTEGER' type='INTEGER'/>
+      <xs:element name='BOOLEAN' type='BOOLEAN'/>
+      <xs:element name='Filter' type='Filter'/>
+      <xs:element name='AttributeDescriptionList' type='AttributeDescriptionList'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='Filter'>
+      <xs:choice>
+      <xs:element name='FilterSet' type='FilterSet'/>
+      <xs:element name='FilterSet' type='FilterSet'/>
+      <xs:element name='Filter' type='Filter'/>
+      <xs:element name='AttributeValueAssertion' type='AttributeValueAssertion'/>
+      <xs:element name='SubstringFilter' type='SubstringFilter'/>
+      <xs:element name='AttributeValueAssertion' type='AttributeValueAssertion'/>
+      <xs:element name='AttributeValueAssertion' type='AttributeValueAssertion'/>
+      <xs:element name='AttributeDescription' type='AttributeDescription'/>
+      <xs:element name='AttributeValueAssertion' type='AttributeValueAssertion'/>
+      <xs:element name='MatchingRuleAssertion' type='MatchingRuleAssertion'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:complexType name='FilterSet'>
+    <xs:sequence>
+      <xs:group ref='Filter' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='SubstringFilter'>
+    <xs:sequence>
+      <xs:element name='AttributeDescription' type='AttributeDescription'/>
+      <xs:element name='Substrings' type='Substrings'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='Substrings'>
+    <xs:sequence>
+      <xs:group ref='SubstringChoice' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='SubstringChoice'>
+      <xs:choice>
+      <xs:element name='LDAPString' type='LDAPString'/>
+      <xs:element name='LDAPString' type='LDAPString'/>
+      <xs:element name='LDAPString' type='LDAPString'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:complexType name='MatchingRuleAssertion'>
+    <xs:sequence>
+      <xs:element name='MatchingRuleId' type='MatchingRuleId' minOccurs='0'/>
+      <xs:element name='AttributeDescription' type='AttributeDescription' minOccurs='0'/>
+      <xs:element name='AssertionValue' type='AssertionValue'/>
+      <xs:element name='BOOLEAN' type='BOOLEAN'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='SearchResultEntry'>
+    <xs:sequence>
+      <xs:element name='LDAPDN' type='LDAPDN'/>
+      <xs:element name='PartialAttributeList' type='PartialAttributeList'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='PartialAttributeList'>
+    <xs:sequence>
+      <xs:element name='AttributeDescription' type='AttributeDescription'/>
+      <xs:element name='AttributeValues' type='AttributeValues'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='SearchResultReference'>
+    <xs:sequence>
+      <xs:element name='LDAPURL' type='LDAPURL' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='SearchResultDone'>
+    <xs:sequence>
+      <xs:element name='LDAPResult' type='LDAPResult'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ModifyRequest'>
+    <xs:sequence>
+      <xs:element name='LDAPDN' type='LDAPDN'/>
+      <xs:element name='AttributeTypeAndValues' type='AttributeTypeAndValues'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='AttributeTypeAndValues'>
+    <xs:sequence>
+      <xs:element name='AttributeDescription' type='AttributeDescription'/>
+      <xs:element name='AttributeValues' type='AttributeValues'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ModifyResponse'>
+    <xs:sequence>
+      <xs:element name='LDAPResult' type='LDAPResult'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='AddRequest'>
+    <xs:sequence>
+      <xs:element name='LDAPDN' type='LDAPDN'/>
+      <xs:element name='AttributeList' type='AttributeList'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='AttributeList'>
+    <xs:sequence>
+      <xs:element name='AttributeDescription' type='AttributeDescription'/>
+      <xs:element name='AttributeValues' type='AttributeValues'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='AddResponse'>
+    <xs:sequence>
+      <xs:element name='LDAPResult' type='LDAPResult'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='DelRequest'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='DelResponse'>
+    <xs:sequence>
+      <xs:element name='LDAPResult' type='LDAPResult'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ModifyDNRequest'>
+    <xs:sequence>
+      <xs:element name='LDAPDN' type='LDAPDN'/>
+      <xs:element name='RelativeLDAPDN' type='RelativeLDAPDN'/>
+      <xs:element name='BOOLEAN' type='BOOLEAN'/>
+      <xs:element name='LDAPDN' type='LDAPDN' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ModifyDNResponse'>
+    <xs:sequence>
+      <xs:element name='LDAPResult' type='LDAPResult'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='CompareRequest'>
+    <xs:sequence>
+      <xs:element name='LDAPDN' type='LDAPDN'/>
+      <xs:element name='AttributeValueAssertion' type='AttributeValueAssertion'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='CompareResponse'>
+    <xs:sequence>
+      <xs:element name='LDAPResult' type='LDAPResult'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='AbandonRequest'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ExtendedRequest'>
+    <xs:sequence>
+      <xs:element name='LDAPOID' type='LDAPOID'/>
+      <xs:element name='OCTET_STRING' type='OCTET_STRING' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ExtendedResponse'>
+    <xs:sequence>
+      <xs:element name='LDAPOID' type='LDAPOID' minOccurs='0'/>
+      <xs:element name='OCTET_STRING' type='OCTET_STRING' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='BOOLEAN'>
+    <xs:restriction base='xs:boolean'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='INTEGER'>
+    <xs:restriction base='xs:integer'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='BIT_STRING'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='OCTET_STRING'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='NULL'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='OBJECT_IDENTIFIER'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ObjectDescriptor'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='EXTERNAL'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='REAL'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ENUMERATED'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='EMBEDDED_PDV'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='UTF8String'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='RELATIVE-OID'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TIME'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='SEQUENCE'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='SET'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='NumericString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='PrintableString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TeletexString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='VideotexString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='IA5String'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='UTCTime'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='GeneralizedTime'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='GraphicString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='VisibleString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='GeneralString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='UniversalString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='CHARACTER_STRING'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='BMPString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='DATE'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TIME-OF-DAY'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='DATE-TIME'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='DURATION'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='OID-IRI'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='RELATIVE-OID-IRI'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>
+

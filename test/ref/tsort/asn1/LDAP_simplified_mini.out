@@ -1,0 +1,246 @@
+LDAPMessage ::= SEQUENCE
+{
+  messageID MessageID,
+  protocolOp ProtocolOp,
+  controls [0] Controls OPTIONAL
+}
+
+ProtocolOp ::= CHOICE
+{
+  bindRequest BindRequest,
+  bindResponse BindResponse,
+  unbindRequest UnbindRequest,
+  searchRequest SearchRequest,
+  searchResEntry SearchResultEntry,
+  searchResDone SearchResultDone,
+  searchResRef SearchResultReference,
+  modifyRequest ModifyRequest,
+  modifyResponse ModifyResponse,
+  addRequest AddRequest,
+  addResponse AddResponse,
+  delRequest DelRequest,
+  delResponse DelResponse,
+  modDNRequest ModifyDNRequest,
+  modDNResponse ModifyDNResponse,
+  compareRequest CompareRequest,
+  compareResponse CompareResponse,
+  abandonRequest AbandonRequest,
+  extendedReq ExtendedRequest,
+  extendedResp ExtendedResponse
+}
+
+MessageID ::= INTEGER
+
+LDAPString ::= OCTET STRING
+
+LDAPOID ::= OCTET STRING
+
+LDAPDN ::= LDAPString
+
+RelativeLDAPDN ::= LDAPString
+
+AttributeType ::= LDAPString
+
+AttributeDescription ::= LDAPString
+
+AttributeDescriptionList ::= SEQUENCE OF AttributeDescription
+
+AttributeValue ::= OCTET STRING
+
+AttributeValueAssertion ::= SEQUENCE
+{
+  attributeDesc AttributeDescription,
+  assertionValue AssertionValue
+}
+
+AssertionValue ::= OCTET STRING
+
+Attribute ::= SEQUENCE
+{
+  type AttributeDescription,
+  vals AttributeValues
+}
+
+AttributeValues ::= SET OF AttributeValue
+
+MatchingRuleId ::= LDAPString
+
+LDAPResult ::= SEQUENCE
+{
+  resultCode INTEGER,
+  matchedDN LDAPDN,
+  errorMessage LDAPString,
+  referral [3] Referral OPTIONAL
+}
+
+Referral ::= SEQUENCE OF LDAPURL
+
+LDAPURL ::= LDAPString
+
+Controls ::= SEQUENCE OF Control
+
+Control ::= SEQUENCE
+{
+  controlType LDAPOID,
+  criticality BOOLEAN,
+  controlValue OCTET STRING OPTIONAL
+}
+
+BindRequest ::= [APPLICATION 0] SEQUENCE
+{
+  version INTEGER (1..127),
+  name LDAPDN,
+  authentication AuthenticationChoice
+}
+
+AuthenticationChoice ::= CHOICE
+{
+  simple [0] OCTET STRING,
+  sasl [3] SaslCredentials
+}
+
+SaslCredentials ::= SEQUENCE
+{
+  mechanism LDAPString,
+  credentials OCTET STRING OPTIONAL
+}
+
+BindResponse ::= [APPLICATION 1] SEQUENCE
+{
+  serverSaslCreds [7] OCTET STRING OPTIONAL
+}
+
+UnbindRequest ::= [APPLICATION 2] NULL
+
+SearchRequest ::= [APPLICATION 3] SEQUENCE
+{
+  baseObject LDAPDN,
+  scope INTEGER,
+  derefAliases INTEGER,
+  sizeLimit INTEGER (0..2147483647),
+  timeLimit INTEGER (0..2147483647),
+  typesOnly BOOLEAN,
+  filter Filter,
+  attributes AttributeDescriptionList
+}
+
+Filter ::= CHOICE
+{
+  and [0] FilterSet,
+  or [1] FilterSet,
+  not [2] Filter,
+  equalityMatch [3] AttributeValueAssertion,
+  substrings [4] SubstringFilter,
+  greaterOrEqual [5] AttributeValueAssertion,
+  lessOrEqual [6] AttributeValueAssertion,
+  present [7] AttributeDescription,
+  approxMatch [8] AttributeValueAssertion,
+  extensibleMatch [9] MatchingRuleAssertion
+}
+
+FilterSet ::= SET OF Filter
+
+SubstringFilter ::= SEQUENCE
+{
+  type AttributeDescription,
+  substrings Substrings
+}
+
+Substrings ::= SEQUENCE OF SubstringChoice
+
+SubstringChoice ::= CHOICE
+{
+  initial [0] LDAPString,
+  any [1] LDAPString,
+  final [2] LDAPString
+}
+
+MatchingRuleAssertion ::= SEQUENCE
+{
+  matchingRule [1] MatchingRuleId OPTIONAL,
+  type [2] AttributeDescription OPTIONAL,
+  matchValue [3] AssertionValue,
+  dnAttributes [4] BOOLEAN
+}
+
+SearchResultEntry ::= [APPLICATION 4] SEQUENCE
+{
+  objectName LDAPDN,
+  attributes PartialAttributeList
+}
+
+PartialAttributeList ::= SEQUENCE
+{
+  type AttributeDescription,
+  vals AttributeValues
+}
+
+SearchResultReference ::= [APPLICATION 19] SEQUENCE OF LDAPURL
+
+SearchResultDone ::= [APPLICATION 5] LDAPResult
+
+ModifyRequest ::= [APPLICATION 6] SEQUENCE
+{
+  object LDAPDN,
+  modification AttributeTypeAndValues
+}
+
+AttributeTypeAndValues ::= SEQUENCE
+{
+  type AttributeDescription,
+  vals AttributeValues
+}
+
+ModifyResponse ::= [APPLICATION 7] LDAPResult
+
+AddRequest ::= [APPLICATION 8] SEQUENCE
+{
+  entry LDAPDN,
+  attributes AttributeList
+}
+
+AttributeList ::= SEQUENCE
+{
+  type AttributeDescription,
+  vals AttributeValues
+}
+
+AddResponse ::= [APPLICATION 9] LDAPResult
+
+DelRequest ::= [APPLICATION 10] LDAPDN
+
+DelResponse ::= [APPLICATION 11] LDAPResult
+
+ModifyDNRequest ::= [APPLICATION 12] SEQUENCE
+{
+  entry LDAPDN,
+  newrdn RelativeLDAPDN,
+  deleteoldrdn BOOLEAN,
+  newSuperior [0] LDAPDN OPTIONAL
+}
+
+ModifyDNResponse ::= [APPLICATION 13] LDAPResult
+
+CompareRequest ::= [APPLICATION 14] SEQUENCE
+{
+  entry LDAPDN,
+  ava AttributeValueAssertion
+}
+
+CompareResponse ::= [APPLICATION 15] LDAPResult
+
+AbandonRequest ::= [APPLICATION 16] MessageID
+
+ExtendedRequest ::= [APPLICATION 23] SEQUENCE
+{
+  requestName [0] LDAPOID,
+  requestValue [1] OCTET STRING OPTIONAL
+}
+
+ExtendedResponse ::= [APPLICATION 24] SEQUENCE
+{
+  responseName [10] LDAPOID OPTIONAL,
+  response [11] OCTET STRING OPTIONAL
+}
+
+

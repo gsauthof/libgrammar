@@ -1,0 +1,2571 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema
+  xmlns:xs='http://www.w3.org/2001/XMLSchema'
+  elementFormDefault='qualified'>
+  <xs:element name='TransferBatch' type='TransferBatch'>
+  </xs:element>
+  <xs:element name='Notification' type='Notification'>
+  </xs:element>
+  <xs:group name='DataInterChange'>
+      <xs:choice>
+      <xs:element name='TransferBatch' type='TransferBatch'/>
+      <xs:element name='Notification' type='Notification'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:complexType name='TransferBatch'>
+    <xs:sequence>
+      <xs:element name='BatchControlInfo' type='BatchControlInfo'/>
+      <xs:element name='AccountingInfo' type='AccountingInfo' minOccurs='0'/>
+      <xs:element name='NetworkInfo' type='NetworkInfo'/>
+      <xs:element name='MessageDescriptionInfoList' type='MessageDescriptionInfoList' minOccurs='0'/>
+      <xs:element name='CallEventDetailList' type='CallEventDetailList'/>
+      <xs:element name='AuditControlInfo' type='AuditControlInfo'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='Notification'>
+    <xs:sequence>
+      <xs:element name='Sender' type='Sender'/>
+      <xs:element name='Recipient' type='Recipient'/>
+      <xs:element name='FileSequenceNumber' type='FileSequenceNumber'/>
+      <xs:element name='RapFileSequenceNumber' type='RapFileSequenceNumber' minOccurs='0'/>
+      <xs:element name='FileCreationTimeStamp' type='DateTimeLong' minOccurs='0'/>
+      <xs:element name='FileAvailableTimeStamp' type='DateTimeLong'/>
+      <xs:element name='TransferCutOffTimeStamp' type='DateTimeLong'/>
+      <xs:element name='SpecificationVersionNumber' type='SpecificationVersionNumber'/>
+      <xs:element name='ReleaseVersionNumber' type='ReleaseVersionNumber'/>
+      <xs:element name='FileTypeIndicator' type='FileTypeIndicator' minOccurs='0'/>
+      <xs:element name='OperatorSpecInfoList' type='OperatorSpecInfoList' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='CallEventDetailList'>
+    <xs:sequence>
+      <xs:group ref='CallEventDetail' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name='CallEventDetail'>
+      <xs:choice>
+      <xs:element name='MobileOriginatedCall' type='MobileOriginatedCall'/>
+      <xs:element name='MobileTerminatedCall' type='MobileTerminatedCall'/>
+      <xs:element name='SupplServiceEvent' type='SupplServiceEvent'/>
+      <xs:element name='ServiceCentreUsage' type='ServiceCentreUsage'/>
+      <xs:element name='GprsCall' type='GprsCall'/>
+      <xs:element name='ContentTransaction' type='ContentTransaction'/>
+      <xs:element name='LocationService' type='LocationService'/>
+      <xs:element name='MessagingEvent' type='MessagingEvent'/>
+      <xs:element name='MobileSession' type='MobileSession'/>
+      </xs:choice>
+  </xs:group>
+
+  <xs:complexType name='BatchControlInfo'>
+    <xs:sequence>
+      <xs:element name='Sender' type='Sender'/>
+      <xs:element name='Recipient' type='Recipient'/>
+      <xs:element name='FileSequenceNumber' type='FileSequenceNumber'/>
+      <xs:element name='FileCreationTimeStamp' type='DateTimeLong' minOccurs='0'/>
+      <xs:element name='TransferCutOffTimeStamp' type='DateTimeLong'/>
+      <xs:element name='FileAvailableTimeStamp' type='DateTimeLong'/>
+      <xs:element name='SpecificationVersionNumber' type='SpecificationVersionNumber'/>
+      <xs:element name='ReleaseVersionNumber' type='ReleaseVersionNumber'/>
+      <xs:element name='FileTypeIndicator' type='FileTypeIndicator' minOccurs='0'/>
+      <xs:element name='RapFileSequenceNumber' type='RapFileSequenceNumber' minOccurs='0'/>
+      <xs:element name='OperatorSpecInfoList' type='OperatorSpecInfoList' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='AccountingInfo'>
+    <xs:sequence>
+      <xs:element name='TaxationList' type='TaxationList' minOccurs='0'/>
+      <xs:element name='DiscountingList' type='DiscountingList' minOccurs='0'/>
+      <xs:element name='LocalCurrency' type='LocalCurrency'/>
+      <xs:element name='TapCurrency' type='TapCurrency' minOccurs='0'/>
+      <xs:element name='CurrencyConversionList' type='CurrencyConversionList' minOccurs='0'/>
+      <xs:element name='TapDecimalPlaces' type='TapDecimalPlaces'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='NetworkInfo'>
+    <xs:sequence>
+      <xs:element name='UtcTimeOffsetInfoList' type='UtcTimeOffsetInfoList'/>
+      <xs:element name='RecEntityInfoList' type='RecEntityInfoList' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='MessageDescriptionInfoList'>
+    <xs:sequence>
+      <xs:element name='MessageDescriptionInformation' type='MessageDescriptionInformation' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='MobileOriginatedCall'>
+    <xs:sequence>
+      <xs:element name='MoBasicCallInformation' type='MoBasicCallInformation'/>
+      <xs:element name='LocationInformation' type='LocationInformation'/>
+      <xs:element name='ImeiOrEsn' type='ImeiOrEsn' minOccurs='0'/>
+      <xs:element name='BasicServiceUsedList' type='BasicServiceUsedList'/>
+      <xs:element name='SupplServiceCode' type='SupplServiceCode' minOccurs='0'/>
+      <xs:element name='ThirdPartyInformation' type='ThirdPartyInformation' minOccurs='0'/>
+      <xs:element name='CamelServiceUsed' type='CamelServiceUsed' minOccurs='0'/>
+      <xs:element name='OperatorSpecInfoList' type='OperatorSpecInfoList' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='MobileTerminatedCall'>
+    <xs:sequence>
+      <xs:element name='MtBasicCallInformation' type='MtBasicCallInformation'/>
+      <xs:element name='LocationInformation' type='LocationInformation'/>
+      <xs:element name='ImeiOrEsn' type='ImeiOrEsn' minOccurs='0'/>
+      <xs:element name='BasicServiceUsedList' type='BasicServiceUsedList'/>
+      <xs:element name='CamelServiceUsed' type='CamelServiceUsed' minOccurs='0'/>
+      <xs:element name='OperatorSpecInfoList' type='OperatorSpecInfoList' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='SupplServiceEvent'>
+    <xs:sequence>
+      <xs:element name='ChargeableSubscriber' type='ChargeableSubscriber'/>
+      <xs:element name='RapFileSequenceNumber' type='RapFileSequenceNumber' minOccurs='0'/>
+      <xs:element name='LocationInformation' type='LocationInformation'/>
+      <xs:element name='ImeiOrEsn' type='ImeiOrEsn' minOccurs='0'/>
+      <xs:element name='SupplServiceUsed' type='SupplServiceUsed'/>
+      <xs:element name='OperatorSpecInfoList' type='OperatorSpecInfoList' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ServiceCentreUsage'>
+    <xs:sequence>
+      <xs:element name='ScuBasicInformation' type='ScuBasicInformation'/>
+      <xs:element name='RapFileSequenceNumber' type='RapFileSequenceNumber' minOccurs='0'/>
+      <xs:element name='ServingNetwork' type='ServingNetwork' minOccurs='0'/>
+      <xs:element name='RecEntityCode' type='RecEntityCode'/>
+      <xs:element name='ChargeInformation' type='ChargeInformation'/>
+      <xs:element name='ScuChargeType' type='ScuChargeType'/>
+      <xs:element name='ScuTimeStamps' type='ScuTimeStamps'/>
+      <xs:element name='OperatorSpecInfoList' type='OperatorSpecInfoList' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GprsCall'>
+    <xs:sequence>
+      <xs:element name='GprsBasicCallInformation' type='GprsBasicCallInformation'/>
+      <xs:element name='GprsLocationInformation' type='GprsLocationInformation'/>
+      <xs:element name='ImeiOrEsn' type='ImeiOrEsn' minOccurs='0'/>
+      <xs:element name='GprsServiceUsed' type='GprsServiceUsed'/>
+      <xs:element name='CamelServiceUsed' type='CamelServiceUsed' minOccurs='0'/>
+      <xs:element name='OperatorSpecInfoList' type='OperatorSpecInfoList' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ContentTransaction'>
+    <xs:sequence>
+      <xs:element name='ContentTransactionBasicInfo' type='ContentTransactionBasicInfo'/>
+      <xs:element name='ChargedPartyInformation' type='ChargedPartyInformation'/>
+      <xs:element name='ServingPartiesInformation' type='ServingPartiesInformation'/>
+      <xs:element name='ContentServiceUsedList' type='ContentServiceUsedList'/>
+      <xs:element name='OperatorSpecInfoList' type='OperatorSpecInfoList' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='LocationService'>
+    <xs:sequence>
+      <xs:element name='RapFileSequenceNumber' type='RapFileSequenceNumber' minOccurs='0'/>
+      <xs:element name='RecEntityCode' type='RecEntityCode'/>
+      <xs:element name='CallReference' type='CallReference' minOccurs='0'/>
+      <xs:element name='TrackingCustomerInformation' type='TrackingCustomerInformation' minOccurs='0'/>
+      <xs:element name='LCSSPInformation' type='LCSSPInformation' minOccurs='0'/>
+      <xs:element name='TrackedCustomerInformation' type='TrackedCustomerInformation' minOccurs='0'/>
+      <xs:element name='LocationServiceUsage' type='LocationServiceUsage'/>
+      <xs:element name='OperatorSpecInfoList' type='OperatorSpecInfoList' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='MessagingEvent'>
+    <xs:sequence>
+      <xs:element name='MessagingEventService' type='MessagingEventService'/>
+      <xs:element name='ChargedParty' type='ChargedParty'/>
+      <xs:element name='RapFileSequenceNumber' type='RapFileSequenceNumber' minOccurs='0'/>
+      <xs:element name='SimToolkitIndicator' type='SimToolkitIndicator' minOccurs='0'/>
+      <xs:element name='GeographicalLocation' type='GeographicalLocation' minOccurs='0'/>
+      <xs:element name='EventReference' type='EventReference'/>
+      <xs:element name='RecEntityCodeList' type='RecEntityCodeList'/>
+      <xs:element name='NetworkElementList' type='NetworkElementList' minOccurs='0'/>
+      <xs:element name='LocationArea' type='LocationArea' minOccurs='0'/>
+      <xs:element name='CellId' type='CellId' minOccurs='0'/>
+      <xs:element name='ServiceStartTimestamp' type='DateTime'/>
+      <xs:element name='NonChargedParty' type='NonChargedParty' minOccurs='0'/>
+      <xs:element name='ExchangeRateCode' type='ExchangeRateCode' minOccurs='0'/>
+      <xs:element name='CallTypeGroup' type='CallTypeGroup'/>
+      <xs:element name='Charge' type='Charge'/>
+      <xs:element name='TaxInformationList' type='TaxInformationList' minOccurs='0'/>
+      <xs:element name='OperatorSpecInfoList' type='OperatorSpecInfoList' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='MobileSession'>
+    <xs:sequence>
+      <xs:element name='MobileSessionService' type='MobileSessionService'/>
+      <xs:element name='ChargedParty' type='ChargedParty'/>
+      <xs:element name='RapFileSequenceNumber' type='RapFileSequenceNumber' minOccurs='0'/>
+      <xs:element name='SimToolkitIndicator' type='SimToolkitIndicator' minOccurs='0'/>
+      <xs:element name='GeographicalLocation' type='GeographicalLocation' minOccurs='0'/>
+      <xs:element name='LocationArea' type='LocationArea' minOccurs='0'/>
+      <xs:element name='CellId' type='CellId' minOccurs='0'/>
+      <xs:element name='EventReference' type='EventReference'/>
+      <xs:element name='RecEntityCodeList' type='RecEntityCodeList'/>
+      <xs:element name='ServiceStartTimestamp' type='DateTime'/>
+      <xs:element name='CauseForTerm' type='CauseForTerm' minOccurs='0'/>
+      <xs:element name='TotalCallEventDuration' type='TotalCallEventDuration'/>
+      <xs:element name='NonChargedParty' type='NonChargedParty' minOccurs='0'/>
+      <xs:element name='RequestedDestination' type='RequestedDestination' minOccurs='0'/>
+      <xs:element name='SessionChargeInfoList' type='SessionChargeInfoList'/>
+      <xs:element name='OperatorSpecInfoList' type='OperatorSpecInfoList' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='AuditControlInfo'>
+    <xs:sequence>
+      <xs:element name='EarliestCallTimeStamp' type='DateTimeLong' minOccurs='0'/>
+      <xs:element name='LatestCallTimeStamp' type='DateTimeLong' minOccurs='0'/>
+      <xs:element name='TotalCharge' type='TotalCharge'/>
+      <xs:element name='TotalChargeRefund' type='TotalChargeRefund' minOccurs='0'/>
+      <xs:element name='TotalTaxRefund' type='TotalTaxRefund' minOccurs='0'/>
+      <xs:element name='TotalTaxValue' type='TotalTaxValue'/>
+      <xs:element name='TotalDiscountValue' type='TotalDiscountValue'/>
+      <xs:element name='TotalDiscountRefund' type='TotalDiscountRefund' minOccurs='0'/>
+      <xs:element name='TotalAdvisedChargeValueList' type='TotalAdvisedChargeValueList' minOccurs='0'/>
+      <xs:element name='CallEventDetailsCount' type='CallEventDetailsCount'/>
+      <xs:element name='OperatorSpecInfoList' type='OperatorSpecInfoList' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='AccessPointNameNI'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='1'/>
+      <xs:maxLength value='63'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='AccessPointNameOI'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='1'/>
+      <xs:maxLength value='37'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ActualDeliveryTimeStamp'>
+    <xs:sequence>
+      <xs:element name='DateTime' type='DateTime'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='AddressStringDigits'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='AdvisedCharge'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='AdvisedChargeCurrency'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:pattern value='[A-Z]{3}'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='AdvisedChargeInformation'>
+    <xs:sequence>
+      <xs:element name='PaidIndicator' type='PaidIndicator' minOccurs='0'/>
+      <xs:element name='PaymentMethod' type='PaymentMethod' minOccurs='0'/>
+      <xs:element name='AdvisedChargeCurrency' type='AdvisedChargeCurrency' minOccurs='0'/>
+      <xs:element name='AdvisedCharge' type='AdvisedCharge'/>
+      <xs:element name='Commission' type='Commission' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='AgeOfLocation'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='32767'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='BasicService'>
+    <xs:sequence>
+      <xs:element name='BasicServiceCode' type='BasicServiceCode'/>
+      <xs:element name='TransparencyIndicator' type='TransparencyIndicator' minOccurs='0'/>
+      <xs:element name='Fnur' type='Fnur' minOccurs='0'/>
+      <xs:element name='UserProtocolIndicator' type='UserProtocolIndicator' minOccurs='0'/>
+      <xs:element name='GuaranteedBitRate' type='GuaranteedBitRate' minOccurs='0'/>
+      <xs:element name='MaximumBitRate' type='MaximumBitRate' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='BasicServiceCode'>
+      <xs:choice>
+      <xs:element name='TeleServiceCode' type='TeleServiceCode'/>
+      <xs:element name='BearerServiceCode' type='BearerServiceCode'/>
+      </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name='BasicServiceCodeList'>
+    <xs:sequence>
+      <xs:element name='BasicServiceCode' type='BasicServiceCode' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='BasicServiceUsed'>
+    <xs:sequence>
+      <xs:element name='BasicService' type='BasicService'/>
+      <xs:element name='ChargingTimeStamp' type='DateTime' minOccurs='0'/>
+      <xs:element name='ChargeInformationList' type='ChargeInformationList'/>
+      <xs:element name='HSCSDIndicator' type='HSCSDIndicator' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='BasicServiceUsedList'>
+    <xs:sequence>
+      <xs:element name='BasicServiceUsed' type='BasicServiceUsed' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='BearerServiceCode'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='2'/>
+      <xs:maxLength value='2'/>
+      <xs:pattern value='(00|[2-5][0-7]|[6-9A-D]0)'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='CalledNumber'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:pattern value='[0-9]+'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='CalledPlace'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='CalledRegion'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='CallEventDetailsCount'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='CallEventStartTimeStamp'>
+    <xs:sequence>
+      <xs:element name='DateTime' type='DateTime'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='CallingNumber'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:pattern value='[0-9]+'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='CallOriginator'>
+    <xs:sequence>
+      <xs:element name='CallingNumber' type='CallingNumber' minOccurs='0'/>
+      <xs:element name='ClirIndicator' type='ClirIndicator' minOccurs='0'/>
+      <xs:element name='SMSOriginator' type='SMSOriginator' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='CallReference'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='1'/>
+      <xs:maxLength value='8'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='CallTypeGroup'>
+    <xs:sequence>
+      <xs:element name='CallTypeLevel1' type='CallTypeLevel1'/>
+      <xs:element name='CallTypeLevel2' type='CallTypeLevel2'/>
+      <xs:element name='CallTypeLevel3' type='CallTypeLevel3'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='CallTypeLevel1'>
+    <xs:restriction base='INTEGER'>
+      <xs:enumeration value='0'/>
+      <xs:enumeration value='1'/>
+      <xs:enumeration value='2'/>
+      <xs:enumeration value='10'/>
+      <xs:enumeration value='11'/>
+      <xs:enumeration value='12'/>
+      <xs:enumeration value='100'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='CallTypeLevel2'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='15'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='CallTypeLevel3'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='CamelDestinationNumber'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:pattern value='[0-9A-E]+'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='CamelInvocationFee'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='CamelServiceKey'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='2147483647'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='CamelServiceLevel'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='3'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='CamelServiceUsed'>
+    <xs:sequence>
+      <xs:element name='CamelServiceLevel' type='CamelServiceLevel' minOccurs='0'/>
+      <xs:element name='CamelServiceKey' type='CamelServiceKey'/>
+      <xs:element name='DefaultCallHandlingIndicator' type='DefaultCallHandlingIndicator' minOccurs='0'/>
+      <xs:element name='ExchangeRateCode' type='ExchangeRateCode' minOccurs='0'/>
+      <xs:element name='TaxInformationList' type='TaxInformationList' minOccurs='0'/>
+      <xs:element name='DiscountInformation' type='DiscountInformation' minOccurs='0'/>
+      <xs:element name='CamelInvocationFee' type='CamelInvocationFee' minOccurs='0'/>
+      <xs:element name='ThreeGcamelDestination' type='ThreeGcamelDestination' minOccurs='0'/>
+      <xs:element name='CseInformation' type='CseInformation' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='CauseForTerm'>
+    <xs:restriction base='INTEGER'>
+      <xs:enumeration value='1'/>
+      <xs:enumeration value='3'/>
+      <xs:enumeration value='4'/>
+      <xs:enumeration value='5'/>
+      <xs:enumeration value='20'/>
+      <xs:enumeration value='21'/>
+      <xs:enumeration value='24'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='CellId'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='Charge'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ChargeableSubscriber'>
+      <xs:choice>
+      <xs:element name='SimChargeableSubscriber' type='SimChargeableSubscriber'/>
+      <xs:element name='MinChargeableSubscriber' type='MinChargeableSubscriber'/>
+      </xs:choice>
+  </xs:complexType>
+
+  <xs:simpleType name='ChargeableUnits'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ChargeDetail'>
+    <xs:sequence>
+      <xs:element name='ChargeType' type='ChargeType'/>
+      <xs:element name='Charge' type='Charge'/>
+      <xs:element name='ChargeableUnits' type='ChargeableUnits' minOccurs='0'/>
+      <xs:element name='ChargedUnits' type='ChargedUnits' minOccurs='0'/>
+      <xs:element name='ChargeDetailTimeStamp' type='DateTime' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ChargeDetailList'>
+    <xs:sequence>
+      <xs:element name='ChargeDetail' type='ChargeDetail' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ChargeDetailTimeStamp'>
+    <xs:sequence>
+      <xs:element name='ChargingTimeStamp' type='DateTime'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='ChargedItem'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='1'/>
+      <xs:maxLength value='1'/>
+      <xs:pattern value='[ACDEFLVWX]'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ChargedParty'>
+    <xs:sequence>
+      <xs:element name='Imsi' type='Imsi'/>
+      <xs:element name='Msisdn' type='Msisdn' minOccurs='0'/>
+      <xs:element name='PublicUserId' type='PublicUserId' minOccurs='0'/>
+      <xs:element name='HomeBid' type='HomeBid' minOccurs='0'/>
+      <xs:element name='HomeLocationDescription' type='HomeLocationDescription' minOccurs='0'/>
+      <xs:element name='Imei' type='Imei' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ChargedPartyEquipment'>
+    <xs:sequence>
+      <xs:element name='EquipmentIdType' type='EquipmentIdType'/>
+      <xs:element name='EquipmentId' type='EquipmentId'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ChargedPartyHomeIdentification'>
+    <xs:sequence>
+      <xs:element name='HomeIdType' type='HomeIdType'/>
+      <xs:element name='HomeIdentifier' type='HomeIdentifier'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ChargedPartyHomeIdList'>
+    <xs:sequence>
+      <xs:element name='ChargedPartyHomeIdentification' type='ChargedPartyHomeIdentification' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ChargedPartyIdentification'>
+    <xs:sequence>
+      <xs:element name='ChargedPartyIdType' type='ChargedPartyIdType'/>
+      <xs:element name='ChargedPartyIdentifier' type='ChargedPartyIdentifier'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='ChargedPartyIdentifier'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ChargedPartyIdList'>
+    <xs:sequence>
+      <xs:element name='ChargedPartyIdentification' type='ChargedPartyIdentification' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='ChargedPartyIdType'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+      <xs:maxInclusive value='8'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ChargedPartyInformation'>
+    <xs:sequence>
+      <xs:element name='ChargedPartyIdList' type='ChargedPartyIdList'/>
+      <xs:element name='ChargedPartyHomeIdList' type='ChargedPartyHomeIdList' minOccurs='0'/>
+      <xs:element name='ChargedPartyLocationList' type='ChargedPartyLocationList' minOccurs='0'/>
+      <xs:element name='ChargedPartyEquipment' type='ChargedPartyEquipment' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ChargedPartyLocation'>
+    <xs:sequence>
+      <xs:element name='LocationIdType' type='LocationIdType'/>
+      <xs:element name='LocationIdentifier' type='LocationIdentifier'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ChargedPartyLocationList'>
+    <xs:sequence>
+      <xs:element name='ChargedPartyLocation' type='ChargedPartyLocation' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='ChargedPartyStatus'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='1'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ChargedUnits'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ChargeInformation'>
+    <xs:sequence>
+      <xs:element name='ChargedItem' type='ChargedItem'/>
+      <xs:element name='ExchangeRateCode' type='ExchangeRateCode' minOccurs='0'/>
+      <xs:element name='CallTypeGroup' type='CallTypeGroup' minOccurs='0'/>
+      <xs:element name='ChargeDetailList' type='ChargeDetailList'/>
+      <xs:element name='TaxInformationList' type='TaxInformationList' minOccurs='0'/>
+      <xs:element name='DiscountInformation' type='DiscountInformation' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ChargeInformationList'>
+    <xs:sequence>
+      <xs:element name='ChargeInformation' type='ChargeInformation' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='ChargeRefundIndicator'>
+    <xs:restriction base='INTEGER'>
+      <xs:enumeration value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ChargeType'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='2'/>
+      <xs:maxLength value='3'/>
+      <xs:pattern value='(0[0-4]|21|50)'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ChargingId'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='4294967295'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ChargingPoint'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='1'/>
+      <xs:maxLength value='1'/>
+      <xs:pattern value='[CD]'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ChargingTimeStamp'>
+    <xs:sequence>
+      <xs:element name='DateTime' type='DateTime'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='ClirIndicator'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='Commission'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='CompletionTimeStamp'>
+    <xs:sequence>
+      <xs:element name='DateTime' type='DateTime'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='ContentChargingPoint'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+      <xs:maxInclusive value='3'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ContentProvider'>
+    <xs:sequence>
+      <xs:element name='ContentProviderIdType' type='ContentProviderIdType'/>
+      <xs:element name='ContentProviderIdentifier' type='ContentProviderIdentifier'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='ContentProviderIdentifier'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ContentProviderIdList'>
+    <xs:sequence>
+      <xs:element name='ContentProvider' type='ContentProvider' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='ContentProviderIdType'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+      <xs:maxInclusive value='5'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ContentProviderName'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='0'/>
+      <xs:maxLength value='24'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ContentServiceUsed'>
+    <xs:sequence>
+      <xs:element name='ContentTransactionCode' type='ContentTransactionCode'/>
+      <xs:element name='ContentTransactionType' type='ContentTransactionType'/>
+      <xs:element name='ObjectType' type='ObjectType' minOccurs='0'/>
+      <xs:element name='TransactionDescriptionSupp' type='TransactionDescriptionSupp' minOccurs='0'/>
+      <xs:element name='TransactionShortDescription' type='TransactionShortDescription'/>
+      <xs:element name='TransactionDetailDescription' type='TransactionDetailDescription' minOccurs='0'/>
+      <xs:element name='TransactionIdentifier' type='TransactionIdentifier'/>
+      <xs:element name='TransactionAuthCode' type='TransactionAuthCode' minOccurs='0'/>
+      <xs:element name='DataVolumeIncoming' type='DataVolumeIncoming' minOccurs='0'/>
+      <xs:element name='DataVolumeOutgoing' type='DataVolumeOutgoing' minOccurs='0'/>
+      <xs:element name='TotalDataVolume' type='TotalDataVolume' minOccurs='0'/>
+      <xs:element name='ChargeRefundIndicator' type='ChargeRefundIndicator' minOccurs='0'/>
+      <xs:element name='ContentChargingPoint' type='ContentChargingPoint' minOccurs='0'/>
+      <xs:element name='ChargeInformationList' type='ChargeInformationList' minOccurs='0'/>
+      <xs:element name='AdvisedChargeInformation' type='AdvisedChargeInformation' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ContentServiceUsedList'>
+    <xs:sequence>
+      <xs:element name='ContentServiceUsed' type='ContentServiceUsed' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ContentTransactionBasicInfo'>
+    <xs:sequence>
+      <xs:element name='RapFileSequenceNumber' type='RapFileSequenceNumber' minOccurs='0'/>
+      <xs:element name='OrderPlacedTimeStamp' type='DateTime' minOccurs='0'/>
+      <xs:element name='RequestedDeliveryTimeStamp' type='DateTime' minOccurs='0'/>
+      <xs:element name='ActualDeliveryTimeStamp' type='DateTime' minOccurs='0'/>
+      <xs:element name='TotalTransactionDuration' type='TotalTransactionDuration' minOccurs='0'/>
+      <xs:element name='TransactionStatus' type='TransactionStatus' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='ContentTransactionCode'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='7'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ContentTransactionType'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='17'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='CseInformation'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='1'/>
+      <xs:maxLength value='40'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='CurrencyConversion'>
+    <xs:sequence>
+      <xs:element name='ExchangeRateCode' type='ExchangeRateCode'/>
+      <xs:element name='NumberOfDecimalPlaces' type='NumberOfDecimalPlaces'/>
+      <xs:element name='ExchangeRate' type='ExchangeRate'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='CurrencyConversionList'>
+    <xs:sequence>
+      <xs:element name='CurrencyConversion' type='CurrencyConversion' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='CustomerIdentifier'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='CustomerIdType'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+      <xs:maxInclusive value='8'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='DataVolume'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='DataVolumeIncoming'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='DataVolumeOutgoing'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='DateTime'>
+    <xs:sequence>
+      <xs:element name='LocalTimeStamp' type='LocalTimeStamp'/>
+      <xs:element name='UtcTimeOffsetCode' type='UtcTimeOffsetCode'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='DateTimeLong'>
+    <xs:sequence>
+      <xs:element name='LocalTimeStamp' type='LocalTimeStamp'/>
+      <xs:element name='UtcTimeOffset' type='UtcTimeOffset'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='DefaultCallHandlingIndicator'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='1'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='DepositTimeStamp'>
+    <xs:sequence>
+      <xs:element name='DateTime' type='DateTime'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='Destination'>
+    <xs:sequence>
+      <xs:element name='CalledNumber' type='CalledNumber' minOccurs='0'/>
+      <xs:element name='DialledDigits' type='DialledDigits' minOccurs='0'/>
+      <xs:element name='CalledPlace' type='CalledPlace' minOccurs='0'/>
+      <xs:element name='CalledRegion' type='CalledRegion' minOccurs='0'/>
+      <xs:element name='SMSDestinationNumber' type='SMSDestinationNumber' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='DestinationNetwork'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:pattern value='[A-Z0-9]{5}'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='DialledDigits'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:pattern value='[0-9+*#]+'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='Discount'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='DiscountableAmount'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='DiscountApplied'>
+      <xs:choice>
+      <xs:element name='FixedDiscountValue' type='FixedDiscountValue'/>
+      <xs:element name='DiscountRate' type='DiscountRate'/>
+      </xs:choice>
+  </xs:complexType>
+
+  <xs:simpleType name='DiscountCode'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='99'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='DiscountInformation'>
+    <xs:sequence>
+      <xs:element name='DiscountCode' type='DiscountCode'/>
+      <xs:element name='Discount' type='Discount' minOccurs='0'/>
+      <xs:element name='DiscountableAmount' type='DiscountableAmount' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='Discounting'>
+    <xs:sequence>
+      <xs:element name='DiscountCode' type='DiscountCode'/>
+      <xs:element name='DiscountApplied' type='DiscountApplied'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='DiscountingList'>
+    <xs:sequence>
+      <xs:element name='Discounting' type='Discounting' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='DiscountRate'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='100'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='DiscountValue'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='DistanceChargeBandCode'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='1'/>
+      <xs:maxLength value='1'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='EarliestCallTimeStamp'>
+    <xs:sequence>
+      <xs:element name='DateTimeLong' type='DateTimeLong'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='ElementId'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ElementType'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='EquipmentId'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='EquipmentIdType'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='Esn'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='EventReference'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ExchangeRate'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ExchangeRateCode'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='99'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='FileAvailableTimeStamp'>
+    <xs:sequence>
+      <xs:element name='DateTimeLong' type='DateTimeLong'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='FileCreationTimeStamp'>
+    <xs:sequence>
+      <xs:element name='DateTimeLong' type='DateTimeLong'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='FileSequenceNumber'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='5'/>
+      <xs:maxLength value='5'/>
+      <xs:pattern value='[0-9]{5}'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='FileTypeIndicator'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='1'/>
+      <xs:maxLength value='1'/>
+      <xs:pattern value='(T|[BHSV])'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='FixedDiscountValue'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='Fnur'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='GeographicalLocation'>
+    <xs:sequence>
+      <xs:element name='ServingNetwork' type='ServingNetwork' minOccurs='0'/>
+      <xs:element name='ServingBid' type='ServingBid' minOccurs='0'/>
+      <xs:element name='ServingLocationDescription' type='ServingLocationDescription' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GprsBasicCallInformation'>
+    <xs:sequence>
+      <xs:element name='GprsChargeableSubscriber' type='GprsChargeableSubscriber'/>
+      <xs:element name='RapFileSequenceNumber' type='RapFileSequenceNumber' minOccurs='0'/>
+      <xs:element name='GprsDestination' type='GprsDestination'/>
+      <xs:element name='CallEventStartTimeStamp' type='DateTime'/>
+      <xs:element name='TotalCallEventDuration' type='TotalCallEventDuration'/>
+      <xs:element name='CauseForTerm' type='CauseForTerm' minOccurs='0'/>
+      <xs:element name='PartialTypeIndicator' type='PartialTypeIndicator' minOccurs='0'/>
+      <xs:element name='PDPContextStartTimestamp' type='DateTime' minOccurs='0'/>
+      <xs:element name='NetworkInitPDPContext' type='NetworkInitPDPContext' minOccurs='0'/>
+      <xs:element name='ChargingId' type='ChargingId'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GprsChargeableSubscriber'>
+    <xs:sequence>
+      <xs:element name='ChargeableSubscriber' type='ChargeableSubscriber' minOccurs='0'/>
+      <xs:element name='PdpAddress' type='PdpAddress' minOccurs='0'/>
+      <xs:element name='NetworkAccessIdentifier' type='NetworkAccessIdentifier' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GprsDestination'>
+    <xs:sequence>
+      <xs:element name='AccessPointNameNI' type='AccessPointNameNI'/>
+      <xs:element name='AccessPointNameOI' type='AccessPointNameOI' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GprsLocationInformation'>
+    <xs:sequence>
+      <xs:element name='GprsNetworkLocation' type='GprsNetworkLocation'/>
+      <xs:element name='HomeLocationInformation' type='HomeLocationInformation' minOccurs='0'/>
+      <xs:element name='GeographicalLocation' type='GeographicalLocation' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GprsNetworkLocation'>
+    <xs:sequence>
+      <xs:element name='RecEntityCodeList' type='RecEntityCodeList'/>
+      <xs:element name='LocationArea' type='LocationArea' minOccurs='0'/>
+      <xs:element name='CellId' type='CellId' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GprsServiceUsed'>
+    <xs:sequence>
+      <xs:element name='IMSSignallingContext' type='IMSSignallingContext' minOccurs='0'/>
+      <xs:element name='DataVolumeIncoming' type='DataVolumeIncoming'/>
+      <xs:element name='DataVolumeOutgoing' type='DataVolumeOutgoing'/>
+      <xs:element name='ChargeInformationList' type='ChargeInformationList'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GsmChargeableSubscriber'>
+    <xs:sequence>
+      <xs:element name='Imsi' type='Imsi' minOccurs='0'/>
+      <xs:element name='Msisdn' type='Msisdn' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='GuaranteedBitRate'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='1'/>
+      <xs:maxLength value='1'/>
+      <xs:pattern value='[1-7]'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='HomeBid'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='HomeIdentifier'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='HomeIdType'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='4'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='HomeLocationDescription'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='HomeLocationInformation'>
+    <xs:sequence>
+      <xs:element name='HomeBid' type='HomeBid'/>
+      <xs:element name='HomeLocationDescription' type='HomeLocationDescription'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='HorizontalAccuracyDelivered'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='HorizontalAccuracyRequested'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='HSCSDIndicator'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='1'/>
+      <xs:maxLength value='1'/>
+      <xs:enumeration value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='Imei'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='14'/>
+      <xs:maxLength value='16'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ImeiOrEsn'>
+      <xs:choice>
+      <xs:element name='Imei' type='Imei'/>
+      <xs:element name='Esn' type='Esn'/>
+      </xs:choice>
+  </xs:complexType>
+
+  <xs:simpleType name='Imsi'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='6'/>
+      <xs:maxLength value='16'/>
+      <xs:minLength value='0'/>
+      <xs:maxLength value='15'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='IMSSignallingContext'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='InternetServiceProvider'>
+    <xs:sequence>
+      <xs:element name='IspIdType' type='IspIdType'/>
+      <xs:element name='IspIdentifier' type='IspIdentifier'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='InternetServiceProviderIdList'>
+    <xs:sequence>
+      <xs:element name='InternetServiceProvider' type='InternetServiceProvider' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='IspIdentifier'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='IspIdType'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+      <xs:maxInclusive value='5'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ISPList'>
+    <xs:sequence>
+      <xs:element name='InternetServiceProvider' type='InternetServiceProvider' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='NetworkIdType'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+      <xs:maxInclusive value='6'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='NetworkIdentifier'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='Network'>
+    <xs:sequence>
+      <xs:element name='NetworkIdType' type='NetworkIdType'/>
+      <xs:element name='NetworkIdentifier' type='NetworkIdentifier'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='NetworkList'>
+    <xs:sequence>
+      <xs:element name='Network' type='Network' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='LatestCallTimeStamp'>
+    <xs:sequence>
+      <xs:element name='DateTimeLong' type='DateTimeLong'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='LCSQosDelivered'>
+    <xs:sequence>
+      <xs:element name='LCSTransactionStatus' type='LCSTransactionStatus' minOccurs='0'/>
+      <xs:element name='HorizontalAccuracyDelivered' type='HorizontalAccuracyDelivered' minOccurs='0'/>
+      <xs:element name='VerticalAccuracyDelivered' type='VerticalAccuracyDelivered' minOccurs='0'/>
+      <xs:element name='ResponseTime' type='ResponseTime' minOccurs='0'/>
+      <xs:element name='PositioningMethod' type='PositioningMethod' minOccurs='0'/>
+      <xs:element name='TrackingPeriod' type='TrackingPeriod' minOccurs='0'/>
+      <xs:element name='TrackingFrequency' type='TrackingFrequency' minOccurs='0'/>
+      <xs:element name='AgeOfLocation' type='AgeOfLocation' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='LCSQosRequested'>
+    <xs:sequence>
+      <xs:element name='LCSRequestTimestamp' type='DateTime'/>
+      <xs:element name='HorizontalAccuracyRequested' type='HorizontalAccuracyRequested' minOccurs='0'/>
+      <xs:element name='VerticalAccuracyRequested' type='VerticalAccuracyRequested' minOccurs='0'/>
+      <xs:element name='ResponseTimeCategory' type='ResponseTimeCategory' minOccurs='0'/>
+      <xs:element name='TrackingPeriod' type='TrackingPeriod' minOccurs='0'/>
+      <xs:element name='TrackingFrequency' type='TrackingFrequency' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='LCSRequestTimestamp'>
+    <xs:sequence>
+      <xs:element name='DateTime' type='DateTime'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='LCSSPIdentification'>
+    <xs:sequence>
+      <xs:element name='ContentProviderIdType' type='ContentProviderIdType'/>
+      <xs:element name='ContentProviderIdentifier' type='ContentProviderIdentifier'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='LCSSPIdentificationList'>
+    <xs:sequence>
+      <xs:element name='LCSSPIdentification' type='LCSSPIdentification' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='LCSSPInformation'>
+    <xs:sequence>
+      <xs:element name='LCSSPIdentificationList' type='LCSSPIdentificationList'/>
+      <xs:element name='ISPList' type='ISPList' minOccurs='0'/>
+      <xs:element name='NetworkList' type='NetworkList' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='LCSTransactionStatus'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+      <xs:maxInclusive value='3'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='LocalCurrency'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:pattern value='[A-Z]{3}'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='LocalTimeStamp'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='14'/>
+      <xs:maxLength value='14'/>
+      <xs:pattern value='[0-9]{4}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])([01][0-9]|2[0-3])([0-5][0-9])([0-5][0-9])'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='LocationArea'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='LocationDescription'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='LocationIdentifier'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='LocationIdType'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+      <xs:maxInclusive value='8'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='LocationInformation'>
+    <xs:sequence>
+      <xs:element name='NetworkLocation' type='NetworkLocation'/>
+      <xs:element name='HomeLocationInformation' type='HomeLocationInformation' minOccurs='0'/>
+      <xs:element name='GeographicalLocation' type='GeographicalLocation' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='LocationServiceUsage'>
+    <xs:sequence>
+      <xs:element name='LCSQosRequested' type='LCSQosRequested'/>
+      <xs:element name='LCSQosDelivered' type='LCSQosDelivered' minOccurs='0'/>
+      <xs:element name='ChargingTimeStamp' type='DateTime' minOccurs='0'/>
+      <xs:element name='ChargeInformationList' type='ChargeInformationList'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='MaximumBitRate'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='1'/>
+      <xs:maxLength value='1'/>
+      <xs:pattern value='[1-7]'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='Mdn'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='MessageDescription'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='MessageDescriptionCode'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='MessageDescriptionInformation'>
+    <xs:sequence>
+      <xs:element name='MessageDescriptionCode' type='MessageDescriptionCode'/>
+      <xs:element name='MessageDescription' type='MessageDescription'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='MessageStatus'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+      <xs:maxInclusive value='4'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='MessageType'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='2'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='MessagingEventService'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+      <xs:maxInclusive value='2'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='Min'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='2'/>
+      <xs:maxLength value='15'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='MinChargeableSubscriber'>
+    <xs:sequence>
+      <xs:element name='Min' type='Min'/>
+      <xs:element name='Mdn' type='Mdn' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='MoBasicCallInformation'>
+    <xs:sequence>
+      <xs:element name='ChargeableSubscriber' type='ChargeableSubscriber'/>
+      <xs:element name='RapFileSequenceNumber' type='RapFileSequenceNumber' minOccurs='0'/>
+      <xs:element name='Destination' type='Destination' minOccurs='0'/>
+      <xs:element name='DestinationNetwork' type='DestinationNetwork' minOccurs='0'/>
+      <xs:element name='CallEventStartTimeStamp' type='DateTime'/>
+      <xs:element name='TotalCallEventDuration' type='TotalCallEventDuration'/>
+      <xs:element name='SimToolkitIndicator' type='SimToolkitIndicator' minOccurs='0'/>
+      <xs:element name='CauseForTerm' type='CauseForTerm' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='MobileSessionService'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+      <xs:maxInclusive value='3'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='Msisdn'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='2'/>
+      <xs:maxLength value='18'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='MtBasicCallInformation'>
+    <xs:sequence>
+      <xs:element name='ChargeableSubscriber' type='ChargeableSubscriber'/>
+      <xs:element name='RapFileSequenceNumber' type='RapFileSequenceNumber' minOccurs='0'/>
+      <xs:element name='CallOriginator' type='CallOriginator' minOccurs='0'/>
+      <xs:element name='OriginatingNetwork' type='OriginatingNetwork' minOccurs='0'/>
+      <xs:element name='CallEventStartTimeStamp' type='DateTime'/>
+      <xs:element name='TotalCallEventDuration' type='TotalCallEventDuration'/>
+      <xs:element name='SimToolkitIndicator' type='SimToolkitIndicator' minOccurs='0'/>
+      <xs:element name='CauseForTerm' type='CauseForTerm' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='NetworkAccessIdentifier'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='NetworkElement'>
+    <xs:sequence>
+      <xs:element name='ElementType' type='ElementType'/>
+      <xs:element name='ElementId' type='ElementId'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='NetworkElementList'>
+    <xs:sequence>
+      <xs:element name='NetworkElement' type='NetworkElement' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='NetworkId'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='1'/>
+      <xs:maxLength value='6'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='NetworkInitPDPContext'>
+    <xs:restriction base='INTEGER'>
+      <xs:enumeration value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='NetworkLocation'>
+    <xs:sequence>
+      <xs:element name='RecEntityCode' type='RecEntityCode'/>
+      <xs:element name='CallReference' type='CallReference' minOccurs='0'/>
+      <xs:element name='LocationArea' type='LocationArea' minOccurs='0'/>
+      <xs:element name='CellId' type='CellId' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='NonChargedNumber'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='NonChargedParty'>
+    <xs:sequence>
+      <xs:element name='NonChargedPartyNumber' type='NonChargedPartyNumber' minOccurs='0'/>
+      <xs:element name='NonChargedPublicUserId' type='NonChargedPublicUserId' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='NonChargedPartyNumber'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:pattern value='[0-9]+'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='NonChargedPublicUserId'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='NumberOfDecimalPlaces'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ObjectType'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='109'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='OperatorSpecInfoList'>
+    <xs:sequence>
+      <xs:element name='OperatorSpecInformation' type='OperatorSpecInformation' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='OperatorSpecInformation'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='OrderPlacedTimeStamp'>
+    <xs:sequence>
+      <xs:element name='DateTime' type='DateTime'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='OriginatingNetwork'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:pattern value='[A-Z0-9]{5}'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='PacketDataProtocolAddress'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='PaidIndicator'>
+    <xs:restriction base='INTEGER'>
+      <xs:enumeration value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='PartialTypeIndicator'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='1'/>
+      <xs:maxLength value='1'/>
+      <xs:pattern value='[FIL]'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='PaymentMethod'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='8'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='PdpAddress'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='PDPContextStartTimestamp'>
+    <xs:sequence>
+      <xs:element name='DateTime' type='DateTime'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='PlmnId'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='5'/>
+      <xs:maxLength value='5'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='PositioningMethod'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='31'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='PriorityCode'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='2'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='PublicUserId'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='RapFileSequenceNumber'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:pattern value='[0-9]{5}'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='RecEntityCode'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='10000'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='RecEntityCodeList'>
+    <xs:sequence>
+      <xs:element name='RecEntityCode' type='RecEntityCode' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='RecEntityId'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='RecEntityInfoList'>
+    <xs:sequence>
+      <xs:element name='RecEntityInformation' type='RecEntityInformation' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='RecEntityInformation'>
+    <xs:sequence>
+      <xs:element name='RecEntityCode' type='RecEntityCode'/>
+      <xs:element name='RecEntityType' type='RecEntityType'/>
+      <xs:element name='RecEntityId' type='RecEntityId'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='RecEntityType'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+      <xs:maxInclusive value='11'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='Recipient'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:pattern value='[A-Z0-9]{5}'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ReleaseVersionNumber'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='RequestedDeliveryTimeStamp'>
+    <xs:sequence>
+      <xs:element name='DateTime' type='DateTime'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='RequestedDestination'>
+    <xs:sequence>
+      <xs:element name='RequestedNumber' type='RequestedNumber' minOccurs='0'/>
+      <xs:element name='RequestedPublicUserId' type='RequestedPublicUserId' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='RequestedNumber'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:pattern value='[0-9]+'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='RequestedPublicUserId'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ResponseTime'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ResponseTimeCategory'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='3'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ScuBasicInformation'>
+    <xs:sequence>
+      <xs:element name='ScuChargeableSubscriber' type='ScuChargeableSubscriber'/>
+      <xs:element name='ChargedPartyStatus' type='ChargedPartyStatus'/>
+      <xs:element name='NonChargedNumber' type='NonChargedNumber'/>
+      <xs:element name='ClirIndicator' type='ClirIndicator' minOccurs='0'/>
+      <xs:element name='OriginatingNetwork' type='OriginatingNetwork' minOccurs='0'/>
+      <xs:element name='DestinationNetwork' type='DestinationNetwork' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ScuChargeType'>
+    <xs:sequence>
+      <xs:element name='MessageStatus' type='MessageStatus'/>
+      <xs:element name='PriorityCode' type='PriorityCode'/>
+      <xs:element name='DistanceChargeBandCode' type='DistanceChargeBandCode' minOccurs='0'/>
+      <xs:element name='MessageType' type='MessageType'/>
+      <xs:element name='MessageDescriptionCode' type='MessageDescriptionCode'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ScuTimeStamps'>
+    <xs:sequence>
+      <xs:element name='DepositTimeStamp' type='DateTime'/>
+      <xs:element name='CompletionTimeStamp' type='DateTime'/>
+      <xs:element name='ChargingPoint' type='ChargingPoint'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='ScuChargeableSubscriber'>
+      <xs:choice>
+      <xs:element name='GsmChargeableSubscriber' type='GsmChargeableSubscriber'/>
+      <xs:element name='MinChargeableSubscriber' type='MinChargeableSubscriber'/>
+      </xs:choice>
+  </xs:complexType>
+
+  <xs:simpleType name='Sender'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:pattern value='[A-Z0-9]{5}'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ServiceStartTimestamp'>
+    <xs:sequence>
+      <xs:element name='DateTime' type='DateTime'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='ServingBid'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ServingLocationDescription'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ServingNetwork'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ServingPartiesInformation'>
+    <xs:sequence>
+      <xs:element name='ContentProviderName' type='ContentProviderName'/>
+      <xs:element name='ContentProviderIdList' type='ContentProviderIdList' minOccurs='0'/>
+      <xs:element name='InternetServiceProviderIdList' type='InternetServiceProviderIdList' minOccurs='0'/>
+      <xs:element name='NetworkList' type='NetworkList' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='SessionChargeInfoList'>
+    <xs:sequence>
+      <xs:element name='SessionChargeInformation' type='SessionChargeInformation' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='SessionChargeInformation'>
+    <xs:sequence>
+      <xs:element name='ChargedItem' type='ChargedItem'/>
+      <xs:element name='ExchangeRateCode' type='ExchangeRateCode' minOccurs='0'/>
+      <xs:element name='CallTypeGroup' type='CallTypeGroup'/>
+      <xs:element name='ChargeDetailList' type='ChargeDetailList'/>
+      <xs:element name='TaxInformationList' type='TaxInformationList' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='SimChargeableSubscriber'>
+    <xs:sequence>
+      <xs:element name='Imsi' type='Imsi'/>
+      <xs:element name='Msisdn' type='Msisdn' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='SimToolkitIndicator'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='1'/>
+      <xs:maxLength value='1'/>
+      <xs:pattern value='1'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='SMSDestinationNumber'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:pattern value='[0-9+*#]+'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='SMSOriginator'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='SpecificationVersionNumber'>
+    <xs:restriction base='INTEGER'>
+      <xs:enumeration value='3'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='SsParameters'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='1'/>
+      <xs:maxLength value='40'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='SupplServiceActionCode'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='7'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='SupplServiceCode'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='2'/>
+      <xs:maxLength value='2'/>
+      <xs:pattern value='(00|1[0-9]|2[01489AB]|3[01]|4[0-5]|5[01]|6[01]|7[0-2]|8[0-3]|9[012349AB]|FF)'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='SupplServiceUsed'>
+    <xs:sequence>
+      <xs:element name='SupplServiceCode' type='SupplServiceCode'/>
+      <xs:element name='SupplServiceActionCode' type='SupplServiceActionCode'/>
+      <xs:element name='SsParameters' type='SsParameters' minOccurs='0'/>
+      <xs:element name='ChargingTimeStamp' type='DateTime'/>
+      <xs:element name='ChargeInformation' type='ChargeInformation' minOccurs='0'/>
+      <xs:element name='BasicServiceCodeList' type='BasicServiceCodeList' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='TapCurrency'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:pattern value='[A-Z]{3}'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TapDecimalPlaces'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='6'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TaxableAmount'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='Taxation'>
+    <xs:sequence>
+      <xs:element name='TaxCode' type='TaxCode'/>
+      <xs:element name='TaxType' type='TaxType'/>
+      <xs:element name='TaxRate' type='TaxRate' minOccurs='0'/>
+      <xs:element name='ChargeType' type='ChargeType' minOccurs='0'/>
+      <xs:element name='TaxIndicator' type='TaxIndicator' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TaxationList'>
+    <xs:sequence>
+      <xs:element name='Taxation' type='Taxation' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='TaxCode'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='999'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TaxIndicator'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='1'/>
+      <xs:maxLength value='1'/>
+      <xs:pattern value='1'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='TaxInformation'>
+    <xs:sequence>
+      <xs:element name='TaxCode' type='TaxCode'/>
+      <xs:element name='TaxValue' type='TaxValue'/>
+      <xs:element name='TaxableAmount' type='TaxableAmount' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TaxInformationList'>
+    <xs:sequence>
+      <xs:element name='TaxInformation' type='TaxInformation' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='TaxRate'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='7'/>
+      <xs:maxLength value='7'/>
+      <xs:pattern value='[0-9]{7}'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TaxType'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='2'/>
+      <xs:maxLength value='2'/>
+      <xs:pattern value='0[1-4]'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TaxValue'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TeleServiceCode'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='2'/>
+      <xs:maxLength value='2'/>
+      <xs:pattern value='(00|[12][0-2]|6[0-3]|[78]0|9[0-2])'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ThirdPartyInformation'>
+    <xs:sequence>
+      <xs:element name='ThirdPartyNumber' type='ThirdPartyNumber' minOccurs='0'/>
+      <xs:element name='ClirIndicator' type='ClirIndicator' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='ThirdPartyNumber'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:pattern value='[0-9]+'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='ThreeGcamelDestination'>
+      <xs:choice>
+      <xs:element name='CamelDestinationNumber' type='CamelDestinationNumber'/>
+      <xs:element name='GprsDestination' type='GprsDestination'/>
+      </xs:choice>
+  </xs:complexType>
+
+  <xs:simpleType name='TotalAdvisedCharge'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TotalAdvisedChargeRefund'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='TotalAdvisedChargeValue'>
+    <xs:sequence>
+      <xs:element name='AdvisedChargeCurrency' type='AdvisedChargeCurrency' minOccurs='0'/>
+      <xs:element name='TotalAdvisedCharge' type='TotalAdvisedCharge'/>
+      <xs:element name='TotalAdvisedChargeRefund' type='TotalAdvisedChargeRefund' minOccurs='0'/>
+      <xs:element name='TotalCommission' type='TotalCommission' minOccurs='0'/>
+      <xs:element name='TotalCommissionRefund' type='TotalCommissionRefund' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TotalAdvisedChargeValueList'>
+    <xs:sequence>
+      <xs:element name='TotalAdvisedChargeValue' type='TotalAdvisedChargeValue' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='TotalCallEventDuration'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TotalCharge'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TotalChargeRefund'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TotalCommission'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TotalCommissionRefund'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TotalDataVolume'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TotalDiscountRefund'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TotalDiscountValue'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TotalTaxRefund'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TotalTaxValue'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TotalTransactionDuration'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='TrackedCustomerEquipment'>
+    <xs:sequence>
+      <xs:element name='EquipmentIdType' type='EquipmentIdType'/>
+      <xs:element name='EquipmentId' type='EquipmentId'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TrackedCustomerHomeId'>
+    <xs:sequence>
+      <xs:element name='HomeIdType' type='HomeIdType'/>
+      <xs:element name='HomeIdentifier' type='HomeIdentifier'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TrackedCustomerHomeIdList'>
+    <xs:sequence>
+      <xs:element name='TrackedCustomerHomeId' type='TrackedCustomerHomeId' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TrackedCustomerIdentification'>
+    <xs:sequence>
+      <xs:element name='CustomerIdType' type='CustomerIdType'/>
+      <xs:element name='CustomerIdentifier' type='CustomerIdentifier'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TrackedCustomerIdList'>
+    <xs:sequence>
+      <xs:element name='TrackedCustomerIdentification' type='TrackedCustomerIdentification' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TrackedCustomerInformation'>
+    <xs:sequence>
+      <xs:element name='TrackedCustomerIdList' type='TrackedCustomerIdList'/>
+      <xs:element name='TrackedCustomerHomeIdList' type='TrackedCustomerHomeIdList' minOccurs='0'/>
+      <xs:element name='TrackedCustomerLocList' type='TrackedCustomerLocList' minOccurs='0'/>
+      <xs:element name='TrackedCustomerEquipment' type='TrackedCustomerEquipment' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TrackedCustomerLocation'>
+    <xs:sequence>
+      <xs:element name='LocationIdType' type='LocationIdType'/>
+      <xs:element name='LocationIdentifier' type='LocationIdentifier'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TrackedCustomerLocList'>
+    <xs:sequence>
+      <xs:element name='TrackedCustomerLocation' type='TrackedCustomerLocation' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TrackingCustomerEquipment'>
+    <xs:sequence>
+      <xs:element name='EquipmentIdType' type='EquipmentIdType'/>
+      <xs:element name='EquipmentId' type='EquipmentId'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TrackingCustomerHomeId'>
+    <xs:sequence>
+      <xs:element name='HomeIdType' type='HomeIdType'/>
+      <xs:element name='HomeIdentifier' type='HomeIdentifier'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TrackingCustomerHomeIdList'>
+    <xs:sequence>
+      <xs:element name='TrackingCustomerHomeId' type='TrackingCustomerHomeId' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TrackingCustomerIdentification'>
+    <xs:sequence>
+      <xs:element name='CustomerIdType' type='CustomerIdType'/>
+      <xs:element name='CustomerIdentifier' type='CustomerIdentifier'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TrackingCustomerIdList'>
+    <xs:sequence>
+      <xs:element name='TrackingCustomerIdentification' type='TrackingCustomerIdentification' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TrackingCustomerInformation'>
+    <xs:sequence>
+      <xs:element name='TrackingCustomerIdList' type='TrackingCustomerIdList'/>
+      <xs:element name='TrackingCustomerHomeIdList' type='TrackingCustomerHomeIdList' minOccurs='0'/>
+      <xs:element name='TrackingCustomerLocList' type='TrackingCustomerLocList' minOccurs='0'/>
+      <xs:element name='TrackingCustomerEquipment' type='TrackingCustomerEquipment' minOccurs='0'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TrackingCustomerLocation'>
+    <xs:sequence>
+      <xs:element name='LocationIdType' type='LocationIdType'/>
+      <xs:element name='LocationIdentifier' type='LocationIdentifier'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='TrackingCustomerLocList'>
+    <xs:sequence>
+      <xs:element name='TrackingCustomerLocation' type='TrackingCustomerLocation' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='TrackingFrequency'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TrackingPeriod'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TransactionAuthCode'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TransactionDescriptionSupp'>
+    <xs:restriction base='INTEGER'>
+      <xs:enumeration value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TransactionDetailDescription'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TransactionIdentifier'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TransactionShortDescription'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='0'/>
+      <xs:maxLength value='24'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TransactionStatus'>
+    <xs:restriction base='INTEGER'>
+      <xs:enumeration value='0'/>
+      <xs:enumeration value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='TransferCutOffTimeStamp'>
+    <xs:sequence>
+      <xs:element name='DateTimeLong' type='DateTimeLong'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='TransparencyIndicator'>
+    <xs:restriction base='INTEGER'>
+      <xs:enumeration value='0'/>
+      <xs:enumeration value='1'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='UserProtocolIndicator'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='5'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='UtcTimeOffset'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='5'/>
+      <xs:maxLength value='5'/>
+      <xs:pattern value='(-1[0-3]|-0[0-9]|\+0[0-9]|\+1[0-4])(00|15|30|45)'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='UtcTimeOffsetCode'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+      <xs:maxInclusive value='99'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='UtcTimeOffsetInfo'>
+    <xs:sequence>
+      <xs:element name='UtcTimeOffsetCode' type='UtcTimeOffsetCode'/>
+      <xs:element name='UtcTimeOffset' type='UtcTimeOffset'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='UtcTimeOffsetInfoList'>
+    <xs:sequence>
+      <xs:element name='UtcTimeOffsetInfo' type='UtcTimeOffsetInfo' maxOccurs='unbounded'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name='VerticalAccuracyDelivered'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='VerticalAccuracyRequested'>
+    <xs:restriction base='INTEGER'>
+      <xs:minInclusive value='0'/>
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='AbsoluteAmount'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='Bid'>
+    <xs:restriction base='OCTET_STRING'>
+      <xs:minLength value='5'/>
+      <xs:maxLength value='5'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='Code'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='AsciiString'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='BCDString'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='Currency'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='HexString'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='NumberString'>
+    <xs:restriction base='OCTET_STRING'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='PercentageRate'>
+    <xs:restriction base='INTEGER'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='BOOLEAN'>
+    <xs:restriction base='xs:boolean'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='INTEGER'>
+    <xs:restriction base='xs:integer'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='BIT_STRING'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='OCTET_STRING'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='NULL'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='OBJECT_IDENTIFIER'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ObjectDescriptor'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='EXTERNAL'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='REAL'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='ENUMERATED'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='EMBEDDED_PDV'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='UTF8String'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='RELATIVE-OID'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TIME'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='SEQUENCE'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='SET'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='NumericString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='PrintableString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TeletexString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='VideotexString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='IA5String'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='UTCTime'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='GeneralizedTime'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='GraphicString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='VisibleString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='GeneralString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='UniversalString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='CHARACTER_STRING'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='BMPString'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='DATE'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='TIME-OF-DAY'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='DATE-TIME'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='DURATION'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='OID-IRI'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='RELATIVE-OID-IRI'>
+    <xs:restriction base='xs:string'>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

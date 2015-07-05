@@ -1,0 +1,270 @@
+<?xml version='1.0'?>
+<grammar datatypeLibrary='http://www.w3.org/2001/XMLSchema-datatypes'
+         xmlns='http://relaxng.org/ns/structure/1.0'>
+
+  <start>
+    <element name='Document'>
+      <ref name='Document'/>
+    </element>
+  </start>
+
+  <define name='Document'>
+    <element name='Header'>
+      <ref name='Header'/>
+    </element>
+    <element name='Records'>
+      <ref name='Records'/>
+    </element>
+    <optional>
+    <element name='Footer'>
+      <ref name='Footer'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='Header'>
+    <element name='From'>
+      <ref name='From'/>
+    </element>
+    <element name='To'>
+      <ref name='To'/>
+    </element>
+  </define>
+
+  <define name='Footer'>
+    <element name='RecordCount'>
+      <ref name='RecordCount'/>
+    </element>
+  </define>
+
+  <define name='Records'>
+    <oneOrMore>
+    <element name='Record'>
+      <ref name='Record'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='Record'>
+    <element name='Number'>
+      <ref name='Number'/>
+    </element>
+    <element name='Date'>
+      <ref name='Date'/>
+    </element>
+    <element name='Location'>
+      <ref name='Location'/>
+    </element>
+  </define>
+
+  <define name='Number'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='Date'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='From'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='To'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='String'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='RecordCount'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='Location'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='BOOLEAN'>
+    <data type='boolean'>
+    </data>
+  </define>
+
+  <define name='INTEGER'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='BIT_STRING'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='OCTET_STRING'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='NULL'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='OBJECT_IDENTIFIER'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ObjectDescriptor'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='EXTERNAL'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='REAL'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ENUMERATED'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='EMBEDDED_PDV'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='UTF8String'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='RELATIVE-OID'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='TIME'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='SEQUENCE'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='SET'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='NumericString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='PrintableString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='TeletexString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='VideotexString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='IA5String'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='UTCTime'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='GeneralizedTime'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='GraphicString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='VisibleString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='GeneralString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='UniversalString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='CHARACTER_STRING'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='BMPString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='DATE'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='TIME-OF-DAY'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='DATE-TIME'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='DURATION'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='OID-IRI'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='RELATIVE-OID-IRI'>
+    <data type='string'>
+    </data>
+  </define>
+
+</grammar>

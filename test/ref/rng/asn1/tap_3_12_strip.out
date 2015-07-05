@@ -1,0 +1,3494 @@
+<?xml version='1.0'?>
+<grammar datatypeLibrary='http://www.w3.org/2001/XMLSchema-datatypes'
+         xmlns='http://relaxng.org/ns/structure/1.0'>
+
+  <start>
+      <ref name='DataInterChange'/>
+  </start>
+
+  <define name='DataInterChange'>
+    <choice>
+    <element name='TransferBatch'>
+      <ref name='TransferBatch'/>
+    </element>
+    <element name='Notification'>
+      <ref name='Notification'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='TransferBatch'>
+    <element name='BatchControlInfo'>
+      <ref name='BatchControlInfo'/>
+    </element>
+    <optional>
+    <element name='AccountingInfo'>
+      <ref name='AccountingInfo'/>
+    </element>
+    </optional>
+    <element name='NetworkInfo'>
+      <ref name='NetworkInfo'/>
+    </element>
+    <optional>
+    <element name='MessageDescriptionInfoList'>
+      <ref name='MessageDescriptionInfoList'/>
+    </element>
+    </optional>
+    <element name='CallEventDetailList'>
+      <ref name='CallEventDetailList'/>
+    </element>
+    <element name='AuditControlInfo'>
+      <ref name='AuditControlInfo'/>
+    </element>
+  </define>
+
+  <define name='Notification'>
+    <element name='Sender'>
+      <ref name='Sender'/>
+    </element>
+    <element name='Recipient'>
+      <ref name='Recipient'/>
+    </element>
+    <element name='FileSequenceNumber'>
+      <ref name='FileSequenceNumber'/>
+    </element>
+    <optional>
+    <element name='RapFileSequenceNumber'>
+      <ref name='RapFileSequenceNumber'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='FileCreationTimeStamp'>
+      <ref name='DateTimeLong'/>
+    </element>
+    </optional>
+    <element name='FileAvailableTimeStamp'>
+      <ref name='DateTimeLong'/>
+    </element>
+    <element name='TransferCutOffTimeStamp'>
+      <ref name='DateTimeLong'/>
+    </element>
+    <element name='SpecificationVersionNumber'>
+      <ref name='SpecificationVersionNumber'/>
+    </element>
+    <element name='ReleaseVersionNumber'>
+      <ref name='ReleaseVersionNumber'/>
+    </element>
+    <optional>
+    <element name='FileTypeIndicator'>
+      <ref name='FileTypeIndicator'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='OperatorSpecInfoList'>
+      <ref name='OperatorSpecInfoList'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='CallEventDetailList'>
+    <oneOrMore>
+      <ref name='CallEventDetail'/>
+    </oneOrMore>
+  </define>
+
+  <define name='CallEventDetail'>
+    <choice>
+    <element name='MobileOriginatedCall'>
+      <ref name='MobileOriginatedCall'/>
+    </element>
+    <element name='MobileTerminatedCall'>
+      <ref name='MobileTerminatedCall'/>
+    </element>
+    <element name='SupplServiceEvent'>
+      <ref name='SupplServiceEvent'/>
+    </element>
+    <element name='ServiceCentreUsage'>
+      <ref name='ServiceCentreUsage'/>
+    </element>
+    <element name='GprsCall'>
+      <ref name='GprsCall'/>
+    </element>
+    <element name='ContentTransaction'>
+      <ref name='ContentTransaction'/>
+    </element>
+    <element name='LocationService'>
+      <ref name='LocationService'/>
+    </element>
+    <element name='MessagingEvent'>
+      <ref name='MessagingEvent'/>
+    </element>
+    <element name='MobileSession'>
+      <ref name='MobileSession'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='BatchControlInfo'>
+    <element name='Sender'>
+      <ref name='Sender'/>
+    </element>
+    <element name='Recipient'>
+      <ref name='Recipient'/>
+    </element>
+    <element name='FileSequenceNumber'>
+      <ref name='FileSequenceNumber'/>
+    </element>
+    <optional>
+    <element name='FileCreationTimeStamp'>
+      <ref name='DateTimeLong'/>
+    </element>
+    </optional>
+    <element name='TransferCutOffTimeStamp'>
+      <ref name='DateTimeLong'/>
+    </element>
+    <element name='FileAvailableTimeStamp'>
+      <ref name='DateTimeLong'/>
+    </element>
+    <element name='SpecificationVersionNumber'>
+      <ref name='SpecificationVersionNumber'/>
+    </element>
+    <element name='ReleaseVersionNumber'>
+      <ref name='ReleaseVersionNumber'/>
+    </element>
+    <optional>
+    <element name='FileTypeIndicator'>
+      <ref name='FileTypeIndicator'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='RapFileSequenceNumber'>
+      <ref name='RapFileSequenceNumber'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='OperatorSpecInfoList'>
+      <ref name='OperatorSpecInfoList'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='AccountingInfo'>
+    <optional>
+    <element name='TaxationList'>
+      <ref name='TaxationList'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='DiscountingList'>
+      <ref name='DiscountingList'/>
+    </element>
+    </optional>
+    <element name='LocalCurrency'>
+      <ref name='LocalCurrency'/>
+    </element>
+    <optional>
+    <element name='TapCurrency'>
+      <ref name='TapCurrency'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='CurrencyConversionList'>
+      <ref name='CurrencyConversionList'/>
+    </element>
+    </optional>
+    <element name='TapDecimalPlaces'>
+      <ref name='TapDecimalPlaces'/>
+    </element>
+  </define>
+
+  <define name='NetworkInfo'>
+    <element name='UtcTimeOffsetInfoList'>
+      <ref name='UtcTimeOffsetInfoList'/>
+    </element>
+    <optional>
+    <element name='RecEntityInfoList'>
+      <ref name='RecEntityInfoList'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='MessageDescriptionInfoList'>
+    <oneOrMore>
+    <element name='MessageDescriptionInformation'>
+      <ref name='MessageDescriptionInformation'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='MobileOriginatedCall'>
+    <element name='MoBasicCallInformation'>
+      <ref name='MoBasicCallInformation'/>
+    </element>
+    <element name='LocationInformation'>
+      <ref name='LocationInformation'/>
+    </element>
+    <optional>
+    <element name='ImeiOrEsn'>
+      <ref name='ImeiOrEsn'/>
+    </element>
+    </optional>
+    <element name='BasicServiceUsedList'>
+      <ref name='BasicServiceUsedList'/>
+    </element>
+    <optional>
+    <element name='SupplServiceCode'>
+      <ref name='SupplServiceCode'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ThirdPartyInformation'>
+      <ref name='ThirdPartyInformation'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='CamelServiceUsed'>
+      <ref name='CamelServiceUsed'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='OperatorSpecInfoList'>
+      <ref name='OperatorSpecInfoList'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='MobileTerminatedCall'>
+    <element name='MtBasicCallInformation'>
+      <ref name='MtBasicCallInformation'/>
+    </element>
+    <element name='LocationInformation'>
+      <ref name='LocationInformation'/>
+    </element>
+    <optional>
+    <element name='ImeiOrEsn'>
+      <ref name='ImeiOrEsn'/>
+    </element>
+    </optional>
+    <element name='BasicServiceUsedList'>
+      <ref name='BasicServiceUsedList'/>
+    </element>
+    <optional>
+    <element name='CamelServiceUsed'>
+      <ref name='CamelServiceUsed'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='OperatorSpecInfoList'>
+      <ref name='OperatorSpecInfoList'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='SupplServiceEvent'>
+    <element name='ChargeableSubscriber'>
+      <ref name='ChargeableSubscriber'/>
+    </element>
+    <optional>
+    <element name='RapFileSequenceNumber'>
+      <ref name='RapFileSequenceNumber'/>
+    </element>
+    </optional>
+    <element name='LocationInformation'>
+      <ref name='LocationInformation'/>
+    </element>
+    <optional>
+    <element name='ImeiOrEsn'>
+      <ref name='ImeiOrEsn'/>
+    </element>
+    </optional>
+    <element name='SupplServiceUsed'>
+      <ref name='SupplServiceUsed'/>
+    </element>
+    <optional>
+    <element name='OperatorSpecInfoList'>
+      <ref name='OperatorSpecInfoList'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='ServiceCentreUsage'>
+    <element name='ScuBasicInformation'>
+      <ref name='ScuBasicInformation'/>
+    </element>
+    <optional>
+    <element name='RapFileSequenceNumber'>
+      <ref name='RapFileSequenceNumber'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ServingNetwork'>
+      <ref name='ServingNetwork'/>
+    </element>
+    </optional>
+    <element name='RecEntityCode'>
+      <ref name='RecEntityCode'/>
+    </element>
+    <element name='ChargeInformation'>
+      <ref name='ChargeInformation'/>
+    </element>
+    <element name='ScuChargeType'>
+      <ref name='ScuChargeType'/>
+    </element>
+    <element name='ScuTimeStamps'>
+      <ref name='ScuTimeStamps'/>
+    </element>
+    <optional>
+    <element name='OperatorSpecInfoList'>
+      <ref name='OperatorSpecInfoList'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='GprsCall'>
+    <element name='GprsBasicCallInformation'>
+      <ref name='GprsBasicCallInformation'/>
+    </element>
+    <element name='GprsLocationInformation'>
+      <ref name='GprsLocationInformation'/>
+    </element>
+    <optional>
+    <element name='ImeiOrEsn'>
+      <ref name='ImeiOrEsn'/>
+    </element>
+    </optional>
+    <element name='GprsServiceUsed'>
+      <ref name='GprsServiceUsed'/>
+    </element>
+    <optional>
+    <element name='CamelServiceUsed'>
+      <ref name='CamelServiceUsed'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='OperatorSpecInfoList'>
+      <ref name='OperatorSpecInfoList'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='ContentTransaction'>
+    <element name='ContentTransactionBasicInfo'>
+      <ref name='ContentTransactionBasicInfo'/>
+    </element>
+    <element name='ChargedPartyInformation'>
+      <ref name='ChargedPartyInformation'/>
+    </element>
+    <element name='ServingPartiesInformation'>
+      <ref name='ServingPartiesInformation'/>
+    </element>
+    <element name='ContentServiceUsedList'>
+      <ref name='ContentServiceUsedList'/>
+    </element>
+    <optional>
+    <element name='OperatorSpecInfoList'>
+      <ref name='OperatorSpecInfoList'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='LocationService'>
+    <optional>
+    <element name='RapFileSequenceNumber'>
+      <ref name='RapFileSequenceNumber'/>
+    </element>
+    </optional>
+    <element name='RecEntityCode'>
+      <ref name='RecEntityCode'/>
+    </element>
+    <optional>
+    <element name='CallReference'>
+      <ref name='CallReference'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TrackingCustomerInformation'>
+      <ref name='TrackingCustomerInformation'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='LCSSPInformation'>
+      <ref name='LCSSPInformation'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TrackedCustomerInformation'>
+      <ref name='TrackedCustomerInformation'/>
+    </element>
+    </optional>
+    <element name='LocationServiceUsage'>
+      <ref name='LocationServiceUsage'/>
+    </element>
+    <optional>
+    <element name='OperatorSpecInfoList'>
+      <ref name='OperatorSpecInfoList'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='MessagingEvent'>
+    <element name='MessagingEventService'>
+      <ref name='MessagingEventService'/>
+    </element>
+    <element name='ChargedParty'>
+      <ref name='ChargedParty'/>
+    </element>
+    <optional>
+    <element name='RapFileSequenceNumber'>
+      <ref name='RapFileSequenceNumber'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='SimToolkitIndicator'>
+      <ref name='SimToolkitIndicator'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='GeographicalLocation'>
+      <ref name='GeographicalLocation'/>
+    </element>
+    </optional>
+    <element name='EventReference'>
+      <ref name='EventReference'/>
+    </element>
+    <element name='RecEntityCodeList'>
+      <ref name='RecEntityCodeList'/>
+    </element>
+    <optional>
+    <element name='NetworkElementList'>
+      <ref name='NetworkElementList'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='LocationArea'>
+      <ref name='LocationArea'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='CellId'>
+      <ref name='CellId'/>
+    </element>
+    </optional>
+    <element name='ServiceStartTimestamp'>
+      <ref name='DateTime'/>
+    </element>
+    <optional>
+    <element name='NonChargedParty'>
+      <ref name='NonChargedParty'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ExchangeRateCode'>
+      <ref name='ExchangeRateCode'/>
+    </element>
+    </optional>
+    <element name='CallTypeGroup'>
+      <ref name='CallTypeGroup'/>
+    </element>
+    <element name='Charge'>
+      <ref name='Charge'/>
+    </element>
+    <optional>
+    <element name='TaxInformationList'>
+      <ref name='TaxInformationList'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='OperatorSpecInfoList'>
+      <ref name='OperatorSpecInfoList'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='MobileSession'>
+    <element name='MobileSessionService'>
+      <ref name='MobileSessionService'/>
+    </element>
+    <element name='ChargedParty'>
+      <ref name='ChargedParty'/>
+    </element>
+    <optional>
+    <element name='RapFileSequenceNumber'>
+      <ref name='RapFileSequenceNumber'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='SimToolkitIndicator'>
+      <ref name='SimToolkitIndicator'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='GeographicalLocation'>
+      <ref name='GeographicalLocation'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='LocationArea'>
+      <ref name='LocationArea'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='CellId'>
+      <ref name='CellId'/>
+    </element>
+    </optional>
+    <element name='EventReference'>
+      <ref name='EventReference'/>
+    </element>
+    <element name='RecEntityCodeList'>
+      <ref name='RecEntityCodeList'/>
+    </element>
+    <element name='ServiceStartTimestamp'>
+      <ref name='DateTime'/>
+    </element>
+    <optional>
+    <element name='CauseForTerm'>
+      <ref name='CauseForTerm'/>
+    </element>
+    </optional>
+    <element name='TotalCallEventDuration'>
+      <ref name='TotalCallEventDuration'/>
+    </element>
+    <optional>
+    <element name='NonChargedParty'>
+      <ref name='NonChargedParty'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='RequestedDestination'>
+      <ref name='RequestedDestination'/>
+    </element>
+    </optional>
+    <element name='SessionChargeInfoList'>
+      <ref name='SessionChargeInfoList'/>
+    </element>
+    <optional>
+    <element name='OperatorSpecInfoList'>
+      <ref name='OperatorSpecInfoList'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='AuditControlInfo'>
+    <optional>
+    <element name='EarliestCallTimeStamp'>
+      <ref name='DateTimeLong'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='LatestCallTimeStamp'>
+      <ref name='DateTimeLong'/>
+    </element>
+    </optional>
+    <element name='TotalCharge'>
+      <ref name='TotalCharge'/>
+    </element>
+    <optional>
+    <element name='TotalChargeRefund'>
+      <ref name='TotalChargeRefund'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TotalTaxRefund'>
+      <ref name='TotalTaxRefund'/>
+    </element>
+    </optional>
+    <element name='TotalTaxValue'>
+      <ref name='TotalTaxValue'/>
+    </element>
+    <element name='TotalDiscountValue'>
+      <ref name='TotalDiscountValue'/>
+    </element>
+    <optional>
+    <element name='TotalDiscountRefund'>
+      <ref name='TotalDiscountRefund'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TotalAdvisedChargeValueList'>
+      <ref name='TotalAdvisedChargeValueList'/>
+    </element>
+    </optional>
+    <element name='CallEventDetailsCount'>
+      <ref name='CallEventDetailsCount'/>
+    </element>
+    <optional>
+    <element name='OperatorSpecInfoList'>
+      <ref name='OperatorSpecInfoList'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='AccessPointNameNI'>
+    <data type='string'>
+      <param name='minLength'>1</param>
+      <param name='maxLength'>63</param>
+    </data>
+  </define>
+
+  <define name='AccessPointNameOI'>
+    <data type='string'>
+      <param name='minLength'>1</param>
+      <param name='maxLength'>37</param>
+    </data>
+  </define>
+
+  <define name='ActualDeliveryTimeStamp'>
+    <element name='DateTime'>
+      <ref name='DateTime'/>
+    </element>
+  </define>
+
+  <define name='AddressStringDigits'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='AdvisedCharge'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='AdvisedChargeCurrency'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='AdvisedChargeInformation'>
+    <optional>
+    <element name='PaidIndicator'>
+      <ref name='PaidIndicator'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='PaymentMethod'>
+      <ref name='PaymentMethod'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='AdvisedChargeCurrency'>
+      <ref name='AdvisedChargeCurrency'/>
+    </element>
+    </optional>
+    <element name='AdvisedCharge'>
+      <ref name='AdvisedCharge'/>
+    </element>
+    <optional>
+    <element name='Commission'>
+      <ref name='Commission'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='AgeOfLocation'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='BasicService'>
+    <element name='BasicServiceCode'>
+      <ref name='BasicServiceCode'/>
+    </element>
+    <optional>
+    <element name='TransparencyIndicator'>
+      <ref name='TransparencyIndicator'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='Fnur'>
+      <ref name='Fnur'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='UserProtocolIndicator'>
+      <ref name='UserProtocolIndicator'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='GuaranteedBitRate'>
+      <ref name='GuaranteedBitRate'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='MaximumBitRate'>
+      <ref name='MaximumBitRate'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='BasicServiceCode'>
+    <choice>
+    <element name='TeleServiceCode'>
+      <ref name='TeleServiceCode'/>
+    </element>
+    <element name='BearerServiceCode'>
+      <ref name='BearerServiceCode'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='BasicServiceCodeList'>
+    <oneOrMore>
+    <element name='BasicServiceCode'>
+      <ref name='BasicServiceCode'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='BasicServiceUsed'>
+    <element name='BasicService'>
+      <ref name='BasicService'/>
+    </element>
+    <optional>
+    <element name='ChargingTimeStamp'>
+      <ref name='DateTime'/>
+    </element>
+    </optional>
+    <element name='ChargeInformationList'>
+      <ref name='ChargeInformationList'/>
+    </element>
+    <optional>
+    <element name='HSCSDIndicator'>
+      <ref name='HSCSDIndicator'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='BasicServiceUsedList'>
+    <oneOrMore>
+    <element name='BasicServiceUsed'>
+      <ref name='BasicServiceUsed'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='BearerServiceCode'>
+    <data type='string'>
+      <param name='minLength'>2</param>
+      <param name='maxLength'>2</param>
+    </data>
+  </define>
+
+  <define name='CalledNumber'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='CalledPlace'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='CalledRegion'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='CallEventDetailsCount'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='CallEventStartTimeStamp'>
+    <element name='DateTime'>
+      <ref name='DateTime'/>
+    </element>
+  </define>
+
+  <define name='CallingNumber'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='CallOriginator'>
+    <optional>
+    <element name='CallingNumber'>
+      <ref name='CallingNumber'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ClirIndicator'>
+      <ref name='ClirIndicator'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='SMSOriginator'>
+      <ref name='SMSOriginator'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='CallReference'>
+    <data type='string'>
+      <param name='minLength'>1</param>
+      <param name='maxLength'>8</param>
+    </data>
+  </define>
+
+  <define name='CallTypeGroup'>
+    <element name='CallTypeLevel1'>
+      <ref name='CallTypeLevel1'/>
+    </element>
+    <element name='CallTypeLevel2'>
+      <ref name='CallTypeLevel2'/>
+    </element>
+    <element name='CallTypeLevel3'>
+      <ref name='CallTypeLevel3'/>
+    </element>
+  </define>
+
+  <define name='CallTypeLevel1'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='CallTypeLevel2'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='CallTypeLevel3'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='CamelDestinationNumber'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='CamelInvocationFee'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='CamelServiceKey'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='CamelServiceLevel'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='CamelServiceUsed'>
+    <optional>
+    <element name='CamelServiceLevel'>
+      <ref name='CamelServiceLevel'/>
+    </element>
+    </optional>
+    <element name='CamelServiceKey'>
+      <ref name='CamelServiceKey'/>
+    </element>
+    <optional>
+    <element name='DefaultCallHandlingIndicator'>
+      <ref name='DefaultCallHandlingIndicator'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ExchangeRateCode'>
+      <ref name='ExchangeRateCode'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TaxInformationList'>
+      <ref name='TaxInformationList'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='DiscountInformation'>
+      <ref name='DiscountInformation'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='CamelInvocationFee'>
+      <ref name='CamelInvocationFee'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ThreeGcamelDestination'>
+      <ref name='ThreeGcamelDestination'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='CseInformation'>
+      <ref name='CseInformation'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='CauseForTerm'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='CellId'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='Charge'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ChargeableSubscriber'>
+    <choice>
+    <element name='SimChargeableSubscriber'>
+      <ref name='SimChargeableSubscriber'/>
+    </element>
+    <element name='MinChargeableSubscriber'>
+      <ref name='MinChargeableSubscriber'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='ChargeableUnits'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ChargeDetail'>
+    <element name='ChargeType'>
+      <ref name='ChargeType'/>
+    </element>
+    <element name='Charge'>
+      <ref name='Charge'/>
+    </element>
+    <optional>
+    <element name='ChargeableUnits'>
+      <ref name='ChargeableUnits'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ChargedUnits'>
+      <ref name='ChargedUnits'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ChargeDetailTimeStamp'>
+      <ref name='DateTime'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='ChargeDetailList'>
+    <oneOrMore>
+    <element name='ChargeDetail'>
+      <ref name='ChargeDetail'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='ChargeDetailTimeStamp'>
+    <element name='ChargingTimeStamp'>
+      <ref name='DateTime'/>
+    </element>
+  </define>
+
+  <define name='ChargedItem'>
+    <data type='string'>
+      <param name='minLength'>1</param>
+      <param name='maxLength'>1</param>
+    </data>
+  </define>
+
+  <define name='ChargedParty'>
+    <element name='Imsi'>
+      <ref name='Imsi'/>
+    </element>
+    <optional>
+    <element name='Msisdn'>
+      <ref name='Msisdn'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='PublicUserId'>
+      <ref name='PublicUserId'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='HomeBid'>
+      <ref name='HomeBid'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='HomeLocationDescription'>
+      <ref name='HomeLocationDescription'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='Imei'>
+      <ref name='Imei'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='ChargedPartyEquipment'>
+    <element name='EquipmentIdType'>
+      <ref name='EquipmentIdType'/>
+    </element>
+    <element name='EquipmentId'>
+      <ref name='EquipmentId'/>
+    </element>
+  </define>
+
+  <define name='ChargedPartyHomeIdentification'>
+    <element name='HomeIdType'>
+      <ref name='HomeIdType'/>
+    </element>
+    <element name='HomeIdentifier'>
+      <ref name='HomeIdentifier'/>
+    </element>
+  </define>
+
+  <define name='ChargedPartyHomeIdList'>
+    <oneOrMore>
+    <element name='ChargedPartyHomeIdentification'>
+      <ref name='ChargedPartyHomeIdentification'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='ChargedPartyIdentification'>
+    <element name='ChargedPartyIdType'>
+      <ref name='ChargedPartyIdType'/>
+    </element>
+    <element name='ChargedPartyIdentifier'>
+      <ref name='ChargedPartyIdentifier'/>
+    </element>
+  </define>
+
+  <define name='ChargedPartyIdentifier'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ChargedPartyIdList'>
+    <oneOrMore>
+    <element name='ChargedPartyIdentification'>
+      <ref name='ChargedPartyIdentification'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='ChargedPartyIdType'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ChargedPartyInformation'>
+    <element name='ChargedPartyIdList'>
+      <ref name='ChargedPartyIdList'/>
+    </element>
+    <optional>
+    <element name='ChargedPartyHomeIdList'>
+      <ref name='ChargedPartyHomeIdList'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ChargedPartyLocationList'>
+      <ref name='ChargedPartyLocationList'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ChargedPartyEquipment'>
+      <ref name='ChargedPartyEquipment'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='ChargedPartyLocation'>
+    <element name='LocationIdType'>
+      <ref name='LocationIdType'/>
+    </element>
+    <element name='LocationIdentifier'>
+      <ref name='LocationIdentifier'/>
+    </element>
+  </define>
+
+  <define name='ChargedPartyLocationList'>
+    <oneOrMore>
+    <element name='ChargedPartyLocation'>
+      <ref name='ChargedPartyLocation'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='ChargedPartyStatus'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ChargedUnits'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ChargeInformation'>
+    <element name='ChargedItem'>
+      <ref name='ChargedItem'/>
+    </element>
+    <optional>
+    <element name='ExchangeRateCode'>
+      <ref name='ExchangeRateCode'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='CallTypeGroup'>
+      <ref name='CallTypeGroup'/>
+    </element>
+    </optional>
+    <element name='ChargeDetailList'>
+      <ref name='ChargeDetailList'/>
+    </element>
+    <optional>
+    <element name='TaxInformationList'>
+      <ref name='TaxInformationList'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='DiscountInformation'>
+      <ref name='DiscountInformation'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='ChargeInformationList'>
+    <oneOrMore>
+    <element name='ChargeInformation'>
+      <ref name='ChargeInformation'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='ChargeRefundIndicator'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ChargeType'>
+    <data type='string'>
+      <param name='minLength'>2</param>
+      <param name='maxLength'>3</param>
+    </data>
+  </define>
+
+  <define name='ChargingId'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ChargingPoint'>
+    <data type='string'>
+      <param name='minLength'>1</param>
+      <param name='maxLength'>1</param>
+    </data>
+  </define>
+
+  <define name='ChargingTimeStamp'>
+    <element name='DateTime'>
+      <ref name='DateTime'/>
+    </element>
+  </define>
+
+  <define name='ClirIndicator'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='Commission'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='CompletionTimeStamp'>
+    <element name='DateTime'>
+      <ref name='DateTime'/>
+    </element>
+  </define>
+
+  <define name='ContentChargingPoint'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ContentProvider'>
+    <element name='ContentProviderIdType'>
+      <ref name='ContentProviderIdType'/>
+    </element>
+    <element name='ContentProviderIdentifier'>
+      <ref name='ContentProviderIdentifier'/>
+    </element>
+  </define>
+
+  <define name='ContentProviderIdentifier'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ContentProviderIdList'>
+    <oneOrMore>
+    <element name='ContentProvider'>
+      <ref name='ContentProvider'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='ContentProviderIdType'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ContentProviderName'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ContentServiceUsed'>
+    <element name='ContentTransactionCode'>
+      <ref name='ContentTransactionCode'/>
+    </element>
+    <element name='ContentTransactionType'>
+      <ref name='ContentTransactionType'/>
+    </element>
+    <optional>
+    <element name='ObjectType'>
+      <ref name='ObjectType'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TransactionDescriptionSupp'>
+      <ref name='TransactionDescriptionSupp'/>
+    </element>
+    </optional>
+    <element name='TransactionShortDescription'>
+      <ref name='TransactionShortDescription'/>
+    </element>
+    <optional>
+    <element name='TransactionDetailDescription'>
+      <ref name='TransactionDetailDescription'/>
+    </element>
+    </optional>
+    <element name='TransactionIdentifier'>
+      <ref name='TransactionIdentifier'/>
+    </element>
+    <optional>
+    <element name='TransactionAuthCode'>
+      <ref name='TransactionAuthCode'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='DataVolumeIncoming'>
+      <ref name='DataVolumeIncoming'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='DataVolumeOutgoing'>
+      <ref name='DataVolumeOutgoing'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TotalDataVolume'>
+      <ref name='TotalDataVolume'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ChargeRefundIndicator'>
+      <ref name='ChargeRefundIndicator'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ContentChargingPoint'>
+      <ref name='ContentChargingPoint'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ChargeInformationList'>
+      <ref name='ChargeInformationList'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='AdvisedChargeInformation'>
+      <ref name='AdvisedChargeInformation'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='ContentServiceUsedList'>
+    <oneOrMore>
+    <element name='ContentServiceUsed'>
+      <ref name='ContentServiceUsed'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='ContentTransactionBasicInfo'>
+    <optional>
+    <element name='RapFileSequenceNumber'>
+      <ref name='RapFileSequenceNumber'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='OrderPlacedTimeStamp'>
+      <ref name='DateTime'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='RequestedDeliveryTimeStamp'>
+      <ref name='DateTime'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ActualDeliveryTimeStamp'>
+      <ref name='DateTime'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TotalTransactionDuration'>
+      <ref name='TotalTransactionDuration'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TransactionStatus'>
+      <ref name='TransactionStatus'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='ContentTransactionCode'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ContentTransactionType'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='CseInformation'>
+    <data type='string'>
+      <param name='minLength'>1</param>
+      <param name='maxLength'>40</param>
+    </data>
+  </define>
+
+  <define name='CurrencyConversion'>
+    <element name='ExchangeRateCode'>
+      <ref name='ExchangeRateCode'/>
+    </element>
+    <element name='NumberOfDecimalPlaces'>
+      <ref name='NumberOfDecimalPlaces'/>
+    </element>
+    <element name='ExchangeRate'>
+      <ref name='ExchangeRate'/>
+    </element>
+  </define>
+
+  <define name='CurrencyConversionList'>
+    <oneOrMore>
+    <element name='CurrencyConversion'>
+      <ref name='CurrencyConversion'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='CustomerIdentifier'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='CustomerIdType'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='DataVolume'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='DataVolumeIncoming'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='DataVolumeOutgoing'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='DateTime'>
+    <element name='LocalTimeStamp'>
+      <ref name='LocalTimeStamp'/>
+    </element>
+    <element name='UtcTimeOffsetCode'>
+      <ref name='UtcTimeOffsetCode'/>
+    </element>
+  </define>
+
+  <define name='DateTimeLong'>
+    <element name='LocalTimeStamp'>
+      <ref name='LocalTimeStamp'/>
+    </element>
+    <element name='UtcTimeOffset'>
+      <ref name='UtcTimeOffset'/>
+    </element>
+  </define>
+
+  <define name='DefaultCallHandlingIndicator'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='DepositTimeStamp'>
+    <element name='DateTime'>
+      <ref name='DateTime'/>
+    </element>
+  </define>
+
+  <define name='Destination'>
+    <optional>
+    <element name='CalledNumber'>
+      <ref name='CalledNumber'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='DialledDigits'>
+      <ref name='DialledDigits'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='CalledPlace'>
+      <ref name='CalledPlace'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='CalledRegion'>
+      <ref name='CalledRegion'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='SMSDestinationNumber'>
+      <ref name='SMSDestinationNumber'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='DestinationNetwork'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='DialledDigits'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='Discount'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='DiscountableAmount'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='DiscountApplied'>
+    <choice>
+    <element name='FixedDiscountValue'>
+      <ref name='FixedDiscountValue'/>
+    </element>
+    <element name='DiscountRate'>
+      <ref name='DiscountRate'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='DiscountCode'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='DiscountInformation'>
+    <element name='DiscountCode'>
+      <ref name='DiscountCode'/>
+    </element>
+    <optional>
+    <element name='Discount'>
+      <ref name='Discount'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='DiscountableAmount'>
+      <ref name='DiscountableAmount'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='Discounting'>
+    <element name='DiscountCode'>
+      <ref name='DiscountCode'/>
+    </element>
+    <element name='DiscountApplied'>
+      <ref name='DiscountApplied'/>
+    </element>
+  </define>
+
+  <define name='DiscountingList'>
+    <oneOrMore>
+    <element name='Discounting'>
+      <ref name='Discounting'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='DiscountRate'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='DiscountValue'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='DistanceChargeBandCode'>
+    <data type='string'>
+      <param name='minLength'>1</param>
+      <param name='maxLength'>1</param>
+    </data>
+  </define>
+
+  <define name='EarliestCallTimeStamp'>
+    <element name='DateTimeLong'>
+      <ref name='DateTimeLong'/>
+    </element>
+  </define>
+
+  <define name='ElementId'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ElementType'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='EquipmentId'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='EquipmentIdType'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='Esn'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='EventReference'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ExchangeRate'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ExchangeRateCode'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='FileAvailableTimeStamp'>
+    <element name='DateTimeLong'>
+      <ref name='DateTimeLong'/>
+    </element>
+  </define>
+
+  <define name='FileCreationTimeStamp'>
+    <element name='DateTimeLong'>
+      <ref name='DateTimeLong'/>
+    </element>
+  </define>
+
+  <define name='FileSequenceNumber'>
+    <data type='string'>
+      <param name='minLength'>5</param>
+      <param name='maxLength'>5</param>
+    </data>
+  </define>
+
+  <define name='FileTypeIndicator'>
+    <data type='string'>
+      <param name='minLength'>1</param>
+      <param name='maxLength'>1</param>
+    </data>
+  </define>
+
+  <define name='FixedDiscountValue'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='Fnur'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='GeographicalLocation'>
+    <optional>
+    <element name='ServingNetwork'>
+      <ref name='ServingNetwork'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ServingBid'>
+      <ref name='ServingBid'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ServingLocationDescription'>
+      <ref name='ServingLocationDescription'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='GprsBasicCallInformation'>
+    <element name='GprsChargeableSubscriber'>
+      <ref name='GprsChargeableSubscriber'/>
+    </element>
+    <optional>
+    <element name='RapFileSequenceNumber'>
+      <ref name='RapFileSequenceNumber'/>
+    </element>
+    </optional>
+    <element name='GprsDestination'>
+      <ref name='GprsDestination'/>
+    </element>
+    <element name='CallEventStartTimeStamp'>
+      <ref name='DateTime'/>
+    </element>
+    <element name='TotalCallEventDuration'>
+      <ref name='TotalCallEventDuration'/>
+    </element>
+    <optional>
+    <element name='CauseForTerm'>
+      <ref name='CauseForTerm'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='PartialTypeIndicator'>
+      <ref name='PartialTypeIndicator'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='PDPContextStartTimestamp'>
+      <ref name='DateTime'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='NetworkInitPDPContext'>
+      <ref name='NetworkInitPDPContext'/>
+    </element>
+    </optional>
+    <element name='ChargingId'>
+      <ref name='ChargingId'/>
+    </element>
+  </define>
+
+  <define name='GprsChargeableSubscriber'>
+    <optional>
+    <element name='ChargeableSubscriber'>
+      <ref name='ChargeableSubscriber'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='PdpAddress'>
+      <ref name='PdpAddress'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='NetworkAccessIdentifier'>
+      <ref name='NetworkAccessIdentifier'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='GprsDestination'>
+    <element name='AccessPointNameNI'>
+      <ref name='AccessPointNameNI'/>
+    </element>
+    <optional>
+    <element name='AccessPointNameOI'>
+      <ref name='AccessPointNameOI'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='GprsLocationInformation'>
+    <element name='GprsNetworkLocation'>
+      <ref name='GprsNetworkLocation'/>
+    </element>
+    <optional>
+    <element name='HomeLocationInformation'>
+      <ref name='HomeLocationInformation'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='GeographicalLocation'>
+      <ref name='GeographicalLocation'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='GprsNetworkLocation'>
+    <element name='RecEntityCodeList'>
+      <ref name='RecEntityCodeList'/>
+    </element>
+    <optional>
+    <element name='LocationArea'>
+      <ref name='LocationArea'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='CellId'>
+      <ref name='CellId'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='GprsServiceUsed'>
+    <optional>
+    <element name='IMSSignallingContext'>
+      <ref name='IMSSignallingContext'/>
+    </element>
+    </optional>
+    <element name='DataVolumeIncoming'>
+      <ref name='DataVolumeIncoming'/>
+    </element>
+    <element name='DataVolumeOutgoing'>
+      <ref name='DataVolumeOutgoing'/>
+    </element>
+    <element name='ChargeInformationList'>
+      <ref name='ChargeInformationList'/>
+    </element>
+  </define>
+
+  <define name='GsmChargeableSubscriber'>
+    <optional>
+    <element name='Imsi'>
+      <ref name='Imsi'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='Msisdn'>
+      <ref name='Msisdn'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='GuaranteedBitRate'>
+    <data type='string'>
+      <param name='minLength'>1</param>
+      <param name='maxLength'>1</param>
+    </data>
+  </define>
+
+  <define name='HomeBid'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='HomeIdentifier'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='HomeIdType'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='HomeLocationDescription'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='HomeLocationInformation'>
+    <element name='HomeBid'>
+      <ref name='HomeBid'/>
+    </element>
+    <element name='HomeLocationDescription'>
+      <ref name='HomeLocationDescription'/>
+    </element>
+  </define>
+
+  <define name='HorizontalAccuracyDelivered'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='HorizontalAccuracyRequested'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='HSCSDIndicator'>
+    <data type='string'>
+      <param name='minLength'>1</param>
+      <param name='maxLength'>1</param>
+    </data>
+  </define>
+
+  <define name='Imei'>
+    <data type='string'>
+      <param name='minLength'>14</param>
+      <param name='maxLength'>16</param>
+    </data>
+  </define>
+
+  <define name='ImeiOrEsn'>
+    <choice>
+    <element name='Imei'>
+      <ref name='Imei'/>
+    </element>
+    <element name='Esn'>
+      <ref name='Esn'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='Imsi'>
+    <data type='string'>
+      <param name='minLength'>6</param>
+      <param name='maxLength'>16</param>
+    </data>
+  </define>
+
+  <define name='IMSSignallingContext'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='InternetServiceProvider'>
+    <element name='IspIdType'>
+      <ref name='IspIdType'/>
+    </element>
+    <element name='IspIdentifier'>
+      <ref name='IspIdentifier'/>
+    </element>
+  </define>
+
+  <define name='InternetServiceProviderIdList'>
+    <oneOrMore>
+    <element name='InternetServiceProvider'>
+      <ref name='InternetServiceProvider'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='IspIdentifier'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='IspIdType'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ISPList'>
+    <oneOrMore>
+    <element name='InternetServiceProvider'>
+      <ref name='InternetServiceProvider'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='NetworkIdType'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='NetworkIdentifier'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='Network'>
+    <element name='NetworkIdType'>
+      <ref name='NetworkIdType'/>
+    </element>
+    <element name='NetworkIdentifier'>
+      <ref name='NetworkIdentifier'/>
+    </element>
+  </define>
+
+  <define name='NetworkList'>
+    <oneOrMore>
+    <element name='Network'>
+      <ref name='Network'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='LatestCallTimeStamp'>
+    <element name='DateTimeLong'>
+      <ref name='DateTimeLong'/>
+    </element>
+  </define>
+
+  <define name='LCSQosDelivered'>
+    <optional>
+    <element name='LCSTransactionStatus'>
+      <ref name='LCSTransactionStatus'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='HorizontalAccuracyDelivered'>
+      <ref name='HorizontalAccuracyDelivered'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='VerticalAccuracyDelivered'>
+      <ref name='VerticalAccuracyDelivered'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ResponseTime'>
+      <ref name='ResponseTime'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='PositioningMethod'>
+      <ref name='PositioningMethod'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TrackingPeriod'>
+      <ref name='TrackingPeriod'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TrackingFrequency'>
+      <ref name='TrackingFrequency'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='AgeOfLocation'>
+      <ref name='AgeOfLocation'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='LCSQosRequested'>
+    <element name='LCSRequestTimestamp'>
+      <ref name='DateTime'/>
+    </element>
+    <optional>
+    <element name='HorizontalAccuracyRequested'>
+      <ref name='HorizontalAccuracyRequested'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='VerticalAccuracyRequested'>
+      <ref name='VerticalAccuracyRequested'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ResponseTimeCategory'>
+      <ref name='ResponseTimeCategory'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TrackingPeriod'>
+      <ref name='TrackingPeriod'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TrackingFrequency'>
+      <ref name='TrackingFrequency'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='LCSRequestTimestamp'>
+    <element name='DateTime'>
+      <ref name='DateTime'/>
+    </element>
+  </define>
+
+  <define name='LCSSPIdentification'>
+    <element name='ContentProviderIdType'>
+      <ref name='ContentProviderIdType'/>
+    </element>
+    <element name='ContentProviderIdentifier'>
+      <ref name='ContentProviderIdentifier'/>
+    </element>
+  </define>
+
+  <define name='LCSSPIdentificationList'>
+    <oneOrMore>
+    <element name='LCSSPIdentification'>
+      <ref name='LCSSPIdentification'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='LCSSPInformation'>
+    <element name='LCSSPIdentificationList'>
+      <ref name='LCSSPIdentificationList'/>
+    </element>
+    <optional>
+    <element name='ISPList'>
+      <ref name='ISPList'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='NetworkList'>
+      <ref name='NetworkList'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='LCSTransactionStatus'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='LocalCurrency'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='LocalTimeStamp'>
+    <data type='string'>
+      <param name='minLength'>14</param>
+      <param name='maxLength'>14</param>
+    </data>
+  </define>
+
+  <define name='LocationArea'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='LocationDescription'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='LocationIdentifier'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='LocationIdType'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='LocationInformation'>
+    <element name='NetworkLocation'>
+      <ref name='NetworkLocation'/>
+    </element>
+    <optional>
+    <element name='HomeLocationInformation'>
+      <ref name='HomeLocationInformation'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='GeographicalLocation'>
+      <ref name='GeographicalLocation'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='LocationServiceUsage'>
+    <element name='LCSQosRequested'>
+      <ref name='LCSQosRequested'/>
+    </element>
+    <optional>
+    <element name='LCSQosDelivered'>
+      <ref name='LCSQosDelivered'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ChargingTimeStamp'>
+      <ref name='DateTime'/>
+    </element>
+    </optional>
+    <element name='ChargeInformationList'>
+      <ref name='ChargeInformationList'/>
+    </element>
+  </define>
+
+  <define name='MaximumBitRate'>
+    <data type='string'>
+      <param name='minLength'>1</param>
+      <param name='maxLength'>1</param>
+    </data>
+  </define>
+
+  <define name='Mdn'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='MessageDescription'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='MessageDescriptionCode'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='MessageDescriptionInformation'>
+    <element name='MessageDescriptionCode'>
+      <ref name='MessageDescriptionCode'/>
+    </element>
+    <element name='MessageDescription'>
+      <ref name='MessageDescription'/>
+    </element>
+  </define>
+
+  <define name='MessageStatus'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='MessageType'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='MessagingEventService'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='Min'>
+    <data type='string'>
+      <param name='minLength'>2</param>
+      <param name='maxLength'>15</param>
+    </data>
+  </define>
+
+  <define name='MinChargeableSubscriber'>
+    <element name='Min'>
+      <ref name='Min'/>
+    </element>
+    <optional>
+    <element name='Mdn'>
+      <ref name='Mdn'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='MoBasicCallInformation'>
+    <element name='ChargeableSubscriber'>
+      <ref name='ChargeableSubscriber'/>
+    </element>
+    <optional>
+    <element name='RapFileSequenceNumber'>
+      <ref name='RapFileSequenceNumber'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='Destination'>
+      <ref name='Destination'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='DestinationNetwork'>
+      <ref name='DestinationNetwork'/>
+    </element>
+    </optional>
+    <element name='CallEventStartTimeStamp'>
+      <ref name='DateTime'/>
+    </element>
+    <element name='TotalCallEventDuration'>
+      <ref name='TotalCallEventDuration'/>
+    </element>
+    <optional>
+    <element name='SimToolkitIndicator'>
+      <ref name='SimToolkitIndicator'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='CauseForTerm'>
+      <ref name='CauseForTerm'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='MobileSessionService'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='Msisdn'>
+    <data type='string'>
+      <param name='minLength'>2</param>
+      <param name='maxLength'>18</param>
+    </data>
+  </define>
+
+  <define name='MtBasicCallInformation'>
+    <element name='ChargeableSubscriber'>
+      <ref name='ChargeableSubscriber'/>
+    </element>
+    <optional>
+    <element name='RapFileSequenceNumber'>
+      <ref name='RapFileSequenceNumber'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='CallOriginator'>
+      <ref name='CallOriginator'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='OriginatingNetwork'>
+      <ref name='OriginatingNetwork'/>
+    </element>
+    </optional>
+    <element name='CallEventStartTimeStamp'>
+      <ref name='DateTime'/>
+    </element>
+    <element name='TotalCallEventDuration'>
+      <ref name='TotalCallEventDuration'/>
+    </element>
+    <optional>
+    <element name='SimToolkitIndicator'>
+      <ref name='SimToolkitIndicator'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='CauseForTerm'>
+      <ref name='CauseForTerm'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='NetworkAccessIdentifier'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='NetworkElement'>
+    <element name='ElementType'>
+      <ref name='ElementType'/>
+    </element>
+    <element name='ElementId'>
+      <ref name='ElementId'/>
+    </element>
+  </define>
+
+  <define name='NetworkElementList'>
+    <oneOrMore>
+    <element name='NetworkElement'>
+      <ref name='NetworkElement'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='NetworkId'>
+    <data type='string'>
+      <param name='minLength'>1</param>
+      <param name='maxLength'>6</param>
+    </data>
+  </define>
+
+  <define name='NetworkInitPDPContext'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='NetworkLocation'>
+    <element name='RecEntityCode'>
+      <ref name='RecEntityCode'/>
+    </element>
+    <optional>
+    <element name='CallReference'>
+      <ref name='CallReference'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='LocationArea'>
+      <ref name='LocationArea'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='CellId'>
+      <ref name='CellId'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='NonChargedNumber'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='NonChargedParty'>
+    <optional>
+    <element name='NonChargedPartyNumber'>
+      <ref name='NonChargedPartyNumber'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='NonChargedPublicUserId'>
+      <ref name='NonChargedPublicUserId'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='NonChargedPartyNumber'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='NonChargedPublicUserId'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='NumberOfDecimalPlaces'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ObjectType'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='OperatorSpecInfoList'>
+    <oneOrMore>
+    <element name='OperatorSpecInformation'>
+      <ref name='OperatorSpecInformation'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='OperatorSpecInformation'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='OrderPlacedTimeStamp'>
+    <element name='DateTime'>
+      <ref name='DateTime'/>
+    </element>
+  </define>
+
+  <define name='OriginatingNetwork'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='PacketDataProtocolAddress'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='PaidIndicator'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='PartialTypeIndicator'>
+    <data type='string'>
+      <param name='minLength'>1</param>
+      <param name='maxLength'>1</param>
+    </data>
+  </define>
+
+  <define name='PaymentMethod'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='PdpAddress'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='PDPContextStartTimestamp'>
+    <element name='DateTime'>
+      <ref name='DateTime'/>
+    </element>
+  </define>
+
+  <define name='PlmnId'>
+    <data type='string'>
+      <param name='minLength'>5</param>
+      <param name='maxLength'>5</param>
+    </data>
+  </define>
+
+  <define name='PositioningMethod'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='PriorityCode'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='PublicUserId'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='RapFileSequenceNumber'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='RecEntityCode'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='RecEntityCodeList'>
+    <oneOrMore>
+    <element name='RecEntityCode'>
+      <ref name='RecEntityCode'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='RecEntityId'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='RecEntityInfoList'>
+    <oneOrMore>
+    <element name='RecEntityInformation'>
+      <ref name='RecEntityInformation'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='RecEntityInformation'>
+    <element name='RecEntityCode'>
+      <ref name='RecEntityCode'/>
+    </element>
+    <element name='RecEntityType'>
+      <ref name='RecEntityType'/>
+    </element>
+    <element name='RecEntityId'>
+      <ref name='RecEntityId'/>
+    </element>
+  </define>
+
+  <define name='RecEntityType'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='Recipient'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ReleaseVersionNumber'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='RequestedDeliveryTimeStamp'>
+    <element name='DateTime'>
+      <ref name='DateTime'/>
+    </element>
+  </define>
+
+  <define name='RequestedDestination'>
+    <optional>
+    <element name='RequestedNumber'>
+      <ref name='RequestedNumber'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='RequestedPublicUserId'>
+      <ref name='RequestedPublicUserId'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='RequestedNumber'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='RequestedPublicUserId'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ResponseTime'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ResponseTimeCategory'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='ScuBasicInformation'>
+    <element name='ScuChargeableSubscriber'>
+      <ref name='ScuChargeableSubscriber'/>
+    </element>
+    <element name='ChargedPartyStatus'>
+      <ref name='ChargedPartyStatus'/>
+    </element>
+    <element name='NonChargedNumber'>
+      <ref name='NonChargedNumber'/>
+    </element>
+    <optional>
+    <element name='ClirIndicator'>
+      <ref name='ClirIndicator'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='OriginatingNetwork'>
+      <ref name='OriginatingNetwork'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='DestinationNetwork'>
+      <ref name='DestinationNetwork'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='ScuChargeType'>
+    <element name='MessageStatus'>
+      <ref name='MessageStatus'/>
+    </element>
+    <element name='PriorityCode'>
+      <ref name='PriorityCode'/>
+    </element>
+    <optional>
+    <element name='DistanceChargeBandCode'>
+      <ref name='DistanceChargeBandCode'/>
+    </element>
+    </optional>
+    <element name='MessageType'>
+      <ref name='MessageType'/>
+    </element>
+    <element name='MessageDescriptionCode'>
+      <ref name='MessageDescriptionCode'/>
+    </element>
+  </define>
+
+  <define name='ScuTimeStamps'>
+    <element name='DepositTimeStamp'>
+      <ref name='DateTime'/>
+    </element>
+    <element name='CompletionTimeStamp'>
+      <ref name='DateTime'/>
+    </element>
+    <element name='ChargingPoint'>
+      <ref name='ChargingPoint'/>
+    </element>
+  </define>
+
+  <define name='ScuChargeableSubscriber'>
+    <choice>
+    <element name='GsmChargeableSubscriber'>
+      <ref name='GsmChargeableSubscriber'/>
+    </element>
+    <element name='MinChargeableSubscriber'>
+      <ref name='MinChargeableSubscriber'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='Sender'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ServiceStartTimestamp'>
+    <element name='DateTime'>
+      <ref name='DateTime'/>
+    </element>
+  </define>
+
+  <define name='ServingBid'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ServingLocationDescription'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ServingNetwork'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ServingPartiesInformation'>
+    <element name='ContentProviderName'>
+      <ref name='ContentProviderName'/>
+    </element>
+    <optional>
+    <element name='ContentProviderIdList'>
+      <ref name='ContentProviderIdList'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='InternetServiceProviderIdList'>
+      <ref name='InternetServiceProviderIdList'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='NetworkList'>
+      <ref name='NetworkList'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='SessionChargeInfoList'>
+    <oneOrMore>
+    <element name='SessionChargeInformation'>
+      <ref name='SessionChargeInformation'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='SessionChargeInformation'>
+    <element name='ChargedItem'>
+      <ref name='ChargedItem'/>
+    </element>
+    <optional>
+    <element name='ExchangeRateCode'>
+      <ref name='ExchangeRateCode'/>
+    </element>
+    </optional>
+    <element name='CallTypeGroup'>
+      <ref name='CallTypeGroup'/>
+    </element>
+    <element name='ChargeDetailList'>
+      <ref name='ChargeDetailList'/>
+    </element>
+    <optional>
+    <element name='TaxInformationList'>
+      <ref name='TaxInformationList'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='SimChargeableSubscriber'>
+    <element name='Imsi'>
+      <ref name='Imsi'/>
+    </element>
+    <optional>
+    <element name='Msisdn'>
+      <ref name='Msisdn'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='SimToolkitIndicator'>
+    <data type='string'>
+      <param name='minLength'>1</param>
+      <param name='maxLength'>1</param>
+    </data>
+  </define>
+
+  <define name='SMSDestinationNumber'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='SMSOriginator'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='SpecificationVersionNumber'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='SsParameters'>
+    <data type='string'>
+      <param name='minLength'>1</param>
+      <param name='maxLength'>40</param>
+    </data>
+  </define>
+
+  <define name='SupplServiceActionCode'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='SupplServiceCode'>
+    <data type='string'>
+      <param name='minLength'>2</param>
+      <param name='maxLength'>2</param>
+    </data>
+  </define>
+
+  <define name='SupplServiceUsed'>
+    <element name='SupplServiceCode'>
+      <ref name='SupplServiceCode'/>
+    </element>
+    <element name='SupplServiceActionCode'>
+      <ref name='SupplServiceActionCode'/>
+    </element>
+    <optional>
+    <element name='SsParameters'>
+      <ref name='SsParameters'/>
+    </element>
+    </optional>
+    <element name='ChargingTimeStamp'>
+      <ref name='DateTime'/>
+    </element>
+    <optional>
+    <element name='ChargeInformation'>
+      <ref name='ChargeInformation'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='BasicServiceCodeList'>
+      <ref name='BasicServiceCodeList'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='TapCurrency'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='TapDecimalPlaces'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TaxableAmount'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='Taxation'>
+    <element name='TaxCode'>
+      <ref name='TaxCode'/>
+    </element>
+    <element name='TaxType'>
+      <ref name='TaxType'/>
+    </element>
+    <optional>
+    <element name='TaxRate'>
+      <ref name='TaxRate'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ChargeType'>
+      <ref name='ChargeType'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TaxIndicator'>
+      <ref name='TaxIndicator'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='TaxationList'>
+    <oneOrMore>
+    <element name='Taxation'>
+      <ref name='Taxation'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='TaxCode'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TaxIndicator'>
+    <data type='string'>
+      <param name='minLength'>1</param>
+      <param name='maxLength'>1</param>
+    </data>
+  </define>
+
+  <define name='TaxInformation'>
+    <element name='TaxCode'>
+      <ref name='TaxCode'/>
+    </element>
+    <element name='TaxValue'>
+      <ref name='TaxValue'/>
+    </element>
+    <optional>
+    <element name='TaxableAmount'>
+      <ref name='TaxableAmount'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='TaxInformationList'>
+    <oneOrMore>
+    <element name='TaxInformation'>
+      <ref name='TaxInformation'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='TaxRate'>
+    <data type='string'>
+      <param name='minLength'>7</param>
+      <param name='maxLength'>7</param>
+    </data>
+  </define>
+
+  <define name='TaxType'>
+    <data type='string'>
+      <param name='minLength'>2</param>
+      <param name='maxLength'>2</param>
+    </data>
+  </define>
+
+  <define name='TaxValue'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TeleServiceCode'>
+    <data type='string'>
+      <param name='minLength'>2</param>
+      <param name='maxLength'>2</param>
+    </data>
+  </define>
+
+  <define name='ThirdPartyInformation'>
+    <optional>
+    <element name='ThirdPartyNumber'>
+      <ref name='ThirdPartyNumber'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='ClirIndicator'>
+      <ref name='ClirIndicator'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='ThirdPartyNumber'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ThreeGcamelDestination'>
+    <choice>
+    <element name='CamelDestinationNumber'>
+      <ref name='CamelDestinationNumber'/>
+    </element>
+    <element name='GprsDestination'>
+      <ref name='GprsDestination'/>
+    </element>
+    </choice>
+  </define>
+
+  <define name='TotalAdvisedCharge'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TotalAdvisedChargeRefund'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TotalAdvisedChargeValue'>
+    <optional>
+    <element name='AdvisedChargeCurrency'>
+      <ref name='AdvisedChargeCurrency'/>
+    </element>
+    </optional>
+    <element name='TotalAdvisedCharge'>
+      <ref name='TotalAdvisedCharge'/>
+    </element>
+    <optional>
+    <element name='TotalAdvisedChargeRefund'>
+      <ref name='TotalAdvisedChargeRefund'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TotalCommission'>
+      <ref name='TotalCommission'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TotalCommissionRefund'>
+      <ref name='TotalCommissionRefund'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='TotalAdvisedChargeValueList'>
+    <oneOrMore>
+    <element name='TotalAdvisedChargeValue'>
+      <ref name='TotalAdvisedChargeValue'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='TotalCallEventDuration'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TotalCharge'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TotalChargeRefund'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TotalCommission'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TotalCommissionRefund'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TotalDataVolume'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TotalDiscountRefund'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TotalDiscountValue'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TotalTaxRefund'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TotalTaxValue'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TotalTransactionDuration'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TrackedCustomerEquipment'>
+    <element name='EquipmentIdType'>
+      <ref name='EquipmentIdType'/>
+    </element>
+    <element name='EquipmentId'>
+      <ref name='EquipmentId'/>
+    </element>
+  </define>
+
+  <define name='TrackedCustomerHomeId'>
+    <element name='HomeIdType'>
+      <ref name='HomeIdType'/>
+    </element>
+    <element name='HomeIdentifier'>
+      <ref name='HomeIdentifier'/>
+    </element>
+  </define>
+
+  <define name='TrackedCustomerHomeIdList'>
+    <oneOrMore>
+    <element name='TrackedCustomerHomeId'>
+      <ref name='TrackedCustomerHomeId'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='TrackedCustomerIdentification'>
+    <element name='CustomerIdType'>
+      <ref name='CustomerIdType'/>
+    </element>
+    <element name='CustomerIdentifier'>
+      <ref name='CustomerIdentifier'/>
+    </element>
+  </define>
+
+  <define name='TrackedCustomerIdList'>
+    <oneOrMore>
+    <element name='TrackedCustomerIdentification'>
+      <ref name='TrackedCustomerIdentification'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='TrackedCustomerInformation'>
+    <element name='TrackedCustomerIdList'>
+      <ref name='TrackedCustomerIdList'/>
+    </element>
+    <optional>
+    <element name='TrackedCustomerHomeIdList'>
+      <ref name='TrackedCustomerHomeIdList'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TrackedCustomerLocList'>
+      <ref name='TrackedCustomerLocList'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TrackedCustomerEquipment'>
+      <ref name='TrackedCustomerEquipment'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='TrackedCustomerLocation'>
+    <element name='LocationIdType'>
+      <ref name='LocationIdType'/>
+    </element>
+    <element name='LocationIdentifier'>
+      <ref name='LocationIdentifier'/>
+    </element>
+  </define>
+
+  <define name='TrackedCustomerLocList'>
+    <oneOrMore>
+    <element name='TrackedCustomerLocation'>
+      <ref name='TrackedCustomerLocation'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='TrackingCustomerEquipment'>
+    <element name='EquipmentIdType'>
+      <ref name='EquipmentIdType'/>
+    </element>
+    <element name='EquipmentId'>
+      <ref name='EquipmentId'/>
+    </element>
+  </define>
+
+  <define name='TrackingCustomerHomeId'>
+    <element name='HomeIdType'>
+      <ref name='HomeIdType'/>
+    </element>
+    <element name='HomeIdentifier'>
+      <ref name='HomeIdentifier'/>
+    </element>
+  </define>
+
+  <define name='TrackingCustomerHomeIdList'>
+    <oneOrMore>
+    <element name='TrackingCustomerHomeId'>
+      <ref name='TrackingCustomerHomeId'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='TrackingCustomerIdentification'>
+    <element name='CustomerIdType'>
+      <ref name='CustomerIdType'/>
+    </element>
+    <element name='CustomerIdentifier'>
+      <ref name='CustomerIdentifier'/>
+    </element>
+  </define>
+
+  <define name='TrackingCustomerIdList'>
+    <oneOrMore>
+    <element name='TrackingCustomerIdentification'>
+      <ref name='TrackingCustomerIdentification'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='TrackingCustomerInformation'>
+    <element name='TrackingCustomerIdList'>
+      <ref name='TrackingCustomerIdList'/>
+    </element>
+    <optional>
+    <element name='TrackingCustomerHomeIdList'>
+      <ref name='TrackingCustomerHomeIdList'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TrackingCustomerLocList'>
+      <ref name='TrackingCustomerLocList'/>
+    </element>
+    </optional>
+    <optional>
+    <element name='TrackingCustomerEquipment'>
+      <ref name='TrackingCustomerEquipment'/>
+    </element>
+    </optional>
+  </define>
+
+  <define name='TrackingCustomerLocation'>
+    <element name='LocationIdType'>
+      <ref name='LocationIdType'/>
+    </element>
+    <element name='LocationIdentifier'>
+      <ref name='LocationIdentifier'/>
+    </element>
+  </define>
+
+  <define name='TrackingCustomerLocList'>
+    <oneOrMore>
+    <element name='TrackingCustomerLocation'>
+      <ref name='TrackingCustomerLocation'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='TrackingFrequency'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TrackingPeriod'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TransactionAuthCode'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='TransactionDescriptionSupp'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TransactionDetailDescription'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='TransactionIdentifier'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='TransactionShortDescription'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='TransactionStatus'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='TransferCutOffTimeStamp'>
+    <element name='DateTimeLong'>
+      <ref name='DateTimeLong'/>
+    </element>
+  </define>
+
+  <define name='TransparencyIndicator'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='UserProtocolIndicator'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='UtcTimeOffset'>
+    <data type='string'>
+      <param name='minLength'>5</param>
+      <param name='maxLength'>5</param>
+    </data>
+  </define>
+
+  <define name='UtcTimeOffsetCode'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='UtcTimeOffsetInfo'>
+    <element name='UtcTimeOffsetCode'>
+      <ref name='UtcTimeOffsetCode'/>
+    </element>
+    <element name='UtcTimeOffset'>
+      <ref name='UtcTimeOffset'/>
+    </element>
+  </define>
+
+  <define name='UtcTimeOffsetInfoList'>
+    <oneOrMore>
+    <element name='UtcTimeOffsetInfo'>
+      <ref name='UtcTimeOffsetInfo'/>
+    </element>
+    </oneOrMore>
+  </define>
+
+  <define name='VerticalAccuracyDelivered'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='VerticalAccuracyRequested'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='AbsoluteAmount'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='Bid'>
+    <data type='string'>
+      <param name='minLength'>5</param>
+      <param name='maxLength'>5</param>
+    </data>
+  </define>
+
+  <define name='Code'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='AsciiString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='BCDString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='Currency'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='HexString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='NumberString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='PercentageRate'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='BOOLEAN'>
+    <data type='boolean'>
+    </data>
+  </define>
+
+  <define name='INTEGER'>
+    <data type='integer'>
+    </data>
+  </define>
+
+  <define name='BIT_STRING'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='OCTET_STRING'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='NULL'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='OBJECT_IDENTIFIER'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ObjectDescriptor'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='EXTERNAL'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='REAL'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='ENUMERATED'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='EMBEDDED_PDV'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='UTF8String'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='RELATIVE-OID'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='TIME'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='SEQUENCE'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='SET'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='NumericString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='PrintableString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='TeletexString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='VideotexString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='IA5String'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='UTCTime'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='GeneralizedTime'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='GraphicString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='VisibleString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='GeneralString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='UniversalString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='CHARACTER_STRING'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='BMPString'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='DATE'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='TIME-OF-DAY'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='DATE-TIME'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='DURATION'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='OID-IRI'>
+    <data type='string'>
+    </data>
+  </define>
+
+  <define name='RELATIVE-OID-IRI'>
+    <data type='string'>
+    </data>
+  </define>
+
+</grammar>

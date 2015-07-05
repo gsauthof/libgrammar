@@ -1,0 +1,190 @@
+<!-- Collection of XSD key and keyref definitions for TAP schemas.
+
+     The TAP formats contains a few 'lookup tables' where often used
+     details are stored that can be referenced via a key (called 'code'
+     in TAP jargon).
+     One motivation behind this is to save some bytes since
+     redundancy is removed.
+
+     Two requirements immediately follow from this structure:
+
+     - the keys in a table must be unique
+     - each referenced key must exist
+
+     The XSD uniqueness and reference constraints are well-suited
+     to define these requirements.
+
+     The below definitions can be pasted into a
+
+         <xs:element name='TransferBatch' type='TransferBatch'>
+         </xs:element>
+
+     element of an XSD schema file.
+
+     2015, Georg Sauthoff <mail@georg.so>
+
+     -->
+
+    <!-- ## Tax -->
+
+    <xs:key name='taxcode_key'>
+      <xs:selector xpath='AccountingInfo/TaxationList/Taxation'/>
+      <xs:field xpath='TaxCode'/>
+    </xs:key>
+
+    <xs:keyref name='taxcode_ref' refer='taxcode_key'>
+      <xs:selector xpath='.//TaxInformation'/>
+      <xs:field xpath='TaxCode'/>
+    </xs:keyref>
+
+    <!-- ## Exchange Rates -->
+
+    <xs:key name='exchangeratecode_key'>
+      <xs:selector
+        xpath='AccountingInfo/CurrencyConversionList/CurrencyConversion'/>
+      <xs:field xpath='ExchangeRateCode'/>
+    </xs:key>
+
+    <!-- One selector to select all codes: -->
+    <xs:keyref name='exchangeratecode_ref' refer='exchangeratecode_key'>
+      <xs:selector xpath='.//ExchangeRateCode'/>
+      <xs:field xpath='.'/>
+    </xs:keyref>
+    <!-- The above selector could be replaced with
+         a set of more localized ones: -->
+    <!--
+    <xs:keyref name='camelserviceused_ref' refer='exchangeratecode_key'>
+      <xs:selector xpath='.//CamelServiceUsed'/>
+      <xs:field xpath='ExchangeRateCode'/>
+    </xs:keyref>
+    <xs:keyref name='chargeinformation_ref' refer='exchangeratecode_key'>
+      <xs:selector xpath='.//ChargeInformation'/>
+      <xs:field xpath='ExchangeRateCode'/>
+    </xs:keyref>
+    <xs:keyref name='messagingevent_ref' refer='exchangeratecode_key'>
+      <xs:selector xpath='.//MessagingEvent'/>
+      <xs:field xpath='ExchangeRateCode'/>
+    </xs:keyref>
+    <xs:keyref name='sessionchargeinformation_ref' refer='exchangeratecode_key'>
+      <xs:selector xpath='.//SessionChargeInformation'/>
+      <xs:field xpath='ExchangeRateCode'/>
+    </xs:keyref>
+    -->
+
+    <!-- ## Discount Definitions -->
+
+    <xs:key name='discountcode_key'>
+      <xs:selector xpath='AccountingInfo/DiscountingList/Discounting'/>
+      <xs:field xpath='DiscountCode'/>
+    </xs:key>
+
+    <xs:keyref name='discountcode_ref' refer='discountcode_key'>
+      <xs:selector xpath='.//DiscountInformation'/>
+      <xs:field xpath='DiscountCode'/>
+    </xs:keyref>
+
+    <!-- Timezone Offsets -->
+
+    <xs:key name='utctimeoffsetcode_key'>
+      <xs:selector xpath='NetworkInfo/UtcTimeOffsetInfoList/UtcTimeOffsetInfo'/>
+      <xs:field xpath='UtcTimeOffsetCode'/>
+    </xs:key>
+
+    <xs:keyref name='utctimeoffsetcode_ref' refer='utctimeoffsetcode_key'>
+      <xs:selector xpath='.//UtcTimeOffsetCode'/>
+      <xs:field xpath='.'/>
+    </xs:keyref>
+    <!-- Again, more the above selector could be replaced by the following
+         group: -->
+    <!--
+    <xs:keyref name='actualdeliverytimestamp_ref' refer='utctimeoffsetcode_key'>
+      <xs:selector xpath='.//ActualDeliveryTimeStamp'/>
+      <xs:field xpath='UtcTimeOffsetCode'/>
+    </xs:keyref>
+    <xs:keyref name='calleventstarttimestamp_ref' refer='utctimeoffsetcode_key'>
+      <xs:selector xpath='.//CallEventStartTimeStamp'/>
+      <xs:field xpath='UtcTimeOffsetCode'/>
+    </xs:keyref>
+    <xs:keyref name='chargingtimestamp_ref' refer='utctimeoffsetcode_key'>
+      <xs:selector xpath='.//ChargingTimeStamp'/>
+      <xs:field xpath='UtcTimeOffsetCode'/>
+    </xs:keyref>
+    <xs:keyref name='completiontimestamp_ref' refer='utctimeoffsetcode_key'>
+      <xs:selector xpath='.//CompletionTimeStamp'/>
+      <xs:field xpath='UtcTimeOffsetCode'/>
+    </xs:keyref>
+    <xs:keyref name='deposittimestamp_ref' refer='utctimeoffsetcode_key'>
+      <xs:selector xpath='.//DepositTimeStamp'/>
+      <xs:field xpath='UtcTimeOffsetCode'/>
+    </xs:keyref>
+    <xs:keyref name='earliestcalltimestamp_ref' refer='utctimeoffsetcode_key'>
+      <xs:selector xpath='.//EarliestCallTimeStamp'/>
+      <xs:field xpath='.//UtcTimeOffsetCode'/>
+    </xs:keyref>
+    <xs:keyref name='fileavailabletimestamp_ref' refer='utctimeoffsetcode_key'>
+      <xs:selector xpath='.//FileAvailableTimeStamp'/>
+      <xs:field xpath='UtcTimeOffsetCode'/>
+    </xs:keyref>
+    <xs:keyref name='filecreationtimestamp_ref' refer='utctimeoffsetcode_key'>
+      <xs:selector xpath='.//FileCreationTimeStamp'/>
+      <xs:field xpath='UtcTimeOffsetCode'/>
+    </xs:keyref>
+    <xs:keyref name='latestcalltimestamp_ref' refer='utctimeoffsetcode_key'>
+      <xs:selector xpath='.//LatestCallTimeStamp'/>
+      <xs:field xpath='UtcTimeOffsetCode'/>
+    </xs:keyref>
+    <xs:keyref name='lcsrequesttimestamp_ref' refer='utctimeoffsetcode_key'>
+      <xs:selector xpath='.//LCSRequestTimestamp'/>
+      <xs:field xpath='UtcTimeOffsetCode'/>
+    </xs:keyref>
+    <xs:keyref name='orderplacedtimestamp_ref' refer='utctimeoffsetcode_key'>
+      <xs:selector xpath='.//OrderPlacedTimeStamp'/>
+      <xs:field xpath='UtcTimeOffsetCode'/>
+    </xs:keyref>
+    <xs:keyref name='pdpcontextstarttimestamp_ref'
+               refer='utctimeoffsetcode_key'>
+      <xs:selector xpath='.//PDPContextStartTimestamp'/>
+      <xs:field xpath='UtcTimeOffsetCode'/>
+    </xs:keyref>
+    <xs:keyref name='requesteddeliverytimestamp_ref'
+               refer='utctimeoffsetcode_key'>
+      <xs:selector xpath='.//RequestedDeliveryTimeStamp'/>
+      <xs:field xpath='UtcTimeOffsetCode'/>
+    </xs:keyref>
+    <xs:keyref name='servicestarttimestamp_ref' refer='utctimeoffsetcode_key'>
+      <xs:selector xpath='.//ServiceStartTimestamp'/>
+      <xs:field xpath='UtcTimeOffsetCode'/>
+    </xs:keyref>
+    <xs:keyref name='transfercutofftimestamp_ref' refer='utctimeoffsetcode_key'>
+      <xs:selector xpath='.//TransferCutOffTimeStamp'/>
+      <xs:field xpath='UtcTimeOffsetCode'/>
+    </xs:keyref>
+    -->
+
+    <!-- ## Entity Definitions -->
+
+    <xs:key name='recentitycode_key'>
+      <xs:selector xpath='NetworkInfo/RecEntityInfoList/RecEntityInformation'/>
+      <xs:field xpath='RecEntityCode'/>
+    </xs:key>
+
+    <xs:keyref name='recentitycode_ref' refer='recentitycode_key'>
+      <xs:selector xpath='.//RecEntityCodeList/RecEntityCode'/>
+      <xs:field xpath='.'/>
+    </xs:keyref>
+
+
+    <!-- ## Message Descriptions -->
+
+    <xs:key name='messagedescriptioncode_key'>
+      <xs:selector
+              xpath='MessageDescriptionInfoList/MessageDescriptionInformation'/>
+      <xs:field xpath='MessageDescriptionCode'/>
+    </xs:key>
+
+    <xs:keyref name='messagedescriptioncode_ref'
+              refer='messagedescriptioncode_key'>
+      <xs:selector xpath='.//ScuChargeType'/>
+      <xs:field xpath='MessageDescriptionCode'/>
+    </xs:keyref>
+
