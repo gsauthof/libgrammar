@@ -23,8 +23,10 @@ RAGEL_TARGET(asn1_mini_parser
   ${CMAKE_CURRENT_BINARY_DIR}/asn1_mini_parser.cc
   )
 
+IF(${CMAKE_PROJECT_NAME} STREQUAL "libgrammar")
 add_subdirectory(libixxx)
 add_subdirectory(libixxxutil)
+endif() # CMAKE_PROJECT_NAME
 
 set(LIB_SRC 
   version.cc
@@ -58,8 +60,8 @@ add_executable(ged
 set_property(TARGET ged grammar grammar_static PROPERTY INCLUDE_DIRECTORIES
   ${Boost_INCLUDE_DIRS}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/libixxx
-  ${CMAKE_CURRENT_SOURCE_DIR}/libixxxutil
+  ${CMAKE_SOURCE_DIR}/libixxx
+  ${CMAKE_SOURCE_DIR}/libixxxutil
   )
 target_link_libraries(ged
   grammar
