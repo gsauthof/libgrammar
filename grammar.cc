@@ -884,14 +884,14 @@ namespace grammar {
     }
   }
 
-  unordered_map<uint32_t, const char *> tag_translations(
+  unordered_map<uint32_t, std::string> tag_translations(
       const Grammar &g, uint32_t klasse)
   {
-    std::unordered_map<uint32_t, const char *> r;
+    std::unordered_map<uint32_t, std::string> r;
     r.max_load_factor(0.75);
     r.reserve(g.symbols().size());
     for_each_tag_translation(g, klasse, [&r](uint32_t tag, const string &name) {
-        r[tag] = name.c_str(); });
+        r[tag] = name; });
     return r;
   }
 

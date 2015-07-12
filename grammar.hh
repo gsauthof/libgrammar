@@ -374,7 +374,7 @@ namespace grammar {
 
   void print_tag_translations(std::ostream &o, const Grammar &g, uint32_t klasse);
 
-  std::unordered_map<uint32_t, const char *> tag_translations(
+  std::unordered_map<uint32_t, std::string> tag_translations(
       const Grammar &g, uint32_t klasse);
 
   std::unordered_set<uint32_t> tag_closure(const Grammar &g,
