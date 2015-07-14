@@ -22,6 +22,7 @@
 
 #include <iostream>
 #include <string>
+#include <deque>
 
 namespace grammar {
 
@@ -61,6 +62,8 @@ namespace grammar {
           std::pair<ssize_t, ssize_t> size_;
 
       };
+
+      Grammar parse_files(const std::deque<std::string> &filenames);
 
 
     }

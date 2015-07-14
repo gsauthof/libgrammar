@@ -23,6 +23,7 @@
 
 #include <boost/lexical_cast.hpp>
 
+#include <ixxx/util.hh>
 
 using namespace std;
 using namespace grammar;
@@ -434,7 +435,27 @@ namespace grammar {
         return std::move(grammar_);
       }
 
+      static Grammar parse_file(const std::string &filename,
+          grammar::Grammar &&g)
+      {
+        ixxx::util::Mapped_File f(filename);
+        grammar::asn1::mini::Parser parser(std::move(g));
+        parser.set_filename(filename);
+        parser.read(f.s_begin(), f.s_end());
+        return parser.grammar();
+      }
 
+      Grammar parse_files(const std::deque<std::string> &filenames)
+      {
+        auto i = filenames.begin();
+        Grammar g;
+        g = parse_file(*i, std::move(g));
+        g.set_ignore_duplicates(true);
+        for (; i != filenames.end(); ++i)
+          g = parse_file(*i, std::move(g));
+        return g;
+      }
+    
     }
 
   }
