@@ -304,7 +304,7 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         g.init_links();
         derive_tags(g);
         auto t = tag_translations(g, 1);
-        map<uint32_t, const char*> s(t.begin(), t.end());
+        map<uint32_t, string> s(t.begin(), t.end());
         const char ref[] = 
   "1,Document\n"
   "2,Records\n"
@@ -336,7 +336,7 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         g.init_links();
         derive_tags(g);
         auto t = tag_translations(g, 0);
-        map<uint32_t, const char*> s(t.begin(), t.end());
+        map<uint32_t, string> s(t.begin(), t.end());
         const char ref[] = 
   "2,INTEGER\n"
   "4,OCTET STRING\n"
