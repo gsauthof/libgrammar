@@ -91,6 +91,12 @@ Translate a ASN.1 file into a RelaxNG Schema (for XSD use `-px`):
 
     $ ged -ra TAP0312.asn1 -e -pr TAP0312.rng
 
+Create XSD from an ASN.1 file using additional key constraints
+and type restrictions:
+
+    $ ged -ra TAP0312.asn1 -key TransferBatch tap_3_12_keys.xml \
+        -cs tap_3_12_constraints.zsv -e -px tap_3_12.xsd
+
 2015, Georg Sauthoff <mail@georg.so>
 
 )";
