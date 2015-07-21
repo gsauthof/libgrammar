@@ -159,6 +159,20 @@ static void compare_primitive(const char *rel_filename_str)
   compare("primitive", pp, rel_filename_str);
 }
 
+static void print_name_map(ostream &o, Grammar &g)
+{
+  grammar::asn1::add_terminals(g);
+  g.init_links();
+  erase_unreachable_symbols(g);
+  derive_tags(g);
+  print_name_to_shape_klasse_tag_map(o, g);
+}
+
+static void compare_name_map(const char *rel_filename_str)
+{
+  compare("name_map", print_name_map, rel_filename_str);
+}
+
 static void ts(ostream &o, Grammar &g)
 {
   grammar::asn1::add_terminals(g);
@@ -231,8 +245,12 @@ boost::unit_test::test_suite *create_asn1_compare_suite()
   unreachable->add(BOOST_PARAM_TEST_CASE(&compare_unreachable,
         filenames.begin(), filenames.end()));
 
-  auto primitive = BOOST_TEST_SUITE("unreachable");
+  auto primitive = BOOST_TEST_SUITE("primitive");
   primitive->add(BOOST_PARAM_TEST_CASE(&compare_primitive,
+        filenames.begin(), filenames.end()));
+
+  auto name_map = BOOST_TEST_SUITE("name_map");
+  name_map->add(BOOST_PARAM_TEST_CASE(&compare_name_map,
         filenames.begin(), filenames.end()));
 
   auto tsort = BOOST_TEST_SUITE("tsort");
@@ -250,6 +268,7 @@ boost::unit_test::test_suite *create_asn1_compare_suite()
   cmp->add(closure);
   cmp->add(unreachable);
   cmp->add(primitive);
+  cmp->add(name_map);
   cmp->add(tsort);
   cmp->add(xsd);
   cmp->add(rng);

@@ -34,6 +34,7 @@ R"((COMMAND|OPTION)+
     -print-unreachable,-pu   print unreachable symbols
     -print-primitive,-ppt    print primitive tags
     -print-translate,-pt     print tag translations
+    -print-name-map,-pn      print symbol name -> (shape, class, tag) mapping
     -print-closure,-pc TAG   print tag closure
     -print-asn,-pa FILE      print grammar in ASN.1 format
     -print-rng,-pr FILE      print grammar as RelaxNG grammar
@@ -243,6 +244,8 @@ namespace ged {
           print_unreachable_symbols(stream(i), g);
         } else if (!strcmp(s, "-print-translate") || !strcmp(s, "-pt")) {
           print_tag_translations(stream(i), g, klasse_);
+        } else if (!strcmp(s, "-print-name-map") || !strcmp(s, "-pn")) {
+          print_name_to_shape_klasse_tag_map(stream(i), g);
         } else if (!strcmp(s, "-print-primitive") || !strcmp(s, "-ppt")) {
           print_primitive_tags(stream(i), g, klasse_);
         } else if (!strcmp(s, "-print-closure") || !strcmp(s, "-pc")) {

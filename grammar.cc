@@ -1050,6 +1050,44 @@ namespace grammar {
     o << '\n';
   }
 
+  std::unordered_map<std::string, std::pair<uint32_t, uint32_t> > map_name_to_klasse_tag(
+      const Grammar &g)
+  {
+    std::unordered_map<std::string, std::pair<uint32_t, uint32_t> > r;
+    for (auto &symbol : g.symbols())
+      if (symbol->coord().initialized())
+        r[symbol->name()] = make_pair(symbol->coord().klasse(), symbol->coord().tag());
+    return r;
+  }
+
+  std::unordered_map<std::string, std::tuple<bool, uint32_t, uint32_t> >
+    map_name_to_shape_klasse_tag(const Grammar &g)
+  {
+    std::unordered_map<std::string, std::tuple<bool, uint32_t, uint32_t> > r;
+    auto m = map_name_to_klasse_tag(g);
+    vector<unordered_set<uint32_t> > k(4);
+    k[0] = primitive_tags(g, 0);
+    k[1] = primitive_tags(g, 1);
+    k[3] = primitive_tags(g, 3);
+    for (auto &x : m)
+      r[x.first] = std::tuple<bool, uint32_t, uint32_t>(
+          k.at(x.second.first).count(x.second.second),
+          x.second.first, x.second.second);
+    return r;
+  }
+
+  void print_name_to_shape_klasse_tag_map(std::ostream &o, const Grammar &g)
+  {
+    auto r = map_name_to_shape_klasse_tag(g);
+    std::map<std::string, std::tuple<bool, uint32_t, uint32_t> > m(r.begin(), r.end());
+    for (auto &e : m) {
+      o << e.first << ','
+        << std::get<0>(e.second) << ','
+        << std::get<1>(e.second) << ','
+        << std::get<2>(e.second) << '\n';
+    }
+  }
+
   void add_constraints(Grammar &g, const std::string &filename)
   {
     unordered_map<string, Constraint::Enum> enums_;

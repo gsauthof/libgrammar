@@ -392,6 +392,12 @@ namespace grammar {
   std::unordered_set<uint32_t> primitive_tags(const Grammar &g, uint32_t klasse);
   void print_primitive_tags(std::ostream &o, const Grammar &g, uint32_t klasse);
 
+  std::unordered_map<std::string, std::pair<uint32_t, uint32_t> > map_name_to_klasse_tag(
+      const Grammar &g);
+  std::unordered_map<std::string, std::tuple<bool, uint32_t, uint32_t> >
+      map_name_to_shape_klasse_tag(const Grammar &g);
+  void print_name_to_shape_klasse_tag_map(std::ostream &o, const Grammar &g);
+
 
   void add_constraints(Grammar &g, const std::string &filename);
 

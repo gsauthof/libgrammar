@@ -64,7 +64,7 @@ set_property(TARGET ged grammar grammar_static PROPERTY INCLUDE_DIRECTORIES
   ${CMAKE_SOURCE_DIR}/libixxxutil
   )
 target_link_libraries(ged
-  grammar
+  grammar_static
   ixxxutil_static
   ixxx_static
   )
