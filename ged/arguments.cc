@@ -61,6 +61,7 @@ R"((COMMAND|OPTION)+
                              Supported are patterns, enumerations, length
                              and value restrictions.
                              Use before -px or -pr.
+    -no-any-att              Don't allow any attribute in each element (XSD)
 
 The current ASN.1 parser just understands a subset of ASN.1 ('Mini-ASN.1'),
 but it is enough to parse many real world grammars (cf. README for details).
@@ -151,6 +152,7 @@ namespace ged {
       std::string namespace_;
       std::deque<std::pair<std::string, std::string> > key_defs_;
       std::string constraints_filename_;
+      bool any_attribute_ {true};
 
     public:
       Arguments(int argc, char **argv);
@@ -263,6 +265,7 @@ namespace ged {
           p << g;
         } else if (!strcmp(s, "-print-xsd") || !strcmp(s, "-px")) {
           grammar::xml::xsd::Printer p(stream(i));
+          p.set_any_attribute(any_attribute_);
           p.set_comment(argc, argv);
           p.set_target_namespace(namespace_);
           for (auto &x : key_defs_)
@@ -300,6 +303,8 @@ namespace ged {
           if (i >= argc)
             throw Argument_Error("constraints filename argument is missing");
           constraints_filename_ = argv[i];
+        } else if (!strcmp(s, "-no-any-att")) {
+          any_attribute_ = false;
         } else if (!strcmp(s, "--version") || !strcmp(s, "-version"))  {
           print_version();
           exit(0);

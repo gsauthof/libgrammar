@@ -409,6 +409,7 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         {
           ofstream f(out.generic_string(), ios_base::out | ios_base::binary);
           grammar::xml::xsd::Printer p(f);
+          p.set_any_attribute(false);
           p.set_comment(string());
           p.read_key_def("TransferBatch", key_file.generic_string());
           grammar::add_constraints(g, cs_file.generic_string());
@@ -452,8 +453,49 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         {
           ofstream f(out.generic_string(), ios_base::out | ios_base::binary);
           grammar::xml::xsd::Printer p(f);
+          p.set_any_attribute(false);
           p.set_comment(string());
           grammar::add_constraints(g, cs_file.generic_string());
+          p << g;
+        }
+        BOOST_TEST_CHECKPOINT("Comparing: " << ref << " vs. " << out);
+        {
+          ixxx::util::Mapped_File a(ref.generic_string());
+          ixxx::util::Mapped_File b(out.generic_string());
+          BOOST_REQUIRE(bf::file_size(ref) && bf::file_size(out));
+          bool are_equal = std::equal(a.begin(), a.end(), b.begin(), b.end());
+          BOOST_CHECK(are_equal);
+        }
+      }
+
+      BOOST_AUTO_TEST_CASE(any_attribute)
+      {
+        grammar::Grammar g;
+        bf::path in(test::path::in());
+        in /= "asn1/tap_3_12_strip.asn1";
+        string rel_out("xsd/asn1/any_attribute.xml");
+        bf::path out(test::path::out());
+        out /= rel_out;
+        BOOST_TEST_CHECKPOINT("Removing: " << out);
+        bf::remove(out);
+        bf::create_directories(out.parent_path());
+        bf::path ref(test::path::ref());
+        ref /= rel_out;
+        BOOST_TEST_CHECKPOINT("Parsing: " << in );
+        {
+          ixxx::util::Mapped_File f(in.generic_string());
+          grammar::asn1::mini::Parser parser(std::move(g));
+          parser.read(f.s_begin(), f.s_end());
+          g = parser.grammar();
+          grammar::asn1::add_terminals(g);
+          g.init_links();
+        }
+        BOOST_TEST_CHECKPOINT("Writing: " << out);
+        {
+          ofstream f(out.generic_string(), ios_base::out | ios_base::binary);
+          grammar::xml::xsd::Printer p(f);
+          p.set_any_attribute(true);
+          p.set_comment(string());
           p << g;
         }
         BOOST_TEST_CHECKPOINT("Comparing: " << ref << " vs. " << out);

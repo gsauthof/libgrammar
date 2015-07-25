@@ -197,6 +197,7 @@ static void print_xsd(ostream &o, Grammar &g)
   g.init_links();
 
   grammar::xml::xsd::Printer p(o);
+  p.set_any_attribute(false);
   p.set_comment(string());
   p << g;
   o << endl;

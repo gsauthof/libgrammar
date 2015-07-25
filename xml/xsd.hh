@@ -37,6 +37,7 @@ namespace grammar {
           std::unordered_map<std::string, std::string>
             nt_key_defs_;
 
+          bool any_attribute_ {true};
         public:
           using grammar::xml::Printer::Printer;
 
@@ -57,6 +58,8 @@ namespace grammar {
           void read_key_def(const std::string &nt, const std::string &filename);
 
           void print_key_defs(const std::string &nt);
+
+          void set_any_attribute(bool b);
       };
 
 

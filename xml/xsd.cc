@@ -88,7 +88,11 @@ o() << R"(<xs:schema
         auto &eff_symbol = grammar::effective_symbol(nt.rule().refs().front());
         if (nt.rule().type() == Rule::LINK
             && dynamic_cast<const Symbol::Terminal*>(&eff_symbol)) {
-          o() << "  <xs:simpleType name='" << nt.name() << "'>\n";
+          o() << "  <xs:simpleType name='";
+          o()  << nt.name();
+          if (any_attribute_)
+            o() << "___base";
+          o()  << "'>\n";
           auto &symbol = grammar::effective_symbol(nt.rule().refs().front());
           o() << "    <xs:restriction base='";;
           o() << boost::replace_all_copy(symbol.name(), " ", "_");
@@ -100,6 +104,16 @@ o() << R"(<xs:schema
           }
           o() << "    </xs:restriction>\n";
           o() << "  </xs:simpleType>";
+
+          if (any_attribute_) {
+            o() << "\n  <xs:complexType name='" << nt.name() << "'>\n"
+                  "    <xs:simpleContent>\n"
+                  "      <xs:extension base='" << nt.name() << "___base'>\n"
+                  "        <xs:anyAttribute processContents='lax'/>\n"
+                  "      </xs:extension>\n"
+                  "    </xs:simpleContent>\n"
+                  "  </xs:complexType>\n";
+          }
         } else if (nt.rule().type() == Rule::CHOICE
             && !nt.coord().initialized()) {
           o() << "  <xs:group name='" << nt.name() << "'>\n";
@@ -110,6 +124,9 @@ o() << R"(<xs:schema
           o() << "  <xs:complexType name='" << nt.name() << "'>\n";
           (*this) << nt.rule();
           o() << '\n';
+          if (any_attribute_) {
+            o() << "    <xs:anyAttribute processContents='lax'/>\n";
+          }
           o() << "  </xs:complexType>";
         }
       }
@@ -263,6 +280,11 @@ o() << R"(<xs:schema
       {
         ixxx::util::Mapped_File f(filename);
         nt_key_defs_[nt] = string(f.s_begin(), f.s_end());
+      }
+
+      void Printer::set_any_attribute(bool b)
+      {
+        any_attribute_ = b;
       }
 
     }
