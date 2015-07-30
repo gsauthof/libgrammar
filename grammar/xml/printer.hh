@@ -24,7 +24,7 @@
 #include <ostream>
 #include <string>
 
-#include <grammar.hh>
+#include <grammar/grammar.hh>
 
 namespace grammar {
 

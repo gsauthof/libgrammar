@@ -18,7 +18,7 @@
     along with libgrammar.  If not, see <http://www.gnu.org/licenses/>.
 
 }}} */
-#include <grammar.hh>
+#include <grammar/grammar.hh>
 
 #include <iostream>
 #include <string>

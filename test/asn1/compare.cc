@@ -30,15 +30,15 @@
 #include <ixxx/util.hh>
 #include <ixxx/util/boost.hh>
 
-#include <asn1/mini_parser.hh>
-#include <asn1/grammar.hh>
+#include <grammar/asn1/mini_parser.hh>
+#include <grammar/asn1/grammar.hh>
 
-#include <grammar.hh>
-#include <tsort.hh>
+#include <grammar/grammar.hh>
+#include <grammar/tsort.hh>
 
-#include <tap/tap.hh>
-#include <xml/xsd.hh>
-#include <xml/rng.hh>
+#include <grammar/tap/tap.hh>
+#include <grammar/xml/xsd.hh>
+#include <grammar/xml/rng.hh>
 
 #include <fstream>
 #include <iostream>

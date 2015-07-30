@@ -20,7 +20,7 @@
 }}} */
 #include "dot.hh"
 
-#include <tap/tap.hh>
+#include <grammar/tap/tap.hh>
 
 #include <boost/algorithm/string/replace.hpp>
 

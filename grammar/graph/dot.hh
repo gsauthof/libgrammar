@@ -25,7 +25,7 @@
 #include <string>
 #include <set>
 
-#include <grammar.hh>
+#include <grammar/grammar.hh>
 
 namespace grammar {
 

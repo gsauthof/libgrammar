@@ -20,9 +20,9 @@
 }}} */
 #include <boost/test/unit_test.hpp>
 
-#include <grammar.hh>
-#include <tsort.hh>
-#include <asn1/grammar.hh>
+#include <grammar/grammar.hh>
+#include <grammar/tsort.hh>
+#include <grammar/asn1/grammar.hh>
 
 using namespace std;
 

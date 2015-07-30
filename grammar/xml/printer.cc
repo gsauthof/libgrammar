@@ -20,7 +20,7 @@
 }}} */
 #include "printer.hh"
 
-#include "version.hh"
+#include <grammar/version.hh>
 
 #include <sstream>
 

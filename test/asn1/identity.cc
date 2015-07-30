@@ -31,8 +31,8 @@
 #include <ixxx/util/boost.hh>
 
 
-#include <asn1/mini_parser.hh>
-#include <asn1/grammar.hh>
+#include <grammar/asn1/mini_parser.hh>
+#include <grammar/asn1/grammar.hh>
 
 #include <fstream>
 #include <iostream>

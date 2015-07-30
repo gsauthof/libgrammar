@@ -19,7 +19,7 @@ find_package(Boost 1.55
   REQUIRED)
 
 RAGEL_TARGET(asn1_mini_parser
-  asn1/mini_parser.rl
+  grammar/asn1/mini_parser.rl
   ${CMAKE_CURRENT_BINARY_DIR}/asn1_mini_parser.cc
   )
 
@@ -29,15 +29,15 @@ add_subdirectory(libixxxutil)
 endif() # CMAKE_PROJECT_NAME
 
 set(LIB_SRC 
-  version.cc
-  grammar.cc
-  tsort.cc
-  asn1/grammar.cc
-  xml/printer.cc
-  xml/xsd.cc
-  xml/rng.cc
-  graph/dot.cc
-  tap/tap.cc
+  grammar/version.cc
+  grammar/grammar.cc
+  grammar/tsort.cc
+  grammar/asn1/grammar.cc
+  grammar/xml/printer.cc
+  grammar/xml/xsd.cc
+  grammar/xml/rng.cc
+  grammar/graph/dot.cc
+  grammar/tap/tap.cc
   ${RAGEL_asn1_mini_parser_OUTPUTS}
   )
 
@@ -80,14 +80,6 @@ IF(${CMAKE_PROJECT_NAME} STREQUAL "libgrammar")
     test/asn1/mini_parser.cc
     test/grammar.cc
 
-    version.cc
-    grammar.cc
-    tsort.cc
-    asn1/grammar.cc
-    tap/tap.cc
-    xml/printer.cc
-    xml/xsd.cc
-    xml/rng.cc
     ${RAGEL_asn1_mini_parser_OUTPUTS}
     )
   set_property(TARGET ut PROPERTY INCLUDE_DIRECTORIES
@@ -99,6 +91,7 @@ IF(${CMAKE_PROJECT_NAME} STREQUAL "libgrammar")
   target_link_libraries(ut
     ${Boost_FILESYSTEM_LIBRARY}
     ${Boost_SYSTEM_LIBRARY}
+    grammar_static
     ixxxutil_static
     ixxx_static
     )

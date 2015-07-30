@@ -18,8 +18,8 @@
 // thus:
 #include <boost/iterator/reverse_iterator.hpp>
 
-#include <grammar.hh>
-#include <asn1/grammar.hh>
+#include <grammar/grammar.hh>
+#include <grammar/asn1/grammar.hh>
 
 #include <boost/lexical_cast.hpp>
 
@@ -299,7 +299,7 @@ main := module ;
 
 }%%
 
-#include <asn1/mini_parser.hh>
+#include <grammar/asn1/mini_parser.hh>
 #include <stdexcept>
 
 using namespace std;

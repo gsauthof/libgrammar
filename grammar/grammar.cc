@@ -34,7 +34,7 @@
 #include <boost/lexical_cast.hpp>
 #include <ixxx/util.hh>
 
-#include <asn1/grammar.hh>
+#include <grammar/asn1/grammar.hh>
 
 using namespace std;
 

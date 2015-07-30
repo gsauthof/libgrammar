@@ -23,7 +23,7 @@
 
 #include <ostream>
 
-#include <grammar.hh>
+#include <grammar/grammar.hh>
 
 namespace grammar {
 

@@ -26,10 +26,10 @@
 
 #include <boost/filesystem.hpp>
 
-#include <asn1/mini_parser.hh>
-#include <asn1/grammar.hh>
-#include <xml/xsd.hh>
-#include <xml/rng.hh>
+#include <grammar/asn1/mini_parser.hh>
+#include <grammar/asn1/grammar.hh>
+#include <grammar/xml/xsd.hh>
+#include <grammar/xml/rng.hh>
 #include <test/test.hh>
 
 #include <ixxx/ixxx.h>
@@ -385,9 +385,9 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         bf::path in(test::path::in());
         in /= "asn1/tap_3_12_strip.asn1";
         bf::path key_file(test::path::in());
-        key_file /= "../../xml/tap_3_12_keys.xml";
+        key_file /= "../../grammar/xml/tap_3_12_keys.xml";
         bf::path cs_file(test::path::in());
-        cs_file /= "../../xml/tap_3_12_constraints.zsv";
+        cs_file /= "../../grammar/xml/tap_3_12_constraints.zsv";
         string rel_out("xsd/asn1/key_const.xml");
         bf::path out(test::path::out());
         out /= rel_out;
@@ -431,7 +431,7 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         bf::path in(test::path::in());
         in /= "asn1/tap_3_12_strip.asn1";
         bf::path cs_file(test::path::in());
-        cs_file /= "../../xml/tap_3_12_constraints.zsv";
+        cs_file /= "../../grammar/xml/tap_3_12_constraints.zsv";
         string rel_out("rng/asn1/const.xml");
         bf::path out(test::path::out());
         out /= rel_out;
