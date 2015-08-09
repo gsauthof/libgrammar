@@ -330,11 +330,7 @@ namespace grammar {
     }
     void Base::push(Reference &&ref)
     {
-      refs_.emplace_back(
-          unique_ptr<Reference>(
-            new Reference(std::move(ref))
-            )
-          );
+      refs_.emplace_back(make_unique<Reference>(std::move(ref)));
       refs_.back()->set_parent(*this);
     }
     const std::deque<unique_ptr<Reference> > &Base::refs() const
