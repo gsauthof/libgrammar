@@ -330,25 +330,30 @@ namespace grammar {
     }
     void Base::push(Reference &&ref)
     {
-      refs_.push_back(std::move(ref));
-      refs_.back().set_parent(*this);
+      refs_.emplace_back(
+          unique_ptr<Reference>(
+            new Reference(std::move(ref))
+            )
+          );
+      refs_.back()->set_parent(*this);
     }
-    const std::deque<Reference> &Base::refs() const
+    const std::deque<unique_ptr<Reference> > &Base::refs() const
     {
       return refs_;
     }
-    std::deque<Reference> &Base::refs()
+    std::deque<unique_ptr<Reference> > &Base::refs()
     {
       return refs_;
     }
-    void Base::erase_reference(Reference &r)
+    void Base::erase_reference(Reference *r)
     {
       auto i = refs_.begin();
-      for (; i != refs_.end(); ++i)
-        if (&(*i) == &r) {
+      for (; i != refs_.end(); ++i) {
+        if ((*i).get() == r) {
           refs_.erase(i);
           return;
         }
+      }
     }
     bool Base::extensible() const
     {
@@ -372,24 +377,24 @@ namespace grammar {
     }
     List::List(std::string &&name)
     {
-      refs_.emplace_back(std::move(name));
-      refs_.back().set_parent(*this);
+      refs_.emplace_back(make_unique<Reference>(std::move(name)));
+      refs_.back()->set_parent(*this);
     }
     Set::Set()
     {
     }
     Set::Set(std::string &&name)
     {
-      refs_.emplace_back(std::move(name));
-      refs_.back().set_parent(*this);
+      refs_.emplace_back(make_unique<Reference>(std::move(name)));
+      refs_.back()->set_parent(*this);
     }
     Link::Link()
     {
     }
     Link::Link(std::string &&name)
     {
-      refs_.emplace_back(std::move(name));
-      refs_.back().set_parent(*this);
+      refs_.emplace_back(make_unique<Reference>(std::move(name)));
+      refs_.back()->set_parent(*this);
     }
 
     void Choice::accept(Visitor &v) const
@@ -507,9 +512,9 @@ namespace grammar {
     {
       return coord_;
     }
-    void Base::push_parent(Reference &ref)
+    void Base::push_parent(Reference *ref)
     {
-      parents_.push_back(&ref);
+      parents_.push_back(ref);
     }
     const std::deque<Reference*> &Base::parents() const
     {
@@ -574,25 +579,30 @@ namespace grammar {
     name_to_symbol_[x->name()] = x;
     name_to_terminal_[x->name()] = x;
   }
+
   void Grammar::erase(const std::string &name)
   {
     if (axiom_ && axiom_->name() == name)
       axiom_ = nullptr;
     auto i = name_to_symbol_.find(name);
     if (i != name_to_symbol_.end()) {
-      auto j = find(symbols_.begin(), symbols_.end(), i->second);
-      if (j != symbols_.end())
-        symbols_.erase(j);
+      {
+        auto j = find(symbols_.begin(), symbols_.end(), i->second);
+        if (j != symbols_.end())
+          symbols_.erase(j);
+      }
       Symbol::NT *nt = dynamic_cast<Symbol::NT*>(i->second);
       if (nt) {
         for (auto &ref : nt->rule().refs()) {
-          ref.symbol().erase_parent(ref);
+          ref->symbol().erase_parent(*ref);
         }
         auto k = name_to_nt_.find(name);
         if (k != name_to_nt_.end()) {
-          auto l = find(nts_.begin(), nts_.end(), k->second);
-          if (l != nts_.end())
-            nts_.erase(l);
+          {
+            auto l = find(nts_.begin(), nts_.end(), k->second);
+            if (l != nts_.end())
+              nts_.erase(l);
+          }
           name_to_nt_.erase(k);
         }
       } else {
@@ -604,13 +614,15 @@ namespace grammar {
           name_to_terminal_.erase(k);
         }
       }
-      for (auto &ref : i->second->parents()) {
-        ref->parent().erase_reference(*ref);
+      for (auto ref : i->second->parents()) {
+        ref->parent().erase_reference(ref);
       }
+
       delete i->second;
       name_to_symbol_.erase(i);
     }
   }
+
   const std::deque<Symbol::NT*> &Grammar::nts() const
   {
     return nts_;
@@ -714,9 +726,9 @@ namespace grammar {
   {
     for (auto &nt : nts_)
       for (auto &ref : nt->rule().refs()) {
-        auto &symbol = name_to_symbol(ref.symbol_name());
-        ref.set_symbol(symbol);
-        symbol.push_parent(ref);
+        auto &symbol = name_to_symbol(ref->symbol_name());
+        ref->set_symbol(symbol);
+        symbol.push_parent(ref.get());
       }
   }
 
@@ -827,8 +839,8 @@ namespace grammar {
               nt.set_coord(Coordinates(asn1::SET, asn1::UNIVERSAL));
               break;
             case Rule::LINK:
-              if (nt.rule().refs().front().coord().initialized())
-                nt.set_coord(nt.rule().refs().front().coord());
+              if (nt.rule().refs().front()->coord().initialized())
+                nt.set_coord(nt.rule().refs().front()->coord());
               break;
             case Rule::CHOICE:
               break;
@@ -837,10 +849,10 @@ namespace grammar {
             has_changed = true;
         }
         for (auto &ref : nt.rule().refs()) {
-          if (!ref.coord().initialized()) {
-            if (ref.symbol().coord().initialized())
-              ref.set_coord(ref.symbol().coord());
-            if (ref.coord().initialized())
+          if (!ref->coord().initialized()) {
+            if (ref->symbol().coord().initialized())
+              ref->set_coord(ref->symbol().coord());
+            if (ref->coord().initialized())
               has_changed = true;
           }
         }
@@ -861,8 +873,8 @@ namespace grammar {
         f(nt.coord().tag(), nt.name());
       }
       for (auto &ref : nt.rule().refs()) {
-         if (ref.coord().initialized() && ref.coord().klasse() == klasse) {
-           f(ref.coord().tag(), ref.symbol_name());
+         if (ref->coord().initialized() && ref->coord().klasse() == klasse) {
+           f(ref->coord().tag(), ref->symbol_name());
          }
       }
     }
@@ -958,7 +970,7 @@ namespace grammar {
       if (nt->rule().type() != Rule::LINK)
         return *s;
       else
-        s = &nt->rule().refs().front().symbol();
+        s = &nt->rule().refs().front()->symbol();
     }
     return root_symbol;
   }
@@ -979,9 +991,9 @@ namespace grammar {
       const Symbol::NT *nt = dynamic_cast<const Symbol::NT*>(s);
       if (nt) {
         for (auto &ref : nt->rule().refs()) {
-          if (unreachable.count(ref.symbol_name())) {
-            stack.push_back(&ref.symbol());
-            unreachable.erase(ref.symbol_name());
+          if (unreachable.count(ref->symbol_name())) {
+            stack.push_back(&ref->symbol());
+            unreachable.erase(ref->symbol_name());
           }
         }
       }
@@ -1118,7 +1130,7 @@ namespace grammar {
           if (j != si()) {
             string value = boost::copy_range<string>(*j);
             if (type == "pattern") {
-              nt.rule().refs().front().push_constraint(
+              nt.rule().refs().front()->push_constraint(
                   make_unique<Constraint::Pattern>(value));
             } else if (type == "minInclusive") {
               domains_[nt_name].set_min(boost::lexical_cast<ssize_t>(value));
@@ -1139,14 +1151,14 @@ namespace grammar {
       }
     }
     for (auto &e : enums_)
-      g.name_to_nt(e.first).rule().refs().front().push_constraint(
+      g.name_to_nt(e.first).rule().refs().front()->push_constraint(
           make_unique<Constraint::Enum>(std::move(e.second)));
     for (auto &e : domains_)
-      g.name_to_nt(e.first).rule().refs().front().push_constraint(
+      g.name_to_nt(e.first).rule().refs().front()->push_constraint(
           make_unique<Constraint::Domain>(std::move(e.second)));
     for (auto &e : sizes_) {
       e.second.set_source(Constraint::Source::EXTERN);
-      g.name_to_nt(e.first).rule().refs().front().push_constraint(
+      g.name_to_nt(e.first).rule().refs().front()->push_constraint(
           make_unique<Constraint::Size>(std::move(e.second)));
     }
   }

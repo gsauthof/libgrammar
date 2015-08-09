@@ -176,7 +176,7 @@ simple_type = type_ident
   }
   ( ws ? '(' naked_constraint ws ? ')' 
   %{
-     rule_->refs().front().set_constraints(std::move(ref_.constraints()));
+     rule_->refs().front()->set_constraints(std::move(ref_.constraints()));
   }
   ) ?
   ;

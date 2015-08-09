@@ -93,11 +93,11 @@ namespace grammar {
     {
       if (rule.refs().empty())
         return o;
-      o.o() << rule.refs().front().symbol_name();
-      if (!rule.refs().front().constraints().empty()) {
+      o.o() << rule.refs().front()->symbol_name();
+      if (!rule.refs().front()->constraints().empty()) {
         o.o() << " (";
-        auto i = rule.refs().front().constraints().begin();
-        auto e = rule.refs().front().constraints().end();
+        auto i = rule.refs().front()->constraints().begin();
+        auto e = rule.refs().front()->constraints().end();
         o << **i;
         ++i;
         for (; i != e; ++i) {
@@ -115,12 +115,12 @@ namespace grammar {
       auto i = rule.refs().begin();
       if (i != rule.refs().end()) {
         o.o() << "  ";
-        o << *i;
+        o << **i;
         ++i;
       }
       for (; i != rule.refs().end(); ++i) {
         o.o() << ",\n  ";
-        o << *i;
+        o << **i;
       }
       if (rule.extensible())
         o.o() << ",\n  ...";
@@ -163,7 +163,7 @@ namespace grammar {
       o.o() << name << " OF ";
       if (rule.refs().empty())
         return o;
-      o << rule.refs().front();
+      o << *rule.refs().front();
       return o;
     }
     Printer &operator<<(Printer &o, const Rule::List &rule)

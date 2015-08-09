@@ -59,7 +59,7 @@ namespace grammar {
     size_t i = 0;
     for (auto nt : nts) {
       for (auto &ref : nt->rule().refs()) {
-        Symbol::NT *nt = dynamic_cast<Symbol::NT*>(&ref.symbol());
+        Symbol::NT *nt = dynamic_cast<Symbol::NT*>(&ref->symbol());
         if (nt) {
           auto p = equal_range(nts.begin(), nts.end(), nt, Cmp);
           edges.emplace_back(i, p.first - nts.begin());

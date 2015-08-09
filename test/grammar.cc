@@ -46,11 +46,11 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       g.push(std::move(root));
       g.push(make_unique<Symbol::Terminal>("OCTET STRING"));
       BOOST_CHECK_THROW(
-          g.name_to_nt("root").rule().refs().front().symbol(),
+          g.name_to_nt("root").rule().refs().front()->symbol(),
           grammar::Runtime_Error);
       g.init_links();
       BOOST_CHECK_EQUAL(
-          g.name_to_nt("root").rule().refs().front().symbol().name(),
+          g.name_to_nt("root").rule().refs().front()->symbol().name(),
           "OCTET STRING");
     }
 
@@ -137,10 +137,10 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       derive_tags(g);
       BOOST_CHECK_EQUAL(g.name_to_nt("root").coord().tag(), 0u);
       BOOST_CHECK_EQUAL(g.name_to_nt("root").coord().klasse(), 0u);
-      BOOST_CHECK_EQUAL(g.name_to_nt("root").rule().refs().front().coord().tag(), 2u);
-      BOOST_CHECK_EQUAL(g.name_to_nt("root").rule().refs().front().coord().klasse(), 0u);
-      BOOST_CHECK_EQUAL(g.name_to_nt("root").rule().refs().back().coord().tag(), 4u);
-      BOOST_CHECK_EQUAL(g.name_to_nt("root").rule().refs().back().coord().klasse(), 0u);
+      BOOST_CHECK_EQUAL(g.name_to_nt("root").rule().refs().front()->coord().tag(), 2u);
+      BOOST_CHECK_EQUAL(g.name_to_nt("root").rule().refs().front()->coord().klasse(), 0u);
+      BOOST_CHECK_EQUAL(g.name_to_nt("root").rule().refs().back()->coord().tag(), 4u);
+      BOOST_CHECK_EQUAL(g.name_to_nt("root").rule().refs().back()->coord().klasse(), 0u);
     }
 
    BOOST_AUTO_TEST_SUITE_END()
@@ -156,7 +156,7 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       g.name_to_nt("foo").set_rule(make_unique<Rule::Link>("INTEGER"));
       g.name_to_nt("bar").set_rule(make_unique<Rule::Link>("INTEGER"));
       g.name_to_nt("baz").set_rule(make_unique<Rule::Link>("blah"));
-      g.name_to_nt("baz").rule().refs().front().set_coord(Coordinates(6, 1));
+      g.name_to_nt("baz").rule().refs().front()->set_coord(Coordinates(6, 1));
       ostringstream o;
       print_tag_translations(o, g, 1);
       const char ref[] =
@@ -293,13 +293,13 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       grammar::asn1::add_terminals(g);
       g.init_links();
       BOOST_CHECK_EQUAL(
-          effective_symbol(g.name_to_nt("root").rule().refs().at(0)).name(),
+          effective_symbol(*g.name_to_nt("root").rule().refs().at(0)).name(),
           "OCTET STRING");
       BOOST_CHECK_EQUAL(
-          effective_symbol(g.name_to_nt("root").rule().refs().at(1)).name(),
+          effective_symbol(*g.name_to_nt("root").rule().refs().at(1)).name(),
           "INTEGER");
       BOOST_CHECK_EQUAL(
-          effective_symbol(g.name_to_nt("root").rule().refs().at(2)).name(),
+          effective_symbol(*g.name_to_nt("root").rule().refs().at(2)).name(),
           "INTEGER");
      }
 

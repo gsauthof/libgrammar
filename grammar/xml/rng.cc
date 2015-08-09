@@ -86,22 +86,22 @@ o() << R"(<grammar datatypeLibrary='http://www.w3.org/2001/XMLSchema-datatypes'
 
       void Printer::visit(const Symbol::NT &nt)
       {
-        auto &eff_symbol = grammar::effective_symbol(nt.rule().refs().front());
+        auto &eff_symbol = grammar::effective_symbol(*nt.rule().refs().front());
         if (nt.rule().type() == Rule::LINK
             && dynamic_cast<const Symbol::Terminal*>(&eff_symbol)) {
           o() << "  <define name='" << nt.name() << "'>\n";
-          auto &symbol = grammar::effective_symbol(nt.rule().refs().front());
+          auto &symbol = grammar::effective_symbol(*nt.rule().refs().front());
 
           if (symbol.name() == "INTEGER"
-              && !nt.rule().refs().front().constraints().empty()
+              && !nt.rule().refs().front()->constraints().empty()
               && dynamic_cast<const Constraint::Enum*>(
-                nt.rule().refs().front().constraints().front().get())
+                nt.rule().refs().front()->constraints().front().get())
               ) {
             // at least libxml2 does not seem to support the xsd enumeration
             // facet
             o() << "    <choice>\n";
             auto &e = *dynamic_cast<const Constraint::Enum*>(
-                nt.rule().refs().front().constraints().front().get());
+                nt.rule().refs().front()->constraints().front().get());
             for (auto &v : e.values())
               o() << "      <value>" << v << "</value>\n";
             o() << "    </choice>\n";
@@ -109,8 +109,8 @@ o() << R"(<grammar datatypeLibrary='http://www.w3.org/2001/XMLSchema-datatypes'
             o() << "    ";
             print_terminal_type_start(*this, symbol.name());
             o() << '\n';
-            symbol_name_ = nt.rule().refs().front().symbol_name();
-            for (auto &constraint : nt.rule().refs().front().constraints()) {
+            symbol_name_ = nt.rule().refs().front()->symbol_name();
+            for (auto &constraint : nt.rule().refs().front()->constraints()) {
               (*this) << *constraint;
               o() << '\n';
             }
@@ -199,10 +199,10 @@ o() << R"(<grammar datatypeLibrary='http://www.w3.org/2001/XMLSchema-datatypes'
         auto i = rule.refs().begin();
         auto e = rule.refs().end();
         if (i != e)
-          print_name_type(o, *i++);
+          print_name_type(o, **i++);
         for (; i != e; i++) {
           o.o() << '\n';
-          print_name_type(o, *i);
+          print_name_type(o, **i);
         }
       }
       void Printer::visit(const Rule::Link &rule)
@@ -215,17 +215,17 @@ o() << R"(<grammar datatypeLibrary='http://www.w3.org/2001/XMLSchema-datatypes'
       }
       static void print_list(Printer &o, const Rule::Base &rule)
       {
-        auto &eff_symbol = grammar::effective_symbol(rule.refs().front());
+        auto &eff_symbol = grammar::effective_symbol(*rule.refs().front());
         if (dynamic_cast<const Symbol::NT*>(&eff_symbol) &&
             dynamic_cast<const Symbol::NT*>(&eff_symbol)->rule().type()
             == Rule::CHOICE && !eff_symbol.coord().initialized()) {
           o.o() << "    <oneOrMore>\n";
           o.o() << "      <ref name='"
-            << rule.refs().front().symbol_name() << "'/>\n";
+            << rule.refs().front()->symbol_name() << "'/>\n";
           o.o() << "    </oneOrMore>";
         } else {
           o.o() << "    <oneOrMore>\n";
-          print_name_type(o, rule.refs().front());
+          print_name_type(o, *rule.refs().front());
           o.o() << '\n';
           o.o() << "    </oneOrMore>";
         }
@@ -243,7 +243,7 @@ o() << R"(<grammar datatypeLibrary='http://www.w3.org/2001/XMLSchema-datatypes'
       {
         o.o() << "    <" << name << ">\n";
         for (auto &ref : rule.refs()) {
-          print_name_type(o, ref);
+          print_name_type(o, *ref);
           o.o() << '\n';
         }
         o.o() << "    </" << name << ">"

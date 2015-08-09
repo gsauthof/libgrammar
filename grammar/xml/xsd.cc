@@ -44,9 +44,9 @@ namespace grammar {
         if (g.axiom().rule().type() == Rule::CHOICE
             && !g.axiom().coord().initialized()) {
           for (auto &ref : g.axiom().rule().refs()) {
-            o.o() << "  <xs:element name='" << ref.symbol_name()
-                  << "' type='" << ref.symbol_name() << "'>\n";
-            o.print_key_defs(ref.symbol_name());
+            o.o() << "  <xs:element name='" << ref->symbol_name()
+                  << "' type='" << ref->symbol_name() << "'>\n";
+            o.print_key_defs(ref->symbol_name());
             o.o() << "  </xs:element>\n";
           }
         } else {
@@ -85,7 +85,7 @@ o() << R"(<xs:schema
       void Printer::visit(const Symbol::NT &nt)
       {
         nt_name_ = nt.name();
-        auto &eff_symbol = grammar::effective_symbol(nt.rule().refs().front());
+        auto &eff_symbol = grammar::effective_symbol(*nt.rule().refs().front());
         if (nt.rule().type() == Rule::LINK
             && dynamic_cast<const Symbol::Terminal*>(&eff_symbol)) {
           o() << "  <xs:simpleType name='";
@@ -93,12 +93,12 @@ o() << R"(<xs:schema
           if (any_attribute_)
             o() << "___base";
           o()  << "'>\n";
-          auto &symbol = grammar::effective_symbol(nt.rule().refs().front());
+          auto &symbol = grammar::effective_symbol(*nt.rule().refs().front());
           o() << "    <xs:restriction base='";;
           o() << boost::replace_all_copy(symbol.name(), " ", "_");
           o() << "'>\n";
-          symbol_name_ = nt.rule().refs().front().symbol_name();
-          for (auto &constraint : nt.rule().refs().front().constraints()) {
+          symbol_name_ = nt.rule().refs().front()->symbol_name();
+          for (auto &constraint : nt.rule().refs().front()->constraints()) {
             (*this) << *constraint;
             o() << '\n';
           }
@@ -211,7 +211,7 @@ o() << R"(<xs:schema
         o.o() << "    <xs:sequence>\n";
         for (auto &ref : rule.refs()) {
           o.o() << "      <xs:element ";
-          print_name_type(o, ref);
+          print_name_type(o, *ref);
           o.o() << "/>\n";
         }
         o.o() << "    </xs:sequence>";
@@ -228,7 +228,7 @@ o() << R"(<xs:schema
       {
         o.o() << "    <xs:sequence>\n";
 
-        auto &eff_symbol = grammar::effective_symbol(rule.refs().front());
+        auto &eff_symbol = grammar::effective_symbol(*rule.refs().front());
         if (dynamic_cast<const Symbol::NT*>(&eff_symbol) &&
             dynamic_cast<const Symbol::NT*>(&eff_symbol)->rule().type()
             == Rule::CHOICE && !eff_symbol.coord().initialized()) {
@@ -238,7 +238,7 @@ o() << R"(<xs:schema
 
 
           o.o() << "      <xs:element ";
-          print_name_type(o, rule.refs().front());
+          print_name_type(o, *rule.refs().front());
           o.o() << " maxOccurs='unbounded'";
           o.o() << "/>\n";
 
@@ -261,7 +261,7 @@ o() << R"(<xs:schema
         o.o() << "      <xs:" << name << ">\n";
         for (auto &ref : rule.refs()) {
           o.o() << "      <xs:element ";
-          print_name_type(o, ref);
+          print_name_type(o, *ref);
           o.o() << "/>\n";
         }
         o.o() << "      </xs:" << name << ">";

@@ -72,16 +72,16 @@ namespace grammar {
       void Printer::print(const Symbol::NT &nt)
       {
         for (auto &ref : nt.rule().refs()) {
-          if (stop_names_.count(ref.symbol_name())) {
+          if (stop_names_.count(ref->symbol_name())) {
             o_ << "  t_ref_" << t_ref_counter_ << " [label=\""
-              << ref.symbol_name() << "\"];\n";
+              << ref->symbol_name() << "\"];\n";
             o_ << "  \"" << nt.name() << "\" -> t_ref_" << t_ref_counter_;
             ++t_ref_counter_;
           } else {
-            o_ << "  \"" << nt.name() << "\" -> \"" << ref.symbol_name()
+            o_ << "  \"" << nt.name() << "\" -> \"" << ref->symbol_name()
               << '"';
           }
-          if (ref.optional())
+          if (ref->optional())
             o_ << "[style=\"dashed\"]";
           o_ << ";\n";
         }

@@ -1,0 +1,62 @@
+DataInterChange ::= CHOICE
+{
+  notification Notification
+}
+
+Notification ::= [APPLICATION 2] SEQUENCE
+{
+  sender Sender,
+  recipient Recipient,
+  fileSequenceNumber FileSequenceNumber,
+  rapFileSequenceNumber RapFileSequenceNumber OPTIONAL,
+  fileCreationTimeStamp FileCreationTimeStamp OPTIONAL,
+  fileAvailableTimeStamp FileAvailableTimeStamp,
+  transferCutOffTimeStamp TransferCutOffTimeStamp,
+  specificationVersionNumber SpecificationVersionNumber,
+  releaseVersionNumber ReleaseVersionNumber,
+  fileTypeIndicator FileTypeIndicator OPTIONAL,
+  operatorSpecInformation OperatorSpecInfoList OPTIONAL,
+  ...
+}
+
+DateTimeLong ::= SEQUENCE
+{
+  localTimeStamp LocalTimeStamp,
+  utcTimeOffset UtcTimeOffset,
+  ...
+}
+
+FileAvailableTimeStamp ::= [APPLICATION 107] DateTimeLong
+
+FileCreationTimeStamp ::= [APPLICATION 108] DateTimeLong
+
+FileSequenceNumber ::= [APPLICATION 109] NumberString (SIZE(5))
+
+FileTypeIndicator ::= [APPLICATION 110] AsciiString (SIZE(1))
+
+LocalTimeStamp ::= [APPLICATION 16] NumberString (SIZE(14))
+
+OperatorSpecInfoList ::= [APPLICATION 162] SEQUENCE OF OperatorSpecInformation
+
+OperatorSpecInformation ::= [APPLICATION 163] AsciiString
+
+PlmnId ::= [APPLICATION 169] AsciiString (SIZE(5))
+
+RapFileSequenceNumber ::= [APPLICATION 181] FileSequenceNumber
+
+Recipient ::= [APPLICATION 182] PlmnId
+
+ReleaseVersionNumber ::= [APPLICATION 189] INTEGER
+
+Sender ::= [APPLICATION 196] PlmnId
+
+SpecificationVersionNumber ::= [APPLICATION 201] INTEGER
+
+TransferCutOffTimeStamp ::= [APPLICATION 227] DateTimeLong
+
+UtcTimeOffset ::= [APPLICATION 231] AsciiString (SIZE(5))
+
+AsciiString ::= OCTET STRING
+
+NumberString ::= OCTET STRING
+

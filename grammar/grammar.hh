@@ -197,14 +197,14 @@ namespace grammar {
     class Set;
     class Base {
       protected:
-        std::deque<Reference> refs_;
+        std::deque<std::unique_ptr<Reference> > refs_;
         bool extensible_ {false};
         Symbol::NT *parent_ {nullptr};
       public:
         virtual ~Base();
         void push(Reference &&ref);
-        const std::deque<Reference> &refs() const;
-        std::deque<Reference> &refs();
+        const std::deque<std::unique_ptr<Reference> > &refs() const;
+        std::deque<std::unique_ptr<Reference> > &refs();
         virtual void accept(Visitor &v) const = 0;
         virtual void apply(Visitor &v) = 0;
         virtual Type type() const = 0;
@@ -212,7 +212,7 @@ namespace grammar {
         void set_extensible(bool e);
         void set_parent(Symbol::NT &parent);
         const Symbol::NT &parent() const;
-        void erase_reference(Reference &r);
+        void erase_reference(Reference *r);
 
     };
     class Choice : public Base {
@@ -282,7 +282,7 @@ namespace grammar {
         void set_coord(Coordinates &&coord);
         void set_coord(const Coordinates &coord);
         const Coordinates &coord() const;
-        void push_parent(Reference &ref);
+        void push_parent(Reference *ref);
         const std::deque<Reference*> &parents() const;
         void erase_parent(Reference &ref);
     };

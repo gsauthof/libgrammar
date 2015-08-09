@@ -100,11 +100,11 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         parser.read(inp, inp + sizeof(inp)-1);
         grammar::Grammar g(parser.grammar());
         BOOST_CHECK_EQUAL(g.nts().size(), 2u);
-        BOOST_CHECK_EQUAL(g.name_to_nt("Root").rule().refs().at(0).symbol_name(), "OCTET STRING");
-        BOOST_CHECK_EQUAL(g.name_to_nt("Root").rule().refs().at(1).symbol_name(), "OCTET STRING");
-        BOOST_CHECK_EQUAL(g.name_to_nt("Root").rule().refs().at(2).symbol_name(), "OCTET STRING");
-        BOOST_CHECK_EQUAL(g.name_to_nt("Root").rule().refs().at(3).symbol_name(), "BIT STRING");
-        BOOST_CHECK_EQUAL(g.name_to_nt("Root").rule().refs().at(4).symbol_name(), "BIT STRING");
+        BOOST_CHECK_EQUAL(g.name_to_nt("Root").rule().refs().at(0)->symbol_name(), "OCTET STRING");
+        BOOST_CHECK_EQUAL(g.name_to_nt("Root").rule().refs().at(1)->symbol_name(), "OCTET STRING");
+        BOOST_CHECK_EQUAL(g.name_to_nt("Root").rule().refs().at(2)->symbol_name(), "OCTET STRING");
+        BOOST_CHECK_EQUAL(g.name_to_nt("Root").rule().refs().at(3)->symbol_name(), "BIT STRING");
+        BOOST_CHECK_EQUAL(g.name_to_nt("Root").rule().refs().at(4)->symbol_name(), "BIT STRING");
       }
 
       BOOST_AUTO_TEST_CASE(minimal_ws)
@@ -278,14 +278,14 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         parser.read(f.sbegin(), f.send());
         grammar::Grammar g(parser.grammar());
         BOOST_CHECK_THROW(
-            g.name_to_nt("RecordCount").rule().refs().front().symbol(),
+            g.name_to_nt("RecordCount").rule().refs().front()->symbol(),
             grammar::Runtime_Error);
         using namespace grammar;
         g.push(make_unique<Symbol::Terminal>("INTEGER"));
         g.push(make_unique<Symbol::Terminal>("OCTET STRING"));
         g.init_links();
         BOOST_CHECK_EQUAL(
-            g.name_to_nt("RecordCount").rule().refs().front().symbol().name(),
+            g.name_to_nt("RecordCount").rule().refs().front()->symbol().name(),
             "INTEGER");
       }
 
@@ -496,6 +496,45 @@ BOOST_AUTO_TEST_SUITE(grammar_)
           grammar::xml::xsd::Printer p(f);
           p.set_any_attribute(true);
           p.set_comment(string());
+          p << g;
+        }
+        BOOST_TEST_CHECKPOINT("Comparing: " << ref << " vs. " << out);
+        {
+          ixxx::util::Mapped_File a(ref.generic_string());
+          ixxx::util::Mapped_File b(out.generic_string());
+          BOOST_REQUIRE(bf::file_size(ref) && bf::file_size(out));
+          bool are_equal = std::equal(a.begin(), a.end(), b.begin(), b.end());
+          BOOST_CHECK(are_equal);
+        }
+      }
+
+      BOOST_AUTO_TEST_CASE(erase_unreachable)
+      {
+        grammar::Grammar g;
+        bf::path in(test::path::in());
+        in /= "asn1/tap_3_12_notification.asn1";
+        string rel_out("unreachable/asn1/notification.asn1");
+        bf::path out(test::path::out());
+        out /= rel_out;
+        BOOST_TEST_CHECKPOINT("Removing: " << out);
+        bf::remove(out);
+        bf::create_directories(out.parent_path());
+        bf::path ref(test::path::ref());
+        ref /= rel_out;
+        BOOST_TEST_CHECKPOINT("Parsing: " << in );
+        {
+          ixxx::util::Mapped_File f(in.generic_string());
+          grammar::asn1::mini::Parser parser(std::move(g));
+          parser.read(f.s_begin(), f.s_end());
+          g = parser.grammar();
+          grammar::asn1::add_terminals(g);
+          g.init_links();
+          grammar::erase_unreachable_symbols(g);
+        }
+        BOOST_TEST_CHECKPOINT("Writing: " << out);
+        {
+          ofstream f(out.generic_string(), ios_base::out | ios_base::binary);
+          grammar::asn1::Printer p(f);
           p << g;
         }
         BOOST_TEST_CHECKPOINT("Comparing: " << ref << " vs. " << out);

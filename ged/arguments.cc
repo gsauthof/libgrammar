@@ -116,15 +116,15 @@ and type restrictions:
 
 #include <ixxx/util.hh>
 
-#include <asn1/mini_parser.hh>
-#include <asn1/grammar.hh>
-#include <xml/xsd.hh>
-#include <xml/rng.hh>
-#include <graph/dot.hh>
+#include <grammar/asn1/mini_parser.hh>
+#include <grammar/asn1/grammar.hh>
+#include <grammar/xml/xsd.hh>
+#include <grammar/xml/rng.hh>
+#include <grammar/graph/dot.hh>
 
-#include <grammar.hh>
-#include <tsort.hh>
-#include <version.hh>
+#include <grammar/grammar.hh>
+#include <grammar/tsort.hh>
+#include <grammar/version.hh>
 
 using namespace std;
 
