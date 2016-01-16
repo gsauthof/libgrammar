@@ -22,12 +22,26 @@
 #define GRAMMAR_TAP_HH
 
 #include <utility>
+#include <stdint.h>
 
 namespace grammar {
 
   namespace tap {
 
     std::pair<const char * const*, const char * const*> well_known_tags();
+
+    enum Tag : uint32_t  {
+      TRANSFER_BATCH     = 1,
+      AUDIT_CONTROL_INFO = 15
+    };
+
+  }
+
+  namespace rap {
+    enum Tag : uint32_t  {
+      RETURN_BATCH           = 534,
+      RAP_AUDIT_CONTROL_INFO = 541
+    };
 
   }
 
