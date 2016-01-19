@@ -31,8 +31,9 @@ namespace grammar {
     std::pair<const char * const*, const char * const*> well_known_tags();
 
     enum Tag : uint32_t  {
-      TRANSFER_BATCH     = 1,
-      AUDIT_CONTROL_INFO = 15
+      TRANSFER_BATCH         = 1,
+      CALL_EVENT_DETAIL_LIST = 3,
+      AUDIT_CONTROL_INFO     = 15
     };
 
   }
@@ -40,6 +41,7 @@ namespace grammar {
   namespace rap {
     enum Tag : uint32_t  {
       RETURN_BATCH           = 534,
+      RETURN_DETAIL_LIST     = 536,
       RAP_AUDIT_CONTROL_INFO = 541
     };
 
