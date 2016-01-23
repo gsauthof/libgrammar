@@ -47,6 +47,14 @@ namespace grammar {
 
   }
 
+  namespace nrt {
+    enum Tag : uint32_t  {
+      NRTRDE            = 1,
+      CALL_EVENT_LIST   = 2,
+      CALL_EVENTS_COUNT = 20
+    };
+  }
+
 }
 
 #endif
