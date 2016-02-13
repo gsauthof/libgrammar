@@ -24,9 +24,7 @@
 #include <map>
 #include <set>
 #include <algorithm>
-
-// XXX remove again
-#include <iostream>
+#include <vector>
 
 #include <boost/algorithm/string/find_iterator.hpp>
 #include <boost/algorithm/string/finder.hpp>
