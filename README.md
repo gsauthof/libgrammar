@@ -30,6 +30,7 @@ how the library features can be used.
 
 2015, Georg Sauthoff <mail@georg.so>
 
+[![Build Status](https://travis-ci.org/gsauthof/libgrammar.svg?branch=master)](https://travis-ci.org/gsauthof/libgrammar)
 
 ## Unittests
 
