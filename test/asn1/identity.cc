@@ -36,6 +36,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <array>
 
 using namespace std;
 using namespace grammar::asn1::mini;
