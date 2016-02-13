@@ -12,7 +12,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/ragel")
 
 find_package(RAGEL 6.6 REQUIRED)
 
-find_package(Boost 1.55
+find_package(Boost 1.54
   COMPONENTS
     filesystem
     system
