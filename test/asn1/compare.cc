@@ -43,6 +43,7 @@
 #include <fstream>
 #include <iostream>
 #include <functional>
+#include <array>
 
 using namespace std;
 using namespace grammar::asn1::mini;
