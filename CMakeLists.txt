@@ -44,6 +44,9 @@ set(LIB_SRC
 add_library(grammar SHARED
   ${LIB_SRC}
   )
+target_link_libraries(grammar
+  ixxxutil
+  )
 add_library(grammar_static STATIC
   ${LIB_SRC}
   )
