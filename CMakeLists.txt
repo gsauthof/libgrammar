@@ -1,11 +1,15 @@
 cmake_minimum_required(VERSION 2.8)
 project(libgrammar CXX)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y -Wall")
+# guard from super-projects, i.e. when it is added as subdirectory
+IF(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
 
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y -Wall")
 
-include (${CMAKE_SOURCE_DIR}/cmake/modules/coverage.cmake)
-include (${CMAKE_SOURCE_DIR}/cmake/modules/sanitize.cmake)
+  include (${CMAKE_SOURCE_DIR}/cmake/modules/coverage.cmake)
+  include (${CMAKE_SOURCE_DIR}/cmake/modules/sanitize.cmake)
+
+endif()
 
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/ragel")
