@@ -32,8 +32,18 @@ namespace grammar {
 
     enum Tag : uint32_t  {
       TRANSFER_BATCH         = 1,
+      NETWORK_INFO           = 6,
       CALL_EVENT_DETAIL_LIST = 3,
-      AUDIT_CONTROL_INFO     = 15
+      AUDIT_CONTROL_INFO     = 15,
+      CHARGE_TYPE            = 71,
+      CHARGE_REFUND_INDICATOR= 344,
+      CAMEL_INVOCATION_FEE   = 422,
+      CHARGE                 = 62,
+      UTC_TIME_OFFSET_CODE   = 232,
+      UTC_TIME_OFFSET        = 231,
+      CHARGING_TIME_STAMP    = 74,
+      CHARGE_DETAIL_TIME_STAMP = 410,
+      LOCAL_TIME_STAMP       = 16
     };
 
   }
