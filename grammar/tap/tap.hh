@@ -44,7 +44,10 @@ namespace grammar {
       CHARGING_TIME_STAMP         = 74,
       CHARGE_DETAIL_TIME_STAMP    = 410,
       CALL_EVENT_START_TIME_STAMP = 44,
-      LOCAL_TIME_STAMP            = 16
+      LOCAL_TIME_STAMP            = 16,
+      DEPOSIT_TIME_STAMP = 88,
+      COMPLETION_TIME_STAMP = 76,
+      CHARGING_POINT = 73
     };
 
   }
