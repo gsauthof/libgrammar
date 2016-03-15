@@ -53,7 +53,8 @@ namespace grammar {
       REQUESTED_DELIVERY_TIME_STAMP  = 301,
       ACTUAL_DELIVERY_TIME_STAMP     = 302,
       CONTENT_SERVICE_USED           = 352,
-      CONTENT_CHARGING_POINT         = 345
+      CONTENT_CHARGING_POINT         = 345,
+      SERVICE_START_TIME_STAMP       = 447
     };
 
   }
