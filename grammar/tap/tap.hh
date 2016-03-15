@@ -31,23 +31,29 @@ namespace grammar {
     std::pair<const char * const*, const char * const*> well_known_tags();
 
     enum Tag : uint32_t  {
-      TRANSFER_BATCH              = 1,
-      NETWORK_INFO                = 6,
-      CALL_EVENT_DETAIL_LIST      = 3,
-      AUDIT_CONTROL_INFO          = 15,
-      CHARGE_TYPE                 = 71,
-      CHARGE_REFUND_INDICATOR     = 344,
-      CAMEL_INVOCATION_FEE        = 422,
-      CHARGE                      = 62,
-      UTC_TIME_OFFSET_CODE        = 232,
-      UTC_TIME_OFFSET             = 231,
-      CHARGING_TIME_STAMP         = 74,
-      CHARGE_DETAIL_TIME_STAMP    = 410,
-      CALL_EVENT_START_TIME_STAMP = 44,
-      LOCAL_TIME_STAMP            = 16,
-      DEPOSIT_TIME_STAMP = 88,
-      COMPLETION_TIME_STAMP = 76,
-      CHARGING_POINT = 73
+      TRANSFER_BATCH                 = 1,
+      NETWORK_INFO                   = 6,
+      CALL_EVENT_DETAIL_LIST         = 3,
+      AUDIT_CONTROL_INFO             = 15,
+      CHARGE_TYPE                    = 71,
+      CHARGE_REFUND_INDICATOR        = 344,
+      CAMEL_INVOCATION_FEE           = 422,
+      CHARGE                         = 62,
+      UTC_TIME_OFFSET_CODE           = 232,
+      UTC_TIME_OFFSET                = 231,
+      CHARGING_TIME_STAMP            = 74,
+      CHARGE_DETAIL_TIME_STAMP       = 410,
+      CALL_EVENT_START_TIME_STAMP    = 44,
+      LOCAL_TIME_STAMP               = 16,
+      DEPOSIT_TIME_STAMP             = 88,
+      COMPLETION_TIME_STAMP          = 76,
+      CHARGING_POINT                 = 73,
+      CONTENT_TRANSACTION_BASIC_INFO = 304,
+      ORDER_PLACED_TIME_STAMP        = 300,
+      REQUESTED_DELIVERY_TIME_STAMP  = 301,
+      ACTUAL_DELIVERY_TIME_STAMP     = 302,
+      CONTENT_SERVICE_USED           = 352,
+      CONTENT_CHARGING_POINT         = 345
     };
 
   }
