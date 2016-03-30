@@ -1142,6 +1142,31 @@ namespace grammar {
     }
     return v;
   }
+}
+
+#include <grammar/constraint/variant.hh>
+
+namespace grammar {
+
+  std::unordered_map<std::string, Constraint::Variant>
+    make_constraint_map(Constraint::Vector &&v)
+  {
+    std::unordered_map<std::string, Constraint::Variant> r;
+    for (auto e : v.enums)
+      r[e.first] = std::move(e.second);
+    for (auto e : v.domains)
+      r[e.first] = std::move(e.second);
+    for (auto e : v.sizes)
+      r[e.first] = std::move(e.second);
+    for (auto e : v.patterns)
+      r[e.first] = std::move(e.second);
+
+    v.enums.clear();
+    v.domains.clear();
+    v.sizes.clear();
+    v.patterns.clear();
+    return r;
+  }
 
   void add_constraints(Grammar &g, const std::string &filename)
   {

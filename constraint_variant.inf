@@ -1,0 +1,16 @@
+union {
+  Enum
+  Domain
+  Size
+  Pattern
+}
+option {
+ namespace {
+   grammar
+   Constraint
+  }
+  include {
+    grammar/grammar.hh
+  }
+  name Variant
+}

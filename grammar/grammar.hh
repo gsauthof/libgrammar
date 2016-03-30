@@ -29,6 +29,7 @@
 #include <memory>
 #include <stdexcept>
 
+
 namespace grammar {
 
   class Runtime_Error : public std::runtime_error {
@@ -126,6 +127,8 @@ namespace grammar {
       std::unordered_map<std::string, Size> sizes;
       std::unordered_map<std::string, Pattern> patterns;
     };
+
+    class Variant;
   }
 
   class Coordinates {
@@ -405,8 +408,9 @@ namespace grammar {
       map_name_to_shape_klasse_tag(const Grammar &g);
   void print_name_to_shape_klasse_tag_map(std::ostream &o, const Grammar &g);
 
-
   Constraint::Vector read_constraints(const std::string &filename);
+  std::unordered_map<std::string, Constraint::Variant>
+    make_constraint_map(Constraint::Vector &&v);
   void add_constraints(Grammar &g, const std::string &filename);
 
 }

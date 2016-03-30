@@ -35,6 +35,7 @@ endif() # CMAKE_PROJECT_NAME
 set(LIB_SRC 
   grammar/version.cc
   grammar/grammar.cc
+  grammar/constraint/variant.cc
   grammar/tsort.cc
   grammar/asn1/grammar.cc
   grammar/xml/printer.cc
@@ -86,6 +87,7 @@ IF(${CMAKE_PROJECT_NAME} STREQUAL "libgrammar")
     test/asn1/compare.cc
     test/asn1/mini_parser.cc
     test/grammar.cc
+    test/constraint.cc
 
     ${RAGEL_asn1_mini_parser_OUTPUTS}
     )
