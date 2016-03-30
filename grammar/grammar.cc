@@ -1094,11 +1094,9 @@ namespace grammar {
     }
   }
 
-  void add_constraints(Grammar &g, const std::string &filename)
+  Constraint::Vector read_constraints(const std::string &filename)
   {
-    unordered_map<string, Constraint::Enum> enums_;
-    unordered_map<string, Constraint::Domain> domains_;
-    unordered_map<string, Constraint::Size> sizes_;
+    Constraint::Vector v;
     ixxx::util::Mapped_File f(filename);
     using si = boost::algorithm::split_iterator<const char*>;
     pair<const char*, const char*> inp(f.s_begin(), f.s_end());
@@ -1116,7 +1114,6 @@ namespace grammar {
         if (boost::empty(*j))
           continue;
         string nt_name = boost::copy_range<string>(*j);
-        Symbol::NT &nt = g.name_to_nt(nt_name);
         ++j;
         if (j != si()) {
           string type = boost::copy_range<string>(*j);
@@ -1124,18 +1121,17 @@ namespace grammar {
           if (j != si()) {
             string value = boost::copy_range<string>(*j);
             if (type == "pattern") {
-              nt.rule().refs().front()->push_constraint(
-                  make_unique<Constraint::Pattern>(value));
+              v.patterns.emplace(nt_name, std::move(value));
             } else if (type == "minInclusive") {
-              domains_[nt_name].set_min(boost::lexical_cast<ssize_t>(value));
+              v.domains[nt_name].set_min(boost::lexical_cast<ssize_t>(value));
             } else if (type == "maxInclusive") {
-              domains_[nt_name].set_max(boost::lexical_cast<ssize_t>(value));
+              v.domains[nt_name].set_max(boost::lexical_cast<ssize_t>(value));
             } else if (type == "minLength") {
-              sizes_[nt_name].set_min(boost::lexical_cast<size_t>(value));
+              v.sizes[nt_name].set_min(boost::lexical_cast<size_t>(value));
             } else if (type == "maxLength") {
-              sizes_[nt_name].set_max(boost::lexical_cast<size_t>(value));
+              v.sizes[nt_name].set_max(boost::lexical_cast<size_t>(value));
             } else if (type == "enumeration") {
-              enums_[nt_name].push(value);
+              v.enums[nt_name].push(value);
             } else {
               throw runtime_error("Unkwnown constraint type: " + type);
             }
@@ -1144,16 +1140,26 @@ namespace grammar {
         }
       }
     }
-    for (auto &e : enums_)
+    return v;
+  }
+
+  void add_constraints(Grammar &g, const std::string &filename)
+  {
+    Constraint::Vector v(read_constraints(filename));
+    for (auto &e : v.enums)
       g.name_to_nt(e.first).rule().refs().front()->push_constraint(
           make_unique<Constraint::Enum>(std::move(e.second)));
-    for (auto &e : domains_)
+    for (auto &e : v.domains)
       g.name_to_nt(e.first).rule().refs().front()->push_constraint(
           make_unique<Constraint::Domain>(std::move(e.second)));
-    for (auto &e : sizes_) {
+    for (auto &e : v.sizes) {
       e.second.set_source(Constraint::Source::EXTERN);
       g.name_to_nt(e.first).rule().refs().front()->push_constraint(
           make_unique<Constraint::Size>(std::move(e.second)));
+    }
+    for (auto &e : v.patterns) {
+      g.name_to_nt(e.first).rule().refs().front()->push_constraint(
+          make_unique<Constraint::Pattern>(std::move(e.second)));
     }
   }
 

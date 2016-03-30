@@ -119,6 +119,13 @@ namespace grammar {
         void push(const std::string &s);
         const std::deque<std::string> &values() const;
     };
+
+    struct Vector {
+      std::unordered_map<std::string, Enum> enums;
+      std::unordered_map<std::string, Domain> domains;
+      std::unordered_map<std::string, Size> sizes;
+      std::unordered_map<std::string, Pattern> patterns;
+    };
   }
 
   class Coordinates {
@@ -399,6 +406,7 @@ namespace grammar {
   void print_name_to_shape_klasse_tag_map(std::ostream &o, const Grammar &g);
 
 
+  Constraint::Vector read_constraints(const std::string &filename);
   void add_constraints(Grammar &g, const std::string &filename);
 
 }
