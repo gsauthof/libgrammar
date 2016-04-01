@@ -58,6 +58,21 @@ BOOST_AUTO_TEST_SUITE(grammar_)
 
     }
 
+    BOOST_AUTO_TEST_CASE(tadig)
+    {
+      boost::filesystem::path cs_file(test::path::in());
+      cs_file /= "../../grammar/xml/tadig_codes.zsv";
+
+      auto v = grammar::read_constraints(cs_file.generic_string());
+
+      BOOST_REQUIRE(v.enums.at("Sender").values().size() > 2);
+      BOOST_REQUIRE(v.enums.at("Recipient").values().size() > 2);
+
+      BOOST_CHECK_EQUAL(v.enums.at("Sender").values()[0], "AAAOA");
+      BOOST_CHECK_EQUAL(v.enums.at("Recipient").values()[1], "AAAOW");
+
+    }
+
   BOOST_AUTO_TEST_SUITE_END() // constraint_
 
 

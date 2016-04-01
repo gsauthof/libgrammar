@@ -192,6 +192,7 @@ namespace grammar {
       v.visit(*this);
     }
 
+    Pattern::Pattern() =default;
     Pattern::Pattern(const std::string &s)
       :
         s_(s)
@@ -1094,9 +1095,17 @@ namespace grammar {
     }
   }
 
+  template <typename T>
+  static void apply_link(const pair<string, string> &l, unordered_map<string, T> &m)
+  {
+    if (m.count(l.second))
+      m[l.first] = m[l.second];
+  }
+
   Constraint::Vector read_constraints(const std::string &filename)
   {
     Constraint::Vector v;
+    unordered_map<string, string> links;
     ixxx::util::Mapped_File f(filename);
     using si = boost::algorithm::split_iterator<const char*>;
     pair<const char*, const char*> inp(f.s_begin(), f.s_end());
@@ -1130,8 +1139,10 @@ namespace grammar {
               v.sizes[nt_name].set_min(boost::lexical_cast<size_t>(value));
             } else if (type == "maxLength") {
               v.sizes[nt_name].set_max(boost::lexical_cast<size_t>(value));
-            } else if (type == "enumeration") {
+            } else if (type == "enumeration" || type == "enum") {
               v.enums[nt_name].push(value);
+            } else if (type == "link") {
+              links[nt_name] = value;
             } else {
               throw runtime_error("Unkwnown constraint type: " + type);
             }
@@ -1139,6 +1150,12 @@ namespace grammar {
           }
         }
       }
+    }
+    for (auto &link : links) {
+      apply_link(link, v.enums);
+      apply_link(link, v.domains);
+      apply_link(link, v.sizes);
+      apply_link(link, v.patterns);
     }
     return v;
   }

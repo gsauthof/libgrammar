@@ -105,6 +105,7 @@ namespace grammar {
       private:
         std::string s_;
       public:
+        Pattern();
         Pattern(const std::string &s);
         void accept(Visitor &v) const override;
 
