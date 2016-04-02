@@ -1698,7 +1698,6 @@
 
   <xs:simpleType name='Recipient'>
     <xs:restriction base='OCTET_STRING'>
-      <xs:pattern value='[A-Z0-9]{5}'/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -1783,7 +1782,6 @@
 
   <xs:simpleType name='Sender'>
     <xs:restriction base='OCTET_STRING'>
-      <xs:pattern value='[A-Z0-9]{5}'/>
     </xs:restriction>
   </xs:simpleType>
 
