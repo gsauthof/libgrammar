@@ -106,7 +106,11 @@ namespace grammar {
       return source_;
     }
 
-    Range_Base::Range_Base() = default;
+    Range_Base::Range_Base()
+      :
+        range_(0, 0)
+    {
+    }
     Range_Base::Range_Base(size_t first)
       :
         range_(first, first)
