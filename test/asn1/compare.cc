@@ -39,6 +39,7 @@
 #include <grammar/tap/tap.hh>
 #include <grammar/xml/xsd.hh>
 #include <grammar/xml/rng.hh>
+#include <grammar/xml/capnp.hh>
 
 #include <fstream>
 #include <iostream>
@@ -225,6 +226,22 @@ static void compare_rng(const char *rel_filename_str)
   compare("rng", print_rng, rel_filename_str);
 }
 
+static void print_capnp(ostream &o, Grammar &g)
+{
+  grammar::asn1::add_terminals(g);
+  g.init_links();
+
+  grammar::xml::capnp::Printer p(o);
+  p.set_comment(string());
+  p << g;
+  o << endl;
+}
+
+static void compare_capnp(const char *rel_filename_str)
+{
+  compare("capnp", print_capnp, rel_filename_str);
+}
+
 boost::unit_test::test_suite *create_asn1_compare_suite()
 {
   const array<const char*, 5> filenames = {
@@ -264,6 +281,9 @@ boost::unit_test::test_suite *create_asn1_compare_suite()
   auto rng = BOOST_TEST_SUITE("rng");
   rng->add(BOOST_PARAM_TEST_CASE(&compare_rng,
         filenames.begin(), filenames.end()));
+  auto capnp = BOOST_TEST_SUITE("capnp");
+  capnp->add(BOOST_PARAM_TEST_CASE(&compare_capnp,
+        filenames.begin(), filenames.end()));
   grammar_->add(asn1_);
   asn1_->add(cmp);
   cmp->add(tt);
@@ -274,5 +294,6 @@ boost::unit_test::test_suite *create_asn1_compare_suite()
   cmp->add(tsort);
   cmp->add(xsd);
   cmp->add(rng);
+  cmp->add(capnp);
   return grammar_;
 }

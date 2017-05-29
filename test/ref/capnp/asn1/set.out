@@ -1,0 +1,35 @@
+  struct Document {
+    header @0 : Header;
+    records @1 : Records;
+    footer: union {
+      some @2 : Footer;
+      none @3 : Void;
+    }
+
+  }
+
+  struct Header {
+    from @0 : Data;
+    to @1 : Data;
+
+  }
+
+  struct Footer {
+    recordCount @0 : Int64;
+
+  }
+
+  struct Records {
+     @0 : Record;
+
+  }
+
+  struct Record {
+    union {
+      number @0 : Int64;
+      date @1 : Data;
+      location @2 : Data;
+    }
+  }
+
+

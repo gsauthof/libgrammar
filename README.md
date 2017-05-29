@@ -24,6 +24,7 @@ Selected functions are:
 - topological sort a grammar - e.g. for cleaning up an existing grammar
 - remove unreachable symbols
 - concatenate grammar snippets
+- automatically derive a Capn' Proto schema from a ASN.1 grammar
 
 The unittests and the help screen of the `ged` utility show in detail
 how the library features can be used.
@@ -81,6 +82,21 @@ documents:
 
 (This also works for the referenced RAP PDF.)
 
+## Cap'n Proto Schema
+
+The `ged` utility also supports the generation of a [Cap'n
+Proto][capnp] [schema][capnps] that is based on a ASN.1 grammar. Example:
+
+    $ ./ged -ra TAP0312.asn1 -e -pp TAP0312.capnp
+    $ ex -c '1i|'$(capnp id)';' -c x TAP0312.capnp
+    $ mkdir out
+    $ capnp compile -o c++:out TAP0312.capnp
+
+The result can then be used to - say - compare the
+serialization/deserialization overhead of a [baroque format like
+BER][1] with one like [Cap'n Proto][capnp] that is designed for
+efficiency.
+
 ## References
 
 This repository also contains a few files from the below locations:
@@ -103,4 +119,5 @@ This repository also contains a few files from the below locations:
 [7]: https://en.wikipedia.org/wiki/RELAX_NG
 [8]: http://www.gsma.com/newsroom/wp-content/uploads/TD.57-v32.31.pdf
 [9]: http://www.gsma.com/newsroom/wp-content/uploads/TD.32-v6.11.pdf
-
+[capnp]: https://capnproto.org/
+[capnps]: https://capnproto.org/language.html

@@ -1,0 +1,809 @@
+  struct MegacoMessage {
+    authHeader: union {
+      some @0 : AuthenticationHeader;
+      none @1 : Void;
+    }
+    mess @2 : Message;
+
+  }
+
+  struct AuthenticationHeader {
+    secParmIndex @0 : Data;
+    seqNum @1 : Data;
+    ad @2 : Data;
+
+  }
+
+  struct Message {
+    version @0 : Int64;
+    mId @1 : MId;
+    messageBody @2 : MessageBody;
+
+  }
+
+  struct MessageBody {
+    union {
+      messageError @0 : ErrorDescriptor;
+      transactions @1 : List(Transaction);
+    }
+  }
+
+  struct MId {
+    union {
+      ip4Address @0 : IP4Address;
+      ip6Address @1 : IP6Address;
+      domainName @2 : DomainName;
+      deviceName @3 : Data;
+      mtpAddress @4 : Data;
+    }
+  }
+
+  struct DomainName {
+    name @0 : Data;
+    portNumber: union {
+      some @1 : Int64;
+      none @2 : Void;
+    }
+
+  }
+
+  struct IP4Address {
+    address @0 : Data;
+    portNumber: union {
+      some @1 : Int64;
+      none @2 : Void;
+    }
+
+  }
+
+  struct IP6Address {
+    address @0 : Data;
+    portNumber: union {
+      some @1 : Int64;
+      none @2 : Void;
+    }
+
+  }
+
+  struct Transaction {
+    union {
+      transactionRequest @0 : TransactionRequest;
+      transactionPending @1 : TransactionPending;
+      transactionReply @2 : TransactionReply;
+      transactionResponseAck @3 : List(TransactionAck);
+    }
+  }
+
+  struct TransactionRequest {
+    transactionId @0 : Int64;
+    actions @1 : List(ActionRequest);
+
+  }
+
+  struct TransactionPending {
+    transactionId @0 : Int64;
+
+  }
+
+  struct TransactionReply {
+    transactionId @0 : Int64;
+    immAckRequired: union {
+      some @1 : Data;
+      none @2 : Void;
+    }
+    transactionResult @3 : TransactionResult;
+
+  }
+
+  struct TransactionResult {
+    union {
+      transactionError @0 : ErrorDescriptor;
+      actionReplies @1 : List(ActionReply);
+    }
+  }
+
+  struct TransactionAck {
+    firstAck @0 : Int64;
+    lastAck: union {
+      some @1 : Int64;
+      none @2 : Void;
+    }
+
+  }
+
+  struct ErrorDescriptor {
+    errorCode @0 : Int64;
+    errorText: union {
+      some @1 : Data;
+      none @2 : Void;
+    }
+
+  }
+
+  struct ActionRequest {
+    contextId @0 : Int64;
+    contextRequest: union {
+      some @1 : ContextRequest;
+      none @2 : Void;
+    }
+    contextAttrAuditReq: union {
+      some @3 : ContextAttrAuditRequest;
+      none @4 : Void;
+    }
+    commandRequests @5 : List(CommandRequest);
+
+  }
+
+  struct ActionReply {
+    contextId @0 : Int64;
+    errorDescriptor: union {
+      some @1 : ErrorDescriptor;
+      none @2 : Void;
+    }
+    contextReply: union {
+      some @3 : ContextRequest;
+      none @4 : Void;
+    }
+    commandReply @5 : List(CommandReply);
+
+  }
+
+  struct ContextRequest {
+    priority: union {
+      some @0 : Int64;
+      none @1 : Void;
+    }
+    emergency: union {
+      some @2 : Bool;
+      none @3 : Void;
+    }
+    topologyReq: union {
+      some @4 : List(TopologyRequest);
+      none @5 : Void;
+    }
+
+  }
+
+  struct ContextAttrAuditRequest {
+    topology: union {
+      some @0 : Data;
+      none @1 : Void;
+    }
+    emergency: union {
+      some @2 : Data;
+      none @3 : Void;
+    }
+    priority: union {
+      some @4 : Data;
+      none @5 : Void;
+    }
+
+  }
+
+  struct CommandRequest {
+    command @0 : Command;
+    optional: union {
+      some @1 : Data;
+      none @2 : Void;
+    }
+    wildcardReturn: union {
+      some @3 : Data;
+      none @4 : Void;
+    }
+
+  }
+
+  struct Command {
+    union {
+      addReq @0 : AmmRequest;
+      moveReq @1 : AmmRequest;
+      modReq @2 : AmmRequest;
+      subtractReq @3 : SubtractRequest;
+      auditCapRequest @4 : AuditRequest;
+      auditValueRequest @5 : AuditRequest;
+      notifyReq @6 : NotifyRequest;
+      serviceChangeReq @7 : ServiceChangeRequest;
+    }
+  }
+
+  struct CommandReply {
+    union {
+      addReply @0 : AmmsReply;
+      moveReply @1 : AmmsReply;
+      modReply @2 : AmmsReply;
+      subtractReply @3 : AmmsReply;
+      auditCapReply @4 : AuditReply;
+      auditValueReply @5 : AuditReply;
+      notifyReply @6 : NotifyReply;
+      serviceChangeReply @7 : ServiceChangeReply;
+    }
+  }
+
+  struct TopologyRequest {
+    terminationFrom @0 : TerminationID;
+    terminationTo @1 : TerminationID;
+    topologyDirection @2 : Int64;
+
+  }
+
+  struct AmmRequest {
+    terminationID @0 : List(TerminationID);
+    descriptors @1 : List(AmmDescriptor);
+
+  }
+
+  struct AmmDescriptor {
+    union {
+      mediaDescriptor @0 : MediaDescriptor;
+      modemDescriptor @1 : ModemDescriptor;
+      muxDescriptor @2 : MuxDescriptor;
+      eventsDescriptor @3 : EventsDescriptor;
+      eventBufferDescriptor @4 : List(EventSpec);
+      signalsDescriptor @5 : List(SignalRequest);
+      digitMapDescriptor @6 : DigitMapDescriptor;
+      auditDescriptor @7 : AuditDescriptor;
+    }
+  }
+
+  struct AmmsReply {
+    terminationID @0 : List(TerminationID);
+    terminationAudit: union {
+      some @1 : List(AuditReturnParameter);
+      none @2 : Void;
+    }
+
+  }
+
+  struct SubtractRequest {
+    terminationID @0 : List(TerminationID);
+    auditDescriptor: union {
+      some @1 : AuditDescriptor;
+      none @2 : Void;
+    }
+
+  }
+
+  struct AuditRequest {
+    terminationID @0 : TerminationID;
+    auditDescriptor @1 : AuditDescriptor;
+
+  }
+
+  struct AuditReply {
+    union {
+      contextAuditResult @0 : List(TerminationID);
+      error @1 : ErrorDescriptor;
+      auditResult @2 : AuditResult;
+    }
+  }
+
+  struct AuditResult {
+    terminationID @0 : TerminationID;
+    terminationAuditResult @1 : List(AuditReturnParameter);
+
+  }
+
+  struct AuditReturnParameter {
+    union {
+      errorDescriptor @0 : ErrorDescriptor;
+      mediaDescriptor @1 : MediaDescriptor;
+      modemDescriptor @2 : ModemDescriptor;
+      muxDescriptor @3 : MuxDescriptor;
+      eventsDescriptor @4 : EventsDescriptor;
+      eventBufferDescriptor @5 : List(EventSpec);
+      signalsDescriptor @6 : List(SignalRequest);
+      digitMapDescriptor @7 : DigitMapDescriptor;
+      observedEventsDescriptor @8 : ObservedEventsDescriptor;
+      statisticsDescriptor @9 : List(StatisticsParameter);
+      packagesDescriptor @10 : List(PackagesItem);
+      emptyDescriptors @11 : AuditDescriptor;
+    }
+  }
+
+  struct AuditDescriptor {
+    auditToken: union {
+      some @0 : Data;
+      none @1 : Void;
+    }
+
+  }
+
+  struct NotifyRequest {
+    terminationID @0 : List(TerminationID);
+    observedEventsDescriptor @1 : ObservedEventsDescriptor;
+    errorDescriptor: union {
+      some @2 : ErrorDescriptor;
+      none @3 : Void;
+    }
+
+  }
+
+  struct NotifyReply {
+    terminationID @0 : List(TerminationID);
+    errorDescriptor: union {
+      some @1 : ErrorDescriptor;
+      none @2 : Void;
+    }
+
+  }
+
+  struct ObservedEventsDescriptor {
+    requestId @0 : Int64;
+    observedEventLst @1 : List(ObservedEvent);
+
+  }
+
+  struct ObservedEvent {
+    eventName @0 : Data;
+    streamID: union {
+      some @1 : Int64;
+      none @2 : Void;
+    }
+    eventParList @3 : List(EventParameter);
+    timeNotation: union {
+      some @4 : TimeNotation;
+      none @5 : Void;
+    }
+
+  }
+
+  struct EventParameter {
+    eventParameterName @0 : Data;
+    value @1 : List(Data);
+    extraInfo: union {
+      some @2 : ExtraInfo;
+      none @3 : Void;
+    }
+
+  }
+
+  struct ExtraInfo {
+    union {
+      relation @0 : Int64;
+      range @1 : Bool;
+      sublist @2 : Bool;
+    }
+  }
+
+  struct ServiceChangeRequest {
+    terminationID @0 : List(TerminationID);
+    serviceChangeParms @1 : ServiceChangeParm;
+
+  }
+
+  struct ServiceChangeReply {
+    terminationID @0 : List(TerminationID);
+    serviceChangeResult @1 : ServiceChangeResult;
+
+  }
+
+  struct ServiceChangeResult {
+    union {
+      errorDescriptor @0 : ErrorDescriptor;
+      serviceChangeResParms @1 : ServiceChangeResParm;
+    }
+  }
+
+  struct TerminationID {
+    wildcard @0 : List(Data);
+    id @1 : Data;
+
+  }
+
+  struct MediaDescriptor {
+    termStateDescr: union {
+      some @0 : TerminationStateDescriptor;
+      none @1 : Void;
+    }
+    streams: union {
+      some @2 : Streams;
+      none @3 : Void;
+    }
+
+  }
+
+  struct Streams {
+    union {
+      oneStream @0 : StreamParms;
+      multiStream @1 : List(StreamDescriptor);
+    }
+  }
+
+  struct StreamDescriptor {
+    streamID @0 : Int64;
+    streamParms @1 : StreamParms;
+
+  }
+
+  struct StreamParms {
+    localControlDescriptor: union {
+      some @0 : LocalControlDescriptor;
+      none @1 : Void;
+    }
+    localDescriptor: union {
+      some @2 : LocalRemoteDescriptor;
+      none @3 : Void;
+    }
+    remoteDescriptor: union {
+      some @4 : LocalRemoteDescriptor;
+      none @5 : Void;
+    }
+
+  }
+
+  struct LocalControlDescriptor {
+    streamMode: union {
+      some @0 : Int64;
+      none @1 : Void;
+    }
+    reserveValue: union {
+      some @2 : Bool;
+      none @3 : Void;
+    }
+    reserveGroup: union {
+      some @4 : Bool;
+      none @5 : Void;
+    }
+    propertyParms @6 : List(PropertyParm);
+
+  }
+
+  struct PropertyParm {
+    name @0 : Data;
+    value @1 : List(Data);
+    extraInfo: union {
+      some @2 : PPExtraInfo;
+      none @3 : Void;
+    }
+
+  }
+
+  struct PPExtraInfo {
+    union {
+      relation @0 : Int64;
+      range @1 : Bool;
+      sublist @2 : Bool;
+    }
+  }
+
+  struct LocalRemoteDescriptor {
+    propGrps @0 : List(PropertyGroup);
+
+  }
+
+  struct TerminationStateDescriptor {
+    propertyParms @0 : List(PropertyParm);
+    eventBufferControl: union {
+      some @1 : Int64;
+      none @2 : Void;
+    }
+    serviceState: union {
+      some @3 : Int64;
+      none @4 : Void;
+    }
+
+  }
+
+  struct MuxDescriptor {
+    muxType @0 : Int64;
+    termList @1 : List(TerminationID);
+    nonStandardData: union {
+      some @2 : NonStandardData;
+      none @3 : Void;
+    }
+
+  }
+
+  struct EventsDescriptor {
+    requestID: union {
+      some @0 : Int64;
+      none @1 : Void;
+    }
+    eventList @2 : List(RequestedEvent);
+
+  }
+
+  struct RequestedEvent {
+    pkgdName @0 : Data;
+    streamID: union {
+      some @1 : Int64;
+      none @2 : Void;
+    }
+    eventAction: union {
+      some @3 : RequestedActions;
+      none @4 : Void;
+    }
+    evParList @5 : List(EventParameter);
+
+  }
+
+  struct RequestedActions {
+    keepActive: union {
+      some @0 : Bool;
+      none @1 : Void;
+    }
+    eventDM: union {
+      some @2 : EventDM;
+      none @3 : Void;
+    }
+    secondEvent: union {
+      some @4 : SecondEventsDescriptor;
+      none @5 : Void;
+    }
+    signalsDescriptor: union {
+      some @6 : List(SignalRequest);
+      none @7 : Void;
+    }
+
+  }
+
+  struct EventDM {
+    union {
+      digitMapName @0 : Data;
+      digitMapValue @1 : DigitMapValue;
+    }
+  }
+
+  struct SecondEventsDescriptor {
+    requestID: union {
+      some @0 : Int64;
+      none @1 : Void;
+    }
+    eventList @2 : List(SecondRequestedEvent);
+
+  }
+
+  struct SecondRequestedEvent {
+    pkgdName @0 : Data;
+    streamID: union {
+      some @1 : Int64;
+      none @2 : Void;
+    }
+    eventAction: union {
+      some @3 : SecondRequestedActions;
+      none @4 : Void;
+    }
+    evParList @5 : List(EventParameter);
+
+  }
+
+  struct SecondRequestedActions {
+    keepActive: union {
+      some @0 : Bool;
+      none @1 : Void;
+    }
+    eventDM: union {
+      some @2 : EventDM;
+      none @3 : Void;
+    }
+    signalsDescriptor: union {
+      some @4 : List(SignalRequest);
+      none @5 : Void;
+    }
+
+  }
+
+  struct EventSpec {
+    eventName @0 : Data;
+    streamID: union {
+      some @1 : Int64;
+      none @2 : Void;
+    }
+    eventParList @3 : List(EventParameter);
+
+  }
+
+  struct SignalRequest {
+    union {
+      signal @0 : Signal;
+      seqSigList @1 : SeqSigList;
+    }
+  }
+
+  struct SeqSigList {
+    id @0 : Int64;
+    signalList @1 : List(Signal);
+
+  }
+
+  struct Signal {
+    signalName @0 : Data;
+    streamID: union {
+      some @1 : Int64;
+      none @2 : Void;
+    }
+    sigType: union {
+      some @3 : Int64;
+      none @4 : Void;
+    }
+    duration: union {
+      some @5 : Int64;
+      none @6 : Void;
+    }
+    notifyCompletion: union {
+      some @7 : Data;
+      none @8 : Void;
+    }
+    keepActive: union {
+      some @9 : Bool;
+      none @10 : Void;
+    }
+    sigParList @11 : List(SigParameter);
+
+  }
+
+  struct SigParameter {
+    sigParameterName @0 : Data;
+    value @1 : List(Data);
+    extraInfo: union {
+      some @2 : SPExtraInfo;
+      none @3 : Void;
+    }
+
+  }
+
+  struct SPExtraInfo {
+    union {
+      relation @0 : Int64;
+      range @1 : Bool;
+      sublist @2 : Bool;
+    }
+  }
+
+  struct ModemDescriptor {
+    mtl @0 : List(Int64);
+    mpl @1 : List(PropertyParm);
+    nonStandardData: union {
+      some @2 : NonStandardData;
+      none @3 : Void;
+    }
+
+  }
+
+  struct DigitMapDescriptor {
+    digitMapName: union {
+      some @0 : Data;
+      none @1 : Void;
+    }
+    digitMapValue: union {
+      some @2 : DigitMapValue;
+      none @3 : Void;
+    }
+
+  }
+
+  struct DigitMapValue {
+    startTimer: union {
+      some @0 : Int64;
+      none @1 : Void;
+    }
+    shortTimer: union {
+      some @2 : Int64;
+      none @3 : Void;
+    }
+    longTimer: union {
+      some @4 : Int64;
+      none @5 : Void;
+    }
+    digitMapBody @6 : Data;
+
+  }
+
+  struct ServiceChangeParm {
+    serviceChangeMethod @0 : Int64;
+    serviceChangeAddress: union {
+      some @1 : ServiceChangeAddress;
+      none @2 : Void;
+    }
+    serviceChangeVersion: union {
+      some @3 : Int64;
+      none @4 : Void;
+    }
+    serviceChangeProfile: union {
+      some @5 : ServiceChangeProfile;
+      none @6 : Void;
+    }
+    serviceChangeReason @7 : List(Data);
+    serviceChangeDelay: union {
+      some @8 : Int64;
+      none @9 : Void;
+    }
+    serviceChangeMgcId: union {
+      some @10 : MId;
+      none @11 : Void;
+    }
+    timeStamp: union {
+      some @12 : TimeNotation;
+      none @13 : Void;
+    }
+    nonStandardData: union {
+      some @14 : NonStandardData;
+      none @15 : Void;
+    }
+
+  }
+
+  struct ServiceChangeAddress {
+    union {
+      portNumber @0 : Int64;
+      ip4Address @1 : IP4Address;
+      ip6Address @2 : IP6Address;
+      domainName @3 : DomainName;
+      deviceName @4 : Data;
+      mtpAddress @5 : Data;
+    }
+  }
+
+  struct ServiceChangeResParm {
+    serviceChangeMgcId: union {
+      some @0 : MId;
+      none @1 : Void;
+    }
+    serviceChangeAddress: union {
+      some @2 : ServiceChangeAddress;
+      none @3 : Void;
+    }
+    serviceChangeVersion: union {
+      some @4 : Int64;
+      none @5 : Void;
+    }
+    serviceChangeProfile: union {
+      some @6 : ServiceChangeProfile;
+      none @7 : Void;
+    }
+    timestamp: union {
+      some @8 : TimeNotation;
+      none @9 : Void;
+    }
+
+  }
+
+  struct ServiceChangeProfile {
+    profileName @0 : Data;
+
+  }
+
+  struct PackagesItem {
+    packageName @0 : Data;
+    packageVersion @1 : Int64;
+
+  }
+
+  struct StatisticsParameter {
+    statName @0 : Data;
+    statValue: union {
+      some @1 : List(Data);
+      none @2 : Void;
+    }
+
+  }
+
+  struct NonStandardData {
+    nonStandardIdentifier @0 : NonStandardIdentifier;
+    data @1 : Data;
+
+  }
+
+  struct NonStandardIdentifier {
+    union {
+      object @0 : Data;
+      h221NonStandard @1 : H221NonStandard;
+      experimental @2 : Data;
+    }
+  }
+
+  struct H221NonStandard {
+    t35CountryCode1 @0 : Int64;
+    t35CountryCode2 @1 : Int64;
+    t35Extension @2 : Int64;
+    manufacturerCode @3 : Int64;
+
+  }
+
+  struct TimeNotation {
+    date @0 : Data;
+    time @1 : Data;
+
+  }
+
+

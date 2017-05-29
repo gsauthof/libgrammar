@@ -41,6 +41,7 @@ set(LIB_SRC
   grammar/xml/printer.cc
   grammar/xml/xsd.cc
   grammar/xml/rng.cc
+  grammar/xml/capnp.cc
   grammar/graph/dot.cc
   grammar/tap/tap.cc
   ${RAGEL_asn1_mini_parser_OUTPUTS}

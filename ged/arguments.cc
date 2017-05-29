@@ -39,6 +39,7 @@ R"((COMMAND|OPTION)+
     -print-asn,-pa FILE      print grammar in ASN.1 format
     -print-rng,-pr FILE      print grammar as RelaxNG grammar
     -print-xsd,-px FILE      print grammar as XML Schema (XSD)
+    -print-capnp,-pp FILE    print grammar as Cap'n Proto Schema (capnp)
     -print-dot,-pd FILE      print grammar as directed graph
 
   Options:
@@ -120,6 +121,7 @@ and type restrictions:
 #include <grammar/asn1/grammar.hh>
 #include <grammar/xml/xsd.hh>
 #include <grammar/xml/rng.hh>
+#include <grammar/xml/capnp.hh>
 #include <grammar/graph/dot.hh>
 
 #include <grammar/grammar.hh>
@@ -204,7 +206,9 @@ namespace ged {
       throw Argument_Error("No arguments given");
     grammar::Grammar g;
     for (int i = 1; i < argc; ++i) {
-      for (auto & s : streams_) s.get()->close(); streams_.clear();
+      for (auto & s : streams_)
+        s.get()->close();
+      streams_.clear();
       char *s = argv[i];
       if (!strcmp(s, "-read-asn") || !strcmp(s, "-ra")) {
         ++i;
@@ -260,6 +264,11 @@ namespace ged {
           p << g;
         } else if (!strcmp(s, "-print-rng") || !strcmp(s, "-pr")) {
           grammar::xml::rng::Printer p(stream(i));
+          p.set_comment(argc, argv);
+          p.set_target_namespace(namespace_);
+          p << g;
+        } else if (!strcmp(s, "-print-capnp") || !strcmp(s, "-pp")) {
+          grammar::xml::capnp::Printer p(stream(i));
           p.set_comment(argc, argv);
           p.set_target_namespace(namespace_);
           p << g;

@@ -1,0 +1,1434 @@
+  struct DataInterChange {
+    union {
+      transferBatch @0 : TransferBatch;
+      notification @1 : Notification;
+    }
+  }
+
+  struct TransferBatch {
+    batchControlInfo @0 : BatchControlInfo;
+    accountingInfo: union {
+      some @1 : AccountingInfo;
+      none @2 : Void;
+    }
+    networkInfo @3 : NetworkInfo;
+    messageDescriptionInfo: union {
+      some @4 : List(MessageDescriptionInformation);
+      none @5 : Void;
+    }
+    callEventDetails @6 : List(CallEventDetail);
+    auditControlInfo @7 : AuditControlInfo;
+
+  }
+
+  struct Notification {
+    sender @0 : Data;
+    recipient @1 : Data;
+    fileSequenceNumber @2 : Data;
+    rapFileSequenceNumber: union {
+      some @3 : Data;
+      none @4 : Void;
+    }
+    fileCreationTimeStamp: union {
+      some @5 : DateTimeLong;
+      none @6 : Void;
+    }
+    fileAvailableTimeStamp @7 : DateTimeLong;
+    transferCutOffTimeStamp @8 : DateTimeLong;
+    specificationVersionNumber @9 : Int64;
+    releaseVersionNumber @10 : Int64;
+    fileTypeIndicator: union {
+      some @11 : Data;
+      none @12 : Void;
+    }
+    operatorSpecInformation: union {
+      some @13 : List(Data);
+      none @14 : Void;
+    }
+
+  }
+
+  struct CallEventDetail {
+    union {
+      mobileOriginatedCall @0 : MobileOriginatedCall;
+      mobileTerminatedCall @1 : MobileTerminatedCall;
+      supplServiceEvent @2 : SupplServiceEvent;
+      serviceCentreUsage @3 : ServiceCentreUsage;
+      gprsCall @4 : GprsCall;
+      contentTransaction @5 : ContentTransaction;
+      locationService @6 : LocationService;
+      messagingEvent @7 : MessagingEvent;
+      mobileSession @8 : MobileSession;
+    }
+  }
+
+  struct BatchControlInfo {
+    sender @0 : Data;
+    recipient @1 : Data;
+    fileSequenceNumber @2 : Data;
+    fileCreationTimeStamp: union {
+      some @3 : DateTimeLong;
+      none @4 : Void;
+    }
+    transferCutOffTimeStamp @5 : DateTimeLong;
+    fileAvailableTimeStamp @6 : DateTimeLong;
+    specificationVersionNumber @7 : Int64;
+    releaseVersionNumber @8 : Int64;
+    fileTypeIndicator: union {
+      some @9 : Data;
+      none @10 : Void;
+    }
+    rapFileSequenceNumber: union {
+      some @11 : Data;
+      none @12 : Void;
+    }
+    operatorSpecInformation: union {
+      some @13 : List(Data);
+      none @14 : Void;
+    }
+
+  }
+
+  struct AccountingInfo {
+    taxation: union {
+      some @0 : List(Taxation);
+      none @1 : Void;
+    }
+    discounting: union {
+      some @2 : List(Discounting);
+      none @3 : Void;
+    }
+    localCurrency @4 : Data;
+    tapCurrency: union {
+      some @5 : Data;
+      none @6 : Void;
+    }
+    currencyConversionInfo: union {
+      some @7 : List(CurrencyConversion);
+      none @8 : Void;
+    }
+    tapDecimalPlaces @9 : Int64;
+
+  }
+
+  struct NetworkInfo {
+    utcTimeOffsetInfo @0 : List(UtcTimeOffsetInfo);
+    recEntityInfo: union {
+      some @1 : List(RecEntityInformation);
+      none @2 : Void;
+    }
+
+  }
+
+  struct MobileOriginatedCall {
+    basicCallInformation @0 : MoBasicCallInformation;
+    locationInformation @1 : LocationInformation;
+    equipmentIdentifier: union {
+      some @2 : ImeiOrEsn;
+      none @3 : Void;
+    }
+    basicServiceUsedList @4 : List(BasicServiceUsed);
+    supplServiceCode: union {
+      some @5 : Data;
+      none @6 : Void;
+    }
+    thirdPartyInformation: union {
+      some @7 : ThirdPartyInformation;
+      none @8 : Void;
+    }
+    camelServiceUsed: union {
+      some @9 : CamelServiceUsed;
+      none @10 : Void;
+    }
+    operatorSpecInformation: union {
+      some @11 : List(Data);
+      none @12 : Void;
+    }
+
+  }
+
+  struct MobileTerminatedCall {
+    basicCallInformation @0 : MtBasicCallInformation;
+    locationInformation @1 : LocationInformation;
+    equipmentIdentifier: union {
+      some @2 : ImeiOrEsn;
+      none @3 : Void;
+    }
+    basicServiceUsedList @4 : List(BasicServiceUsed);
+    camelServiceUsed: union {
+      some @5 : CamelServiceUsed;
+      none @6 : Void;
+    }
+    operatorSpecInformation: union {
+      some @7 : List(Data);
+      none @8 : Void;
+    }
+
+  }
+
+  struct SupplServiceEvent {
+    chargeableSubscriber @0 : ChargeableSubscriber;
+    rapFileSequenceNumber: union {
+      some @1 : Data;
+      none @2 : Void;
+    }
+    locationInformation @3 : LocationInformation;
+    equipmentIdentifier: union {
+      some @4 : ImeiOrEsn;
+      none @5 : Void;
+    }
+    supplServiceUsed @6 : SupplServiceUsed;
+    operatorSpecInformation: union {
+      some @7 : List(Data);
+      none @8 : Void;
+    }
+
+  }
+
+  struct ServiceCentreUsage {
+    basicInformation @0 : ScuBasicInformation;
+    rapFileSequenceNumber: union {
+      some @1 : Data;
+      none @2 : Void;
+    }
+    servingNetwork: union {
+      some @3 : Data;
+      none @4 : Void;
+    }
+    recEntityCode @5 : Int64;
+    chargeInformation @6 : ChargeInformation;
+    scuChargeType @7 : ScuChargeType;
+    scuTimeStamps @8 : ScuTimeStamps;
+    operatorSpecInformation: union {
+      some @9 : List(Data);
+      none @10 : Void;
+    }
+
+  }
+
+  struct GprsCall {
+    gprsBasicCallInformation @0 : GprsBasicCallInformation;
+    gprsLocationInformation @1 : GprsLocationInformation;
+    equipmentIdentifier: union {
+      some @2 : ImeiOrEsn;
+      none @3 : Void;
+    }
+    gprsServiceUsed @4 : GprsServiceUsed;
+    camelServiceUsed: union {
+      some @5 : CamelServiceUsed;
+      none @6 : Void;
+    }
+    operatorSpecInformation: union {
+      some @7 : List(Data);
+      none @8 : Void;
+    }
+
+  }
+
+  struct ContentTransaction {
+    contentTransactionBasicInfo @0 : ContentTransactionBasicInfo;
+    chargedPartyInformation @1 : ChargedPartyInformation;
+    servingPartiesInformation @2 : ServingPartiesInformation;
+    contentServiceUsed @3 : List(ContentServiceUsed);
+    operatorSpecInformation: union {
+      some @4 : List(Data);
+      none @5 : Void;
+    }
+
+  }
+
+  struct LocationService {
+    rapFileSequenceNumber: union {
+      some @0 : Data;
+      none @1 : Void;
+    }
+    recEntityCode @2 : Int64;
+    callReference: union {
+      some @3 : Data;
+      none @4 : Void;
+    }
+    trackingCustomerInformation: union {
+      some @5 : TrackingCustomerInformation;
+      none @6 : Void;
+    }
+    lCSSPInformation: union {
+      some @7 : LCSSPInformation;
+      none @8 : Void;
+    }
+    trackedCustomerInformation: union {
+      some @9 : TrackedCustomerInformation;
+      none @10 : Void;
+    }
+    locationServiceUsage @11 : LocationServiceUsage;
+    operatorSpecInformation: union {
+      some @12 : List(Data);
+      none @13 : Void;
+    }
+
+  }
+
+  struct MessagingEvent {
+    messagingEventService @0 : Int64;
+    chargedParty @1 : ChargedParty;
+    rapFileSequenceNumber: union {
+      some @2 : Data;
+      none @3 : Void;
+    }
+    simToolkitIndicator: union {
+      some @4 : Data;
+      none @5 : Void;
+    }
+    geographicalLocation: union {
+      some @6 : GeographicalLocation;
+      none @7 : Void;
+    }
+    eventReference @8 : Data;
+    recEntityCodeList @9 : List(Int64);
+    networkElementList: union {
+      some @10 : List(NetworkElement);
+      none @11 : Void;
+    }
+    locationArea: union {
+      some @12 : Int64;
+      none @13 : Void;
+    }
+    cellId: union {
+      some @14 : Int64;
+      none @15 : Void;
+    }
+    serviceStartTimestamp @16 : DateTime;
+    nonChargedParty: union {
+      some @17 : NonChargedParty;
+      none @18 : Void;
+    }
+    exchangeRateCode: union {
+      some @19 : Int64;
+      none @20 : Void;
+    }
+    callTypeGroup @21 : CallTypeGroup;
+    charge @22 : Int64;
+    taxInformationList: union {
+      some @23 : List(TaxInformation);
+      none @24 : Void;
+    }
+    operatorSpecInformation: union {
+      some @25 : List(Data);
+      none @26 : Void;
+    }
+
+  }
+
+  struct MobileSession {
+    mobileSessionService @0 : Int64;
+    chargedParty @1 : ChargedParty;
+    rapFileSequenceNumber: union {
+      some @2 : Data;
+      none @3 : Void;
+    }
+    simToolkitIndicator: union {
+      some @4 : Data;
+      none @5 : Void;
+    }
+    geographicalLocation: union {
+      some @6 : GeographicalLocation;
+      none @7 : Void;
+    }
+    locationArea: union {
+      some @8 : Int64;
+      none @9 : Void;
+    }
+    cellId: union {
+      some @10 : Int64;
+      none @11 : Void;
+    }
+    eventReference @12 : Data;
+    recEntityCodeList @13 : List(Int64);
+    serviceStartTimestamp @14 : DateTime;
+    causeForTerm: union {
+      some @15 : Int64;
+      none @16 : Void;
+    }
+    totalCallEventDuration @17 : Int64;
+    nonChargedParty: union {
+      some @18 : NonChargedParty;
+      none @19 : Void;
+    }
+    requestedDestination: union {
+      some @20 : RequestedDestination;
+      none @21 : Void;
+    }
+    sessionChargeInfoList @22 : List(SessionChargeInformation);
+    operatorSpecInformation: union {
+      some @23 : List(Data);
+      none @24 : Void;
+    }
+
+  }
+
+  struct AuditControlInfo {
+    earliestCallTimeStamp: union {
+      some @0 : DateTimeLong;
+      none @1 : Void;
+    }
+    latestCallTimeStamp: union {
+      some @2 : DateTimeLong;
+      none @3 : Void;
+    }
+    totalCharge @4 : Int64;
+    totalChargeRefund: union {
+      some @5 : Int64;
+      none @6 : Void;
+    }
+    totalTaxRefund: union {
+      some @7 : Int64;
+      none @8 : Void;
+    }
+    totalTaxValue @9 : Int64;
+    totalDiscountValue @10 : Int64;
+    totalDiscountRefund: union {
+      some @11 : Int64;
+      none @12 : Void;
+    }
+    totalAdvisedChargeValueList: union {
+      some @13 : List(TotalAdvisedChargeValue);
+      none @14 : Void;
+    }
+    callEventDetailsCount @15 : Int64;
+    operatorSpecInformation: union {
+      some @16 : List(Data);
+      none @17 : Void;
+    }
+
+  }
+
+  struct AdvisedChargeInformation {
+    paidIndicator: union {
+      some @0 : Int64;
+      none @1 : Void;
+    }
+    paymentMethod: union {
+      some @2 : Int64;
+      none @3 : Void;
+    }
+    advisedChargeCurrency: union {
+      some @4 : Data;
+      none @5 : Void;
+    }
+    advisedCharge @6 : Int64;
+    commission: union {
+      some @7 : Int64;
+      none @8 : Void;
+    }
+
+  }
+
+  struct BasicService {
+    serviceCode @0 : BasicServiceCode;
+    transparencyIndicator: union {
+      some @1 : Int64;
+      none @2 : Void;
+    }
+    fnur: union {
+      some @3 : Int64;
+      none @4 : Void;
+    }
+    userProtocolIndicator: union {
+      some @5 : Int64;
+      none @6 : Void;
+    }
+    guaranteedBitRate: union {
+      some @7 : Data;
+      none @8 : Void;
+    }
+    maximumBitRate: union {
+      some @9 : Data;
+      none @10 : Void;
+    }
+
+  }
+
+  struct BasicServiceCode {
+    union {
+      teleServiceCode @0 : Data;
+      bearerServiceCode @1 : Data;
+    }
+  }
+
+  struct BasicServiceUsed {
+    basicService @0 : BasicService;
+    chargingTimeStamp: union {
+      some @1 : DateTime;
+      none @2 : Void;
+    }
+    chargeInformationList @3 : List(ChargeInformation);
+    hSCSDIndicator: union {
+      some @4 : Data;
+      none @5 : Void;
+    }
+
+  }
+
+  struct CallOriginator {
+    callingNumber: union {
+      some @0 : Data;
+      none @1 : Void;
+    }
+    clirIndicator: union {
+      some @2 : Int64;
+      none @3 : Void;
+    }
+    sMSOriginator: union {
+      some @4 : Data;
+      none @5 : Void;
+    }
+
+  }
+
+  struct CallTypeGroup {
+    callTypeLevel1 @0 : Int64;
+    callTypeLevel2 @1 : Int64;
+    callTypeLevel3 @2 : Int64;
+
+  }
+
+  struct CamelServiceUsed {
+    camelServiceLevel: union {
+      some @0 : Int64;
+      none @1 : Void;
+    }
+    camelServiceKey @2 : Int64;
+    defaultCallHandling: union {
+      some @3 : Int64;
+      none @4 : Void;
+    }
+    exchangeRateCode: union {
+      some @5 : Int64;
+      none @6 : Void;
+    }
+    taxInformation: union {
+      some @7 : List(TaxInformation);
+      none @8 : Void;
+    }
+    discountInformation: union {
+      some @9 : DiscountInformation;
+      none @10 : Void;
+    }
+    camelInvocationFee: union {
+      some @11 : Int64;
+      none @12 : Void;
+    }
+    threeGcamelDestination: union {
+      some @13 : ThreeGcamelDestination;
+      none @14 : Void;
+    }
+    cseInformation: union {
+      some @15 : Data;
+      none @16 : Void;
+    }
+
+  }
+
+  struct ChargeableSubscriber {
+    union {
+      simChargeableSubscriber @0 : SimChargeableSubscriber;
+      minChargeableSubscriber @1 : MinChargeableSubscriber;
+    }
+  }
+
+  struct ChargeDetail {
+    chargeType @0 : Data;
+    charge @1 : Int64;
+    chargeableUnits: union {
+      some @2 : Int64;
+      none @3 : Void;
+    }
+    chargedUnits: union {
+      some @4 : Int64;
+      none @5 : Void;
+    }
+    chargeDetailTimeStamp: union {
+      some @6 : DateTime;
+      none @7 : Void;
+    }
+
+  }
+
+  struct ChargedParty {
+    imsi @0 : Data;
+    msisdn: union {
+      some @1 : Data;
+      none @2 : Void;
+    }
+    publicUserId: union {
+      some @3 : Data;
+      none @4 : Void;
+    }
+    homeBid: union {
+      some @5 : Data;
+      none @6 : Void;
+    }
+    homeLocationDescription: union {
+      some @7 : Data;
+      none @8 : Void;
+    }
+    imei: union {
+      some @9 : Data;
+      none @10 : Void;
+    }
+
+  }
+
+  struct ChargedPartyEquipment {
+    equipmentIdType @0 : Int64;
+    equipmentId @1 : Data;
+
+  }
+
+  struct ChargedPartyHomeIdentification {
+    homeIdType @0 : Int64;
+    homeIdentifier @1 : Data;
+
+  }
+
+  struct ChargedPartyIdentification {
+    chargedPartyIdType @0 : Int64;
+    chargedPartyIdentifier @1 : Data;
+
+  }
+
+  struct ChargedPartyInformation {
+    chargedPartyIdList @0 : List(ChargedPartyIdentification);
+    chargedPartyHomeIdList: union {
+      some @1 : List(ChargedPartyHomeIdentification);
+      none @2 : Void;
+    }
+    chargedPartyLocationList: union {
+      some @3 : List(ChargedPartyLocation);
+      none @4 : Void;
+    }
+    chargedPartyEquipment: union {
+      some @5 : ChargedPartyEquipment;
+      none @6 : Void;
+    }
+
+  }
+
+  struct ChargedPartyLocation {
+    locationIdType @0 : Int64;
+    locationIdentifier @1 : Data;
+
+  }
+
+  struct ChargeInformation {
+    chargedItem @0 : Data;
+    exchangeRateCode: union {
+      some @1 : Int64;
+      none @2 : Void;
+    }
+    callTypeGroup: union {
+      some @3 : CallTypeGroup;
+      none @4 : Void;
+    }
+    chargeDetailList @5 : List(ChargeDetail);
+    taxInformation: union {
+      some @6 : List(TaxInformation);
+      none @7 : Void;
+    }
+    discountInformation: union {
+      some @8 : DiscountInformation;
+      none @9 : Void;
+    }
+
+  }
+
+  struct ContentProvider {
+    contentProviderIdType @0 : Int64;
+    contentProviderIdentifier @1 : Data;
+
+  }
+
+  struct ContentServiceUsed {
+    contentTransactionCode @0 : Int64;
+    contentTransactionType @1 : Int64;
+    objectType: union {
+      some @2 : Int64;
+      none @3 : Void;
+    }
+    transactionDescriptionSupp: union {
+      some @4 : Int64;
+      none @5 : Void;
+    }
+    transactionShortDescription @6 : Data;
+    transactionDetailDescription: union {
+      some @7 : Data;
+      none @8 : Void;
+    }
+    transactionIdentifier @9 : Data;
+    transactionAuthCode: union {
+      some @10 : Data;
+      none @11 : Void;
+    }
+    dataVolumeIncoming: union {
+      some @12 : Int64;
+      none @13 : Void;
+    }
+    dataVolumeOutgoing: union {
+      some @14 : Int64;
+      none @15 : Void;
+    }
+    totalDataVolume: union {
+      some @16 : Int64;
+      none @17 : Void;
+    }
+    chargeRefundIndicator: union {
+      some @18 : Int64;
+      none @19 : Void;
+    }
+    contentChargingPoint: union {
+      some @20 : Int64;
+      none @21 : Void;
+    }
+    chargeInformationList: union {
+      some @22 : List(ChargeInformation);
+      none @23 : Void;
+    }
+    advisedChargeInformation: union {
+      some @24 : AdvisedChargeInformation;
+      none @25 : Void;
+    }
+
+  }
+
+  struct ContentTransactionBasicInfo {
+    rapFileSequenceNumber: union {
+      some @0 : Data;
+      none @1 : Void;
+    }
+    orderPlacedTimeStamp: union {
+      some @2 : DateTime;
+      none @3 : Void;
+    }
+    requestedDeliveryTimeStamp: union {
+      some @4 : DateTime;
+      none @5 : Void;
+    }
+    actualDeliveryTimeStamp: union {
+      some @6 : DateTime;
+      none @7 : Void;
+    }
+    totalTransactionDuration: union {
+      some @8 : Int64;
+      none @9 : Void;
+    }
+    transactionStatus: union {
+      some @10 : Int64;
+      none @11 : Void;
+    }
+
+  }
+
+  struct CurrencyConversion {
+    exchangeRateCode @0 : Int64;
+    numberOfDecimalPlaces @1 : Int64;
+    exchangeRate @2 : Int64;
+
+  }
+
+  struct DateTime {
+    localTimeStamp @0 : Data;
+    utcTimeOffsetCode @1 : Int64;
+
+  }
+
+  struct DateTimeLong {
+    localTimeStamp @0 : Data;
+    utcTimeOffset @1 : Data;
+
+  }
+
+  struct Destination {
+    calledNumber: union {
+      some @0 : Data;
+      none @1 : Void;
+    }
+    dialledDigits: union {
+      some @2 : Data;
+      none @3 : Void;
+    }
+    calledPlace: union {
+      some @4 : Data;
+      none @5 : Void;
+    }
+    calledRegion: union {
+      some @6 : Data;
+      none @7 : Void;
+    }
+    sMSDestinationNumber: union {
+      some @8 : Data;
+      none @9 : Void;
+    }
+
+  }
+
+  struct DiscountApplied {
+    union {
+      fixedDiscountValue @0 : Int64;
+      discountRate @1 : Int64;
+    }
+  }
+
+  struct DiscountInformation {
+    discountCode @0 : Int64;
+    discount: union {
+      some @1 : Int64;
+      none @2 : Void;
+    }
+    discountableAmount: union {
+      some @3 : Int64;
+      none @4 : Void;
+    }
+
+  }
+
+  struct Discounting {
+    discountCode @0 : Int64;
+    discountApplied @1 : DiscountApplied;
+
+  }
+
+  struct GeographicalLocation {
+    servingNetwork: union {
+      some @0 : Data;
+      none @1 : Void;
+    }
+    servingBid: union {
+      some @2 : Data;
+      none @3 : Void;
+    }
+    servingLocationDescription: union {
+      some @4 : Data;
+      none @5 : Void;
+    }
+
+  }
+
+  struct GprsBasicCallInformation {
+    gprsChargeableSubscriber @0 : GprsChargeableSubscriber;
+    rapFileSequenceNumber: union {
+      some @1 : Data;
+      none @2 : Void;
+    }
+    gprsDestination @3 : GprsDestination;
+    callEventStartTimeStamp @4 : DateTime;
+    totalCallEventDuration @5 : Int64;
+    causeForTerm: union {
+      some @6 : Int64;
+      none @7 : Void;
+    }
+    partialTypeIndicator: union {
+      some @8 : Data;
+      none @9 : Void;
+    }
+    pDPContextStartTimestamp: union {
+      some @10 : DateTime;
+      none @11 : Void;
+    }
+    networkInitPDPContext: union {
+      some @12 : Int64;
+      none @13 : Void;
+    }
+    chargingId @14 : Int64;
+
+  }
+
+  struct GprsChargeableSubscriber {
+    chargeableSubscriber: union {
+      some @0 : ChargeableSubscriber;
+      none @1 : Void;
+    }
+    pdpAddress: union {
+      some @2 : Data;
+      none @3 : Void;
+    }
+    networkAccessIdentifier: union {
+      some @4 : Data;
+      none @5 : Void;
+    }
+
+  }
+
+  struct GprsDestination {
+    accessPointNameNI @0 : Data;
+    accessPointNameOI: union {
+      some @1 : Data;
+      none @2 : Void;
+    }
+
+  }
+
+  struct GprsLocationInformation {
+    gprsNetworkLocation @0 : GprsNetworkLocation;
+    homeLocationInformation: union {
+      some @1 : HomeLocationInformation;
+      none @2 : Void;
+    }
+    geographicalLocation: union {
+      some @3 : GeographicalLocation;
+      none @4 : Void;
+    }
+
+  }
+
+  struct GprsNetworkLocation {
+    recEntity @0 : List(Int64);
+    locationArea: union {
+      some @1 : Int64;
+      none @2 : Void;
+    }
+    cellId: union {
+      some @3 : Int64;
+      none @4 : Void;
+    }
+
+  }
+
+  struct GprsServiceUsed {
+    iMSSignallingContext: union {
+      some @0 : Int64;
+      none @1 : Void;
+    }
+    dataVolumeIncoming @2 : Int64;
+    dataVolumeOutgoing @3 : Int64;
+    chargeInformationList @4 : List(ChargeInformation);
+
+  }
+
+  struct GsmChargeableSubscriber {
+    imsi: union {
+      some @0 : Data;
+      none @1 : Void;
+    }
+    msisdn: union {
+      some @2 : Data;
+      none @3 : Void;
+    }
+
+  }
+
+  struct HomeLocationInformation {
+    homeBid @0 : Data;
+    homeLocationDescription @1 : Data;
+
+  }
+
+  struct ImeiOrEsn {
+    union {
+      imei @0 : Data;
+      esn @1 : Data;
+    }
+  }
+
+  struct InternetServiceProvider {
+    ispIdType @0 : Int64;
+    ispIdentifier @1 : Data;
+
+  }
+
+  struct Network {
+    networkIdType @0 : Int64;
+    networkIdentifier @1 : Data;
+
+  }
+
+  struct LCSQosDelivered {
+    lCSTransactionStatus: union {
+      some @0 : Int64;
+      none @1 : Void;
+    }
+    horizontalAccuracyDelivered: union {
+      some @2 : Int64;
+      none @3 : Void;
+    }
+    verticalAccuracyDelivered: union {
+      some @4 : Int64;
+      none @5 : Void;
+    }
+    responseTime: union {
+      some @6 : Int64;
+      none @7 : Void;
+    }
+    positioningMethod: union {
+      some @8 : Int64;
+      none @9 : Void;
+    }
+    trackingPeriod: union {
+      some @10 : Int64;
+      none @11 : Void;
+    }
+    trackingFrequency: union {
+      some @12 : Int64;
+      none @13 : Void;
+    }
+    ageOfLocation: union {
+      some @14 : Int64;
+      none @15 : Void;
+    }
+
+  }
+
+  struct LCSQosRequested {
+    lCSRequestTimestamp @0 : DateTime;
+    horizontalAccuracyRequested: union {
+      some @1 : Int64;
+      none @2 : Void;
+    }
+    verticalAccuracyRequested: union {
+      some @3 : Int64;
+      none @4 : Void;
+    }
+    responseTimeCategory: union {
+      some @5 : Int64;
+      none @6 : Void;
+    }
+    trackingPeriod: union {
+      some @7 : Int64;
+      none @8 : Void;
+    }
+    trackingFrequency: union {
+      some @9 : Int64;
+      none @10 : Void;
+    }
+
+  }
+
+  struct LCSSPIdentification {
+    contentProviderIdType @0 : Int64;
+    contentProviderIdentifier @1 : Data;
+
+  }
+
+  struct LCSSPInformation {
+    lCSSPIdentificationList @0 : List(LCSSPIdentification);
+    iSPList: union {
+      some @1 : List(InternetServiceProvider);
+      none @2 : Void;
+    }
+    networkList: union {
+      some @3 : List(Network);
+      none @4 : Void;
+    }
+
+  }
+
+  struct LocationInformation {
+    networkLocation @0 : NetworkLocation;
+    homeLocationInformation: union {
+      some @1 : HomeLocationInformation;
+      none @2 : Void;
+    }
+    geographicalLocation: union {
+      some @3 : GeographicalLocation;
+      none @4 : Void;
+    }
+
+  }
+
+  struct LocationServiceUsage {
+    lCSQosRequested @0 : LCSQosRequested;
+    lCSQosDelivered: union {
+      some @1 : LCSQosDelivered;
+      none @2 : Void;
+    }
+    chargingTimeStamp: union {
+      some @3 : DateTime;
+      none @4 : Void;
+    }
+    chargeInformationList @5 : List(ChargeInformation);
+
+  }
+
+  struct MessageDescriptionInformation {
+    messageDescriptionCode @0 : Int64;
+    messageDescription @1 : Data;
+
+  }
+
+  struct MinChargeableSubscriber {
+    min @0 : Data;
+    mdn: union {
+      some @1 : Data;
+      none @2 : Void;
+    }
+
+  }
+
+  struct MoBasicCallInformation {
+    chargeableSubscriber @0 : ChargeableSubscriber;
+    rapFileSequenceNumber: union {
+      some @1 : Data;
+      none @2 : Void;
+    }
+    destination: union {
+      some @3 : Destination;
+      none @4 : Void;
+    }
+    destinationNetwork: union {
+      some @5 : Data;
+      none @6 : Void;
+    }
+    callEventStartTimeStamp @7 : DateTime;
+    totalCallEventDuration @8 : Int64;
+    simToolkitIndicator: union {
+      some @9 : Data;
+      none @10 : Void;
+    }
+    causeForTerm: union {
+      some @11 : Int64;
+      none @12 : Void;
+    }
+
+  }
+
+  struct MtBasicCallInformation {
+    chargeableSubscriber @0 : ChargeableSubscriber;
+    rapFileSequenceNumber: union {
+      some @1 : Data;
+      none @2 : Void;
+    }
+    callOriginator: union {
+      some @3 : CallOriginator;
+      none @4 : Void;
+    }
+    originatingNetwork: union {
+      some @5 : Data;
+      none @6 : Void;
+    }
+    callEventStartTimeStamp @7 : DateTime;
+    totalCallEventDuration @8 : Int64;
+    simToolkitIndicator: union {
+      some @9 : Data;
+      none @10 : Void;
+    }
+    causeForTerm: union {
+      some @11 : Int64;
+      none @12 : Void;
+    }
+
+  }
+
+  struct NetworkElement {
+    elementType @0 : Int64;
+    elementId @1 : Data;
+
+  }
+
+  struct NetworkLocation {
+    recEntityCode @0 : Int64;
+    callReference: union {
+      some @1 : Data;
+      none @2 : Void;
+    }
+    locationArea: union {
+      some @3 : Int64;
+      none @4 : Void;
+    }
+    cellId: union {
+      some @5 : Int64;
+      none @6 : Void;
+    }
+
+  }
+
+  struct NonChargedParty {
+    nonChargedPartyNumber: union {
+      some @0 : Data;
+      none @1 : Void;
+    }
+    nonChargedPublicUserId: union {
+      some @2 : Data;
+      none @3 : Void;
+    }
+
+  }
+
+  struct RecEntityInformation {
+    recEntityCode @0 : Int64;
+    recEntityType @1 : Int64;
+    recEntityId @2 : Data;
+
+  }
+
+  struct RequestedDestination {
+    requestedNumber: union {
+      some @0 : Data;
+      none @1 : Void;
+    }
+    requestedPublicUserId: union {
+      some @2 : Data;
+      none @3 : Void;
+    }
+
+  }
+
+  struct ScuBasicInformation {
+    chargeableSubscriber @0 : ScuChargeableSubscriber;
+    chargedPartyStatus @1 : Int64;
+    nonChargedNumber @2 : Data;
+    clirIndicator: union {
+      some @3 : Int64;
+      none @4 : Void;
+    }
+    originatingNetwork: union {
+      some @5 : Data;
+      none @6 : Void;
+    }
+    destinationNetwork: union {
+      some @7 : Data;
+      none @8 : Void;
+    }
+
+  }
+
+  struct ScuChargeType {
+    messageStatus @0 : Int64;
+    priorityCode @1 : Int64;
+    distanceChargeBandCode: union {
+      some @2 : Data;
+      none @3 : Void;
+    }
+    messageType @4 : Int64;
+    messageDescriptionCode @5 : Int64;
+
+  }
+
+  struct ScuTimeStamps {
+    depositTimeStamp @0 : DateTime;
+    completionTimeStamp @1 : DateTime;
+    chargingPoint @2 : Data;
+
+  }
+
+  struct ScuChargeableSubscriber {
+    union {
+      gsmChargeableSubscriber @0 : GsmChargeableSubscriber;
+      minChargeableSubscriber @1 : MinChargeableSubscriber;
+    }
+  }
+
+  struct ServingPartiesInformation {
+    contentProviderName @0 : Data;
+    contentProviderIdList: union {
+      some @1 : List(ContentProvider);
+      none @2 : Void;
+    }
+    internetServiceProviderIdList: union {
+      some @3 : List(InternetServiceProvider);
+      none @4 : Void;
+    }
+    networkList: union {
+      some @5 : List(Network);
+      none @6 : Void;
+    }
+
+  }
+
+  struct SessionChargeInformation {
+    chargedItem @0 : Data;
+    exchangeRateCode: union {
+      some @1 : Int64;
+      none @2 : Void;
+    }
+    callTypeGroup @3 : CallTypeGroup;
+    chargeDetailList @4 : List(ChargeDetail);
+    taxInformationList: union {
+      some @5 : List(TaxInformation);
+      none @6 : Void;
+    }
+
+  }
+
+  struct SimChargeableSubscriber {
+    imsi @0 : Data;
+    msisdn: union {
+      some @1 : Data;
+      none @2 : Void;
+    }
+
+  }
+
+  struct SupplServiceUsed {
+    supplServiceCode @0 : Data;
+    supplServiceActionCode @1 : Int64;
+    ssParameters: union {
+      some @2 : Data;
+      none @3 : Void;
+    }
+    chargingTimeStamp @4 : DateTime;
+    chargeInformation: union {
+      some @5 : ChargeInformation;
+      none @6 : Void;
+    }
+    basicServiceCodeList: union {
+      some @7 : List(BasicServiceCode);
+      none @8 : Void;
+    }
+
+  }
+
+  struct Taxation {
+    taxCode @0 : Int64;
+    taxType @1 : Data;
+    taxRate: union {
+      some @2 : Data;
+      none @3 : Void;
+    }
+    chargeType: union {
+      some @4 : Data;
+      none @5 : Void;
+    }
+    taxIndicator: union {
+      some @6 : Data;
+      none @7 : Void;
+    }
+
+  }
+
+  struct TaxInformation {
+    taxCode @0 : Int64;
+    taxValue @1 : Int64;
+    taxableAmount: union {
+      some @2 : Int64;
+      none @3 : Void;
+    }
+
+  }
+
+  struct ThirdPartyInformation {
+    thirdPartyNumber: union {
+      some @0 : Data;
+      none @1 : Void;
+    }
+    clirIndicator: union {
+      some @2 : Int64;
+      none @3 : Void;
+    }
+
+  }
+
+  struct ThreeGcamelDestination {
+    union {
+      camelDestinationNumber @0 : Data;
+      gprsDestination @1 : GprsDestination;
+    }
+  }
+
+  struct TotalAdvisedChargeValue {
+    advisedChargeCurrency: union {
+      some @0 : Data;
+      none @1 : Void;
+    }
+    totalAdvisedCharge @2 : Int64;
+    totalAdvisedChargeRefund: union {
+      some @3 : Int64;
+      none @4 : Void;
+    }
+    totalCommission: union {
+      some @5 : Int64;
+      none @6 : Void;
+    }
+    totalCommissionRefund: union {
+      some @7 : Int64;
+      none @8 : Void;
+    }
+
+  }
+
+  struct TrackedCustomerEquipment {
+    equipmentIdType @0 : Int64;
+    equipmentId @1 : Data;
+
+  }
+
+  struct TrackedCustomerHomeId {
+    homeIdType @0 : Int64;
+    homeIdentifier @1 : Data;
+
+  }
+
+  struct TrackedCustomerIdentification {
+    customerIdType @0 : Int64;
+    customerIdentifier @1 : Data;
+
+  }
+
+  struct TrackedCustomerInformation {
+    trackedCustomerIdList @0 : List(TrackedCustomerIdentification);
+    trackedCustomerHomeIdList: union {
+      some @1 : List(TrackedCustomerHomeId);
+      none @2 : Void;
+    }
+    trackedCustomerLocList: union {
+      some @3 : List(TrackedCustomerLocation);
+      none @4 : Void;
+    }
+    trackedCustomerEquipment: union {
+      some @5 : TrackedCustomerEquipment;
+      none @6 : Void;
+    }
+
+  }
+
+  struct TrackedCustomerLocation {
+    locationIdType @0 : Int64;
+    locationIdentifier @1 : Data;
+
+  }
+
+  struct TrackingCustomerEquipment {
+    equipmentIdType @0 : Int64;
+    equipmentId @1 : Data;
+
+  }
+
+  struct TrackingCustomerHomeId {
+    homeIdType @0 : Int64;
+    homeIdentifier @1 : Data;
+
+  }
+
+  struct TrackingCustomerIdentification {
+    customerIdType @0 : Int64;
+    customerIdentifier @1 : Data;
+
+  }
+
+  struct TrackingCustomerInformation {
+    trackingCustomerIdList @0 : List(TrackingCustomerIdentification);
+    trackingCustomerHomeIdList: union {
+      some @1 : List(TrackingCustomerHomeId);
+      none @2 : Void;
+    }
+    trackingCustomerLocList: union {
+      some @3 : List(TrackingCustomerLocation);
+      none @4 : Void;
+    }
+    trackingCustomerEquipment: union {
+      some @5 : TrackingCustomerEquipment;
+      none @6 : Void;
+    }
+
+  }
+
+  struct TrackingCustomerLocation {
+    locationIdType @0 : Int64;
+    locationIdentifier @1 : Data;
+
+  }
+
+  struct UtcTimeOffsetInfo {
+    utcTimeOffsetCode @0 : Int64;
+    utcTimeOffset @1 : Data;
+
+  }
+
+

@@ -1,0 +1,239 @@
+  struct LDAPMessage {
+    messageID @0 : Int64;
+    protocolOp @1 : ProtocolOp;
+    controls: union {
+      some @2 : List(Control);
+      none @3 : Void;
+    }
+
+  }
+
+  struct ProtocolOp {
+    union {
+      bindRequest @0 : BindRequest;
+      bindResponse @1 : BindResponse;
+      unbindRequest @2 : Data;
+      searchRequest @3 : SearchRequest;
+      searchResEntry @4 : SearchResultEntry;
+      searchResDone @5 : LDAPResult;
+      searchResRef @6 : List(Data);
+      modifyRequest @7 : ModifyRequest;
+      modifyResponse @8 : LDAPResult;
+      addRequest @9 : AddRequest;
+      addResponse @10 : LDAPResult;
+      delRequest @11 : Data;
+      delResponse @12 : LDAPResult;
+      modDNRequest @13 : ModifyDNRequest;
+      modDNResponse @14 : LDAPResult;
+      compareRequest @15 : CompareRequest;
+      compareResponse @16 : LDAPResult;
+      abandonRequest @17 : Int64;
+      extendedReq @18 : ExtendedRequest;
+      extendedResp @19 : ExtendedResponse;
+    }
+  }
+
+  struct AttributeValueAssertion {
+    attributeDesc @0 : Data;
+    assertionValue @1 : Data;
+
+  }
+
+  struct Attribute {
+    type @0 : Data;
+    vals @1 : AttributeValues;
+
+  }
+
+  struct AttributeValues {
+     @0 : Data;
+
+  }
+
+  struct LDAPResult {
+    resultCode @0 : Int64;
+    matchedDN @1 : Data;
+    errorMessage @2 : Data;
+    referral: union {
+      some @3 : List(Data);
+      none @4 : Void;
+    }
+
+  }
+
+  struct Control {
+    controlType @0 : Data;
+    criticality @1 : Bool;
+    controlValue: union {
+      some @2 : Data;
+      none @3 : Void;
+    }
+
+  }
+
+  struct BindRequest {
+    version @0 : Int64;
+    name @1 : Data;
+    authentication @2 : AuthenticationChoice;
+
+  }
+
+  struct AuthenticationChoice {
+    union {
+      simple @0 : Data;
+      sasl @1 : SaslCredentials;
+    }
+  }
+
+  struct SaslCredentials {
+    mechanism @0 : Data;
+    credentials: union {
+      some @1 : Data;
+      none @2 : Void;
+    }
+
+  }
+
+  struct BindResponse {
+    serverSaslCreds: union {
+      some @0 : Data;
+      none @1 : Void;
+    }
+
+  }
+
+  struct SearchRequest {
+    baseObject @0 : Data;
+    scope @1 : Int64;
+    derefAliases @2 : Int64;
+    sizeLimit @3 : Int64;
+    timeLimit @4 : Int64;
+    typesOnly @5 : Bool;
+    filter @6 : Filter;
+    attributes @7 : List(Data);
+
+  }
+
+  struct Filter {
+    union {
+      and @0 : FilterSet;
+      or @1 : FilterSet;
+      not @2 : Filter;
+      equalityMatch @3 : AttributeValueAssertion;
+      substrings @4 : SubstringFilter;
+      greaterOrEqual @5 : AttributeValueAssertion;
+      lessOrEqual @6 : AttributeValueAssertion;
+      present @7 : Data;
+      approxMatch @8 : AttributeValueAssertion;
+      extensibleMatch @9 : MatchingRuleAssertion;
+    }
+  }
+
+  struct FilterSet {
+     @0 : Filter;
+
+  }
+
+  struct SubstringFilter {
+    type @0 : Data;
+    substrings @1 : List(SubstringChoice);
+
+  }
+
+  struct SubstringChoice {
+    union {
+      initial @0 : Data;
+      any @1 : Data;
+      final @2 : Data;
+    }
+  }
+
+  struct MatchingRuleAssertion {
+    matchingRule: union {
+      some @0 : Data;
+      none @1 : Void;
+    }
+    type: union {
+      some @2 : Data;
+      none @3 : Void;
+    }
+    matchValue @4 : Data;
+    dnAttributes @5 : Bool;
+
+  }
+
+  struct SearchResultEntry {
+    objectName @0 : Data;
+    attributes @1 : PartialAttributeList;
+
+  }
+
+  struct PartialAttributeList {
+    type @0 : Data;
+    vals @1 : AttributeValues;
+
+  }
+
+  struct ModifyRequest {
+    object @0 : Data;
+    modification @1 : AttributeTypeAndValues;
+
+  }
+
+  struct AttributeTypeAndValues {
+    type @0 : Data;
+    vals @1 : AttributeValues;
+
+  }
+
+  struct AddRequest {
+    entry @0 : Data;
+    attributes @1 : AttributeList;
+
+  }
+
+  struct AttributeList {
+    type @0 : Data;
+    vals @1 : AttributeValues;
+
+  }
+
+  struct ModifyDNRequest {
+    entry @0 : Data;
+    newrdn @1 : Data;
+    deleteoldrdn @2 : Bool;
+    newSuperior: union {
+      some @3 : Data;
+      none @4 : Void;
+    }
+
+  }
+
+  struct CompareRequest {
+    entry @0 : Data;
+    ava @1 : AttributeValueAssertion;
+
+  }
+
+  struct ExtendedRequest {
+    requestName @0 : Data;
+    requestValue: union {
+      some @1 : Data;
+      none @2 : Void;
+    }
+
+  }
+
+  struct ExtendedResponse {
+    responseName: union {
+      some @0 : Data;
+      none @1 : Void;
+    }
+    response: union {
+      some @2 : Data;
+      none @3 : Void;
+    }
+
+  }
+
+
