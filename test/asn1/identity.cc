@@ -26,9 +26,8 @@
 
 #include <test/test.hh>
 
-#include <ixxx/ixxx.h>
+#include <ixxx/ixxx.hh>
 #include <ixxx/util.hh>
-#include <ixxx/util/boost.hh>
 
 
 #include <grammar/asn1/mini_parser.hh>
@@ -61,9 +60,9 @@ static void compare_identity(const char *rel_filename_str)
   bf::create_directories(out.parent_path());
 
   BOOST_TEST_CHECKPOINT("map file: " << in.generic_string());
-  ixxx::util::RO_Mapped_File f(in.generic_string());
+  auto f = ixxx::util::mmap_file(in.generic_string());
   Parser parser;
-  parser.read(f.sbegin(), f.send());
+  parser.read(f.s_begin(), f.s_end());
 
   {
   grammar::Grammar g(parser.grammar());
@@ -77,7 +76,7 @@ static void compare_identity(const char *rel_filename_str)
   }
 
   BOOST_TEST_CHECKPOINT("comparing files");
-  ixxx::util::RO_Mapped_File o(out.generic_string());
+  auto o = ixxx::util::mmap_file(out.generic_string());
   bool are_equal = std::equal(f.begin(), f.end(), o.begin(), o.end());
   if (!are_equal) {
     cerr << "Files are not equal: " << in << " vs. " << out << '\n';

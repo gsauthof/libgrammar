@@ -278,7 +278,7 @@ o() << R"(<xs:schema
       void Printer::read_key_def(const std::string &nt,
           const std::string &filename)
       {
-        ixxx::util::Mapped_File f(filename);
+        auto f = ixxx::util::mmap_file(filename);
         nt_key_defs_[nt] = string(f.s_begin(), f.s_end());
       }
 

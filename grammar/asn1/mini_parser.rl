@@ -438,7 +438,7 @@ namespace grammar {
       static Grammar parse_file(const std::string &filename,
           grammar::Grammar &&g)
       {
-        ixxx::util::Mapped_File f(filename);
+        auto f = ixxx::util::mmap_file(filename);
         grammar::asn1::mini::Parser parser(std::move(g));
         parser.set_filename(filename);
         parser.read(f.s_begin(), f.s_end());

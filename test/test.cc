@@ -20,7 +20,7 @@
 }}} */
 #include "test.hh"
 
-#include <ixxx/ixxx.h>
+#include <ixxx/ixxx.hh>
 
 using namespace std;
 

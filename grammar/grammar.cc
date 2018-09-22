@@ -1110,7 +1110,7 @@ namespace grammar {
   {
     Constraint::Vector v;
     unordered_map<string, string> links;
-    ixxx::util::Mapped_File f(filename);
+    auto f = ixxx::util::mmap_file(filename);
     using si = boost::algorithm::split_iterator<const char*>;
     pair<const char*, const char*> inp(f.s_begin(), f.s_end());
     const char q_s[1] = {0};

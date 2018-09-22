@@ -26,9 +26,8 @@
 
 #include <test/test.hh>
 
-#include <ixxx/ixxx.h>
+#include <ixxx/ixxx.hh>
 #include <ixxx/util.hh>
-#include <ixxx/util/boost.hh>
 
 #include <grammar/asn1/mini_parser.hh>
 #include <grammar/asn1/grammar.hh>
@@ -78,9 +77,9 @@ static void compare(const char *suffix,
   bf::create_directories(out.parent_path());
 
   BOOST_TEST_CHECKPOINT("map file: " << in.generic_string());
-  ixxx::util::RO_Mapped_File f(in.generic_string());
+  auto f = ixxx::util::mmap_file(in.generic_string());
   Parser parser;
-  parser.read(f.sbegin(), f.send());
+  parser.read(f.s_begin(), f.s_end());
 
   {
     grammar::Grammar g(parser.grammar());
@@ -94,8 +93,8 @@ static void compare(const char *suffix,
   BOOST_TEST_CHECKPOINT("comparing files: " << ref << " vs. " << out);
   if (bf::file_size(ref)) {
     // mmap of zero-length file fails as specified by POSIX ...
-    ixxx::util::RO_Mapped_File r(ref.generic_string());
-    ixxx::util::RO_Mapped_File o(out.generic_string());
+    auto r = ixxx::util::mmap_file(ref.generic_string());
+    auto o = ixxx::util::mmap_file(out.generic_string());
     bool are_equal = std::equal(r.begin(), r.end(), o.begin(), o.end());
     if (!are_equal) {
       cerr << "Files are not equal: " << ref << " vs. " << out << "\n";

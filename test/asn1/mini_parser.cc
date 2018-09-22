@@ -32,9 +32,8 @@
 #include <grammar/xml/rng.hh>
 #include <test/test.hh>
 
-#include <ixxx/ixxx.h>
+#include <ixxx/ixxx.hh>
 #include <ixxx/util.hh>
-#include <ixxx/util/boost.hh>
 
 
 using namespace std;
@@ -273,9 +272,9 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       {
         bf::path in(test::path::in());
         in /= "asn1/record.asn1";
-        ixxx::util::RO_Mapped_File f(in.generic_string());
+        auto f = ixxx::util::mmap_file(in.generic_string());
         Parser parser;
-        parser.read(f.sbegin(), f.send());
+        parser.read(f.s_begin(), f.s_end());
         grammar::Grammar g(parser.grammar());
         BOOST_CHECK_THROW(
             g.name_to_nt("RecordCount").rule().refs().front()->symbol(),
@@ -294,9 +293,9 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       {
         bf::path in(test::path::in());
         in /= "asn1/record.asn1";
-        ixxx::util::RO_Mapped_File f(in.generic_string());
+        auto f = ixxx::util::mmap_file(in.generic_string());
         Parser parser;
-        parser.read(f.sbegin(), f.send());
+        parser.read(f.s_begin(), f.s_end());
         grammar::Grammar g(parser.grammar());
         using namespace grammar;
         g.push(make_unique<Symbol::Terminal>("INTEGER"));
@@ -326,9 +325,9 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       {
         bf::path in(test::path::in());
         in /= "asn1/record.asn1";
-        ixxx::util::RO_Mapped_File f(in.generic_string());
+        auto f = ixxx::util::mmap_file(in.generic_string());
         Parser parser;
-        parser.read(f.sbegin(), f.send());
+        parser.read(f.s_begin(), f.s_end());
         grammar::Grammar g(parser.grammar());
         using namespace grammar;
         g.push(make_unique<Symbol::Terminal>("INTEGER", Coordinates(2, 0)));
@@ -357,7 +356,7 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         {
           bf::path in(test::path::in());
           in /= "asn1/first_half.asn1";
-          ixxx::util::Mapped_File f(in.generic_string());
+          auto f = ixxx::util::mmap_file(in.generic_string());
           grammar::asn1::mini::Parser parser(std::move(g));
           parser.read(f.s_begin(), f.s_end());
           g = parser.grammar();
@@ -366,7 +365,7 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         {
           bf::path in(test::path::in());
           in /= "asn1/second_half.asn1";
-          ixxx::util::Mapped_File f(in.generic_string());
+          auto f = ixxx::util::mmap_file(in.generic_string());
           grammar::asn1::mini::Parser parser(std::move(g));
           parser.read(f.s_begin(), f.s_end());
           g = parser.grammar();
@@ -398,7 +397,7 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         ref /= rel_out;
         BOOST_TEST_CHECKPOINT("Parsing: " << in );
         {
-          ixxx::util::Mapped_File f(in.generic_string());
+          auto f = ixxx::util::mmap_file(in.generic_string());
           grammar::asn1::mini::Parser parser(std::move(g));
           parser.read(f.s_begin(), f.s_end());
           g = parser.grammar();
@@ -417,8 +416,8 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         }
         BOOST_TEST_CHECKPOINT("Comparing: " << ref << " vs. " << out);
         {
-          ixxx::util::Mapped_File a(ref.generic_string());
-          ixxx::util::Mapped_File b(out.generic_string());
+          auto a = ixxx::util::mmap_file(ref.generic_string());
+          auto b = ixxx::util::mmap_file(out.generic_string());
           BOOST_REQUIRE(bf::file_size(ref) && bf::file_size(out));
           bool are_equal = std::equal(a.begin(), a.end(), b.begin(), b.end());
           BOOST_CHECK(are_equal);
@@ -442,7 +441,7 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         ref /= rel_out;
         BOOST_TEST_CHECKPOINT("Parsing: " << in );
         {
-          ixxx::util::Mapped_File f(in.generic_string());
+          auto f = ixxx::util::mmap_file(in.generic_string());
           grammar::asn1::mini::Parser parser(std::move(g));
           parser.read(f.s_begin(), f.s_end());
           g = parser.grammar();
@@ -460,8 +459,8 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         }
         BOOST_TEST_CHECKPOINT("Comparing: " << ref << " vs. " << out);
         {
-          ixxx::util::Mapped_File a(ref.generic_string());
-          ixxx::util::Mapped_File b(out.generic_string());
+          auto a = ixxx::util::mmap_file(ref.generic_string());
+          auto b = ixxx::util::mmap_file(out.generic_string());
           BOOST_REQUIRE(bf::file_size(ref) && bf::file_size(out));
           bool are_equal = std::equal(a.begin(), a.end(), b.begin(), b.end());
           BOOST_CHECK(are_equal);
@@ -483,7 +482,7 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         ref /= rel_out;
         BOOST_TEST_CHECKPOINT("Parsing: " << in );
         {
-          ixxx::util::Mapped_File f(in.generic_string());
+          auto f = ixxx::util::mmap_file(in.generic_string());
           grammar::asn1::mini::Parser parser(std::move(g));
           parser.read(f.s_begin(), f.s_end());
           g = parser.grammar();
@@ -500,8 +499,8 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         }
         BOOST_TEST_CHECKPOINT("Comparing: " << ref << " vs. " << out);
         {
-          ixxx::util::Mapped_File a(ref.generic_string());
-          ixxx::util::Mapped_File b(out.generic_string());
+          auto a = ixxx::util::mmap_file(ref.generic_string());
+          auto b = ixxx::util::mmap_file(out.generic_string());
           BOOST_REQUIRE(bf::file_size(ref) && bf::file_size(out));
           bool are_equal = std::equal(a.begin(), a.end(), b.begin(), b.end());
           BOOST_CHECK(are_equal);
@@ -523,7 +522,7 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         ref /= rel_out;
         BOOST_TEST_CHECKPOINT("Parsing: " << in );
         {
-          ixxx::util::Mapped_File f(in.generic_string());
+          auto f = ixxx::util::mmap_file(in.generic_string());
           grammar::asn1::mini::Parser parser(std::move(g));
           parser.read(f.s_begin(), f.s_end());
           g = parser.grammar();
@@ -539,8 +538,8 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         }
         BOOST_TEST_CHECKPOINT("Comparing: " << ref << " vs. " << out);
         {
-          ixxx::util::Mapped_File a(ref.generic_string());
-          ixxx::util::Mapped_File b(out.generic_string());
+          auto a = ixxx::util::mmap_file(ref.generic_string());
+          auto b = ixxx::util::mmap_file(out.generic_string());
           BOOST_REQUIRE(bf::file_size(ref) && bf::file_size(out));
           bool are_equal = std::equal(a.begin(), a.end(), b.begin(), b.end());
           BOOST_CHECK(are_equal);
