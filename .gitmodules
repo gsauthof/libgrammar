@@ -10,3 +10,6 @@
 [submodule "libixxxutil"]
 	path = libixxxutil
 	url = https://github.com/gsauthof/libixxxutil.git
+[submodule "Catch2"]
+	path = Catch2
+	url = https://github.com/catchorg/Catch2.git

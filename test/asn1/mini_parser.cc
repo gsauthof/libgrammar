@@ -18,11 +18,12 @@
     along with libgrammar.  If not, see <http://www.gnu.org/licenses/>.
 
 }}} */
-#include <boost/test/unit_test.hpp>
 
+#include <catch2/catch.hpp>
 #include <ostream>
 #include <map>
 #include <fstream>
+#include <sstream>
 
 #include <boost/filesystem.hpp>
 
@@ -41,19 +42,11 @@ namespace bf = boost::filesystem;
 
 
 
-BOOST_AUTO_TEST_SUITE(grammar_)
-
-
-  BOOST_AUTO_TEST_SUITE(asn1_)
-
-    BOOST_AUTO_TEST_SUITE(mini_parser)
-
-      // {{{
 
       using namespace grammar::asn1::mini;
 
 
-      BOOST_AUTO_TEST_CASE(begin_end)
+      TEST_CASE("mini_parser" "begin_end", "[asn1][parser]")
       {
         const char inp[] =
           "ABC-0123 DEFINITIONS IMPLICIT TAGS ::=\n"
@@ -72,10 +65,10 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         Parser parser;
         parser.read(inp, inp + sizeof(inp)-1);
         grammar::Grammar g(parser.grammar());
-        BOOST_CHECK_EQUAL(g.nts().size(), 2u);
+        CHECK(g.nts().size() == 2u);
       }
 
-      BOOST_AUTO_TEST_CASE(normalize_ws_in_symbols)
+      TEST_CASE("mini_parser" "normalize_ws_in_symbols", "[asn1][parser]")
       {
         const char inp[] =
           "ABC-0123 DEFINITIONS IMPLICIT TAGS ::=\n"
@@ -98,15 +91,15 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         Parser parser;
         parser.read(inp, inp + sizeof(inp)-1);
         grammar::Grammar g(parser.grammar());
-        BOOST_CHECK_EQUAL(g.nts().size(), 2u);
-        BOOST_CHECK_EQUAL(g.name_to_nt("Root").rule().refs().at(0)->symbol_name(), "OCTET STRING");
-        BOOST_CHECK_EQUAL(g.name_to_nt("Root").rule().refs().at(1)->symbol_name(), "OCTET STRING");
-        BOOST_CHECK_EQUAL(g.name_to_nt("Root").rule().refs().at(2)->symbol_name(), "OCTET STRING");
-        BOOST_CHECK_EQUAL(g.name_to_nt("Root").rule().refs().at(3)->symbol_name(), "BIT STRING");
-        BOOST_CHECK_EQUAL(g.name_to_nt("Root").rule().refs().at(4)->symbol_name(), "BIT STRING");
+        CHECK(g.nts().size() == 2u);
+        CHECK(g.name_to_nt("Root").rule().refs().at(0)->symbol_name() == "OCTET STRING");
+        CHECK(g.name_to_nt("Root").rule().refs().at(1)->symbol_name() == "OCTET STRING");
+        CHECK(g.name_to_nt("Root").rule().refs().at(2)->symbol_name() == "OCTET STRING");
+        CHECK(g.name_to_nt("Root").rule().refs().at(3)->symbol_name() == "BIT STRING");
+        CHECK(g.name_to_nt("Root").rule().refs().at(4)->symbol_name() == "BIT STRING");
       }
 
-      BOOST_AUTO_TEST_CASE(minimal_ws)
+      TEST_CASE("mini_parser" "minimal_ws", "[asn1][parser]")
       {
         const char inp[] =
           "ABC-0123 DEFINITIONS IMPLICIT TAGS::="
@@ -125,10 +118,10 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         Parser parser;
         parser.read(inp, inp + sizeof(inp)-1);
         grammar::Grammar g(parser.grammar());
-        BOOST_CHECK_EQUAL(g.nts().size(), 2u);
+        CHECK(g.nts().size() == 2u);
       }
 
-      BOOST_AUTO_TEST_CASE(rt_error)
+      TEST_CASE("mini_parser" "rt_error", "[asn1][parser]")
       {
         const char inp[] =
           "Root::=SEQUENCE"
@@ -143,10 +136,10 @@ BOOST_AUTO_TEST_SUITE(grammar_)
           "}\n"
           ;
         Parser parser;
-        BOOST_CHECK_THROW(parser.read(inp, inp + sizeof(inp)-1), std::runtime_error);
+        REQUIRE_THROWS_AS(parser.read(inp, inp + sizeof(inp)-1), std::runtime_error);
       }
 
-      BOOST_AUTO_TEST_CASE(dash_comments)
+      TEST_CASE("mini_parser" "dash_comments", "[asn1][parser]")
       {
         const char inp[] =
           "Root ::= ---- SEQUENCE\n"
@@ -166,10 +159,10 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         Parser parser;
         parser.read(inp, inp + sizeof(inp)-1);
         grammar::Grammar g(parser.grammar());
-        BOOST_CHECK_EQUAL(g.nts().size(), 2u);
+        CHECK(g.nts().size() == 2u);
       }
 
-      BOOST_AUTO_TEST_CASE(comment_error)
+      TEST_CASE("mini_parser" "comment_error", "[asn1][parser]")
       {
         const char inp[] =
           "Root ::= SEQUENCE\n"
@@ -185,10 +178,10 @@ BOOST_AUTO_TEST_SUITE(grammar_)
           "}\n"
           ;
         Parser parser;
-        BOOST_CHECK_THROW(parser.read(inp, inp + sizeof(inp)-1), std::runtime_error);
+        REQUIRE_THROWS_AS(parser.read(inp, inp + sizeof(inp)-1), std::runtime_error);
       }
 
-      BOOST_AUTO_TEST_CASE(error_msg)
+      TEST_CASE("mini_parser" "error_msg", "[asn1][parser]")
       {
         const char inp[] =
           "Root ::= SEQUENCE\n"
@@ -209,12 +202,12 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         } catch (const grammar::Parse_Error &e) {
           msg = e.what();
         }
-        BOOST_CHECK(msg.find("\nElement := SEQUENCE\n") != msg.npos);
-        BOOST_CHECK(msg.find("i INTEGER") == msg.npos);
-        BOOST_CHECK(msg.find("e Element") == msg.npos);
+        CHECK(msg.find("\nElement := SEQUENCE\n") != msg.npos);
+        CHECK(msg.find("i INTEGER") == msg.npos);
+        CHECK(msg.find("e Element") == msg.npos);
       }
 
-      BOOST_AUTO_TEST_CASE(location)
+      TEST_CASE("mini_parser" "location", "[asn1][parser]")
       {
         const char inp[] =
           "Root ::= SEQUENCE\n"
@@ -235,11 +228,11 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         } catch (const grammar::Parse_Error &e) {
           msg = e.what();
         }
-        BOOST_CHECK(msg.find("input.asn1:6:10: error: parse error") != msg.npos);
-        BOOST_CHECK(msg.find("\n         ^") != msg.npos);
+        CHECK(msg.find("input.asn1:6:10: error: parse error") != msg.npos);
+        CHECK(msg.find("\n         ^") != msg.npos);
       }
 
-      BOOST_AUTO_TEST_CASE(constraints)
+      TEST_CASE("mini_parser" "constraints", "[asn1][parser]")
       {
         const char inp[] =
           "Root ::= SEQUENCE\n"
@@ -265,10 +258,10 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         Parser parser;
         parser.read(inp, inp + sizeof(inp)-1);
         grammar::Grammar g(parser.grammar());
-        BOOST_CHECK_EQUAL(g.nts().size(), 2u);
+        CHECK(g.nts().size() == 2u);
       }
 
-      BOOST_AUTO_TEST_CASE(links)
+      TEST_CASE("mini_parser" "links", "[asn1][parser]")
       {
         bf::path in(test::path::in());
         in /= "asn1/record.asn1";
@@ -276,20 +269,20 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         Parser parser;
         parser.read(f.s_begin(), f.s_end());
         grammar::Grammar g(parser.grammar());
-        BOOST_CHECK_THROW(
+        REQUIRE_THROWS_AS(
             g.name_to_nt("RecordCount").rule().refs().front()->symbol(),
             grammar::Runtime_Error);
         using namespace grammar;
         g.push(make_unique<Symbol::Terminal>("INTEGER"));
         g.push(make_unique<Symbol::Terminal>("OCTET STRING"));
         g.init_links();
-        BOOST_CHECK_EQUAL(
-            g.name_to_nt("RecordCount").rule().refs().front()->symbol().name(),
+        CHECK(
+            g.name_to_nt("RecordCount").rule().refs().front()->symbol().name() ==
             "INTEGER");
       }
 
 
-      BOOST_AUTO_TEST_CASE(tag_translation)
+      TEST_CASE("mini_parser" "tag_translation", "[asn1][parser]")
       {
         bf::path in(test::path::in());
         in /= "asn1/record.asn1";
@@ -318,10 +311,10 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         for (auto &x : s) {
           o << x.first << ',' << x.second << '\n';
         }
-        BOOST_CHECK_EQUAL(o.str(), ref);
+        CHECK(o.str() == ref);
       }
 
-      BOOST_AUTO_TEST_CASE(tag_translation_uni)
+      TEST_CASE("mini_parser" "tag_translation_uni", "[asn1][parser]")
       {
         bf::path in(test::path::in());
         in /= "asn1/record.asn1";
@@ -344,13 +337,13 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         for (auto &x : s) {
           o << x.first << ',' << x.second << '\n';
         }
-        BOOST_CHECK_EQUAL(o.str(), ref);
+        CHECK(o.str() == ref);
       }
 
       // }}}
 
 
-      BOOST_AUTO_TEST_CASE(ignore_duplicates)
+      TEST_CASE("mini_parser" "ignore_duplicates", "[asn1][parser]")
       {
         grammar::Grammar g;
         {
@@ -372,13 +365,13 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         }
         grammar::asn1::add_terminals(g);
         g.init_links();
-        BOOST_CHECK_EQUAL(g.name_to_nt("Record").rule().refs().size(), 3u);
-        BOOST_CHECK_EQUAL(g.name_to_nt("Record").parents().size(), 1u);
-        BOOST_CHECK_EQUAL(g.name_to_nt("Header").rule().refs().size(), 1u);
-        BOOST_CHECK_EQUAL(g.nts().size(), 12u);
+        CHECK(g.name_to_nt("Record").rule().refs().size() == 3u);
+        CHECK(g.name_to_nt("Record").parents().size() == 1u);
+        CHECK(g.name_to_nt("Header").rule().refs().size() == 1u);
+        CHECK(g.nts().size() == 12u);
       }
 
-      BOOST_AUTO_TEST_CASE(add_keys_constraints)
+      TEST_CASE("mini_parser" "add_keys_constraints", "[asn1][parser]")
       {
         grammar::Grammar g;
         bf::path in(test::path::in());
@@ -390,12 +383,12 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         string rel_out("xsd/asn1/key_const.xml");
         bf::path out(test::path::out());
         out /= rel_out;
-        BOOST_TEST_CHECKPOINT("Removing: " << out);
+        INFO("Removing: " << out);
         bf::remove(out);
         bf::create_directories(out.parent_path());
         bf::path ref(test::path::ref());
         ref /= rel_out;
-        BOOST_TEST_CHECKPOINT("Parsing: " << in );
+        INFO("Parsing: " << in );
         {
           auto f = ixxx::util::mmap_file(in.generic_string());
           grammar::asn1::mini::Parser parser(std::move(g));
@@ -404,7 +397,7 @@ BOOST_AUTO_TEST_SUITE(grammar_)
           grammar::asn1::add_terminals(g);
           g.init_links();
         }
-        BOOST_TEST_CHECKPOINT("Reading: " << key_file << ' ' << cs_file);
+        INFO("Reading: " << key_file << ' ' << cs_file);
         {
           ofstream f(out.generic_string(), ios_base::out | ios_base::binary);
           grammar::xml::xsd::Printer p(f);
@@ -414,17 +407,17 @@ BOOST_AUTO_TEST_SUITE(grammar_)
           grammar::add_constraints(g, cs_file.generic_string());
           p << g;
         }
-        BOOST_TEST_CHECKPOINT("Comparing: " << ref << " vs. " << out);
+        INFO("Comparing: " << ref << " vs. " << out);
         {
           auto a = ixxx::util::mmap_file(ref.generic_string());
           auto b = ixxx::util::mmap_file(out.generic_string());
-          BOOST_REQUIRE(bf::file_size(ref) && bf::file_size(out));
+          REQUIRE(bf::file_size(ref) == bf::file_size(out));
           bool are_equal = std::equal(a.begin(), a.end(), b.begin(), b.end());
-          BOOST_CHECK(are_equal);
+          CHECK(are_equal);
         }
       }
 
-      BOOST_AUTO_TEST_CASE(add_rng_constraints)
+      TEST_CASE("mini_parser" "add_rng_constraints", "[asn1][parser]")
       {
         grammar::Grammar g;
         bf::path in(test::path::in());
@@ -434,12 +427,12 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         string rel_out("rng/asn1/const.xml");
         bf::path out(test::path::out());
         out /= rel_out;
-        BOOST_TEST_CHECKPOINT("Removing: " << out);
+        INFO("Removing: " << out);
         bf::remove(out);
         bf::create_directories(out.parent_path());
         bf::path ref(test::path::ref());
         ref /= rel_out;
-        BOOST_TEST_CHECKPOINT("Parsing: " << in );
+        INFO("Parsing: " << in );
         {
           auto f = ixxx::util::mmap_file(in.generic_string());
           grammar::asn1::mini::Parser parser(std::move(g));
@@ -448,7 +441,7 @@ BOOST_AUTO_TEST_SUITE(grammar_)
           grammar::asn1::add_terminals(g);
           g.init_links();
         }
-        BOOST_TEST_CHECKPOINT("Reading: " << cs_file);
+        INFO("Reading: " << cs_file);
         {
           ofstream f(out.generic_string(), ios_base::out | ios_base::binary);
           grammar::xml::xsd::Printer p(f);
@@ -457,17 +450,17 @@ BOOST_AUTO_TEST_SUITE(grammar_)
           grammar::add_constraints(g, cs_file.generic_string());
           p << g;
         }
-        BOOST_TEST_CHECKPOINT("Comparing: " << ref << " vs. " << out);
+        INFO("Comparing: " << ref << " vs. " << out);
         {
           auto a = ixxx::util::mmap_file(ref.generic_string());
           auto b = ixxx::util::mmap_file(out.generic_string());
-          BOOST_REQUIRE(bf::file_size(ref) && bf::file_size(out));
+          REQUIRE(bf::file_size(ref) == bf::file_size(out));
           bool are_equal = std::equal(a.begin(), a.end(), b.begin(), b.end());
-          BOOST_CHECK(are_equal);
+          CHECK(are_equal);
         }
       }
 
-      BOOST_AUTO_TEST_CASE(any_attribute)
+      TEST_CASE("mini_parser" "any_attribute", "[asn1][parser]")
       {
         grammar::Grammar g;
         bf::path in(test::path::in());
@@ -475,12 +468,12 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         string rel_out("xsd/asn1/any_attribute.xml");
         bf::path out(test::path::out());
         out /= rel_out;
-        BOOST_TEST_CHECKPOINT("Removing: " << out);
+        INFO("Removing: " << out);
         bf::remove(out);
         bf::create_directories(out.parent_path());
         bf::path ref(test::path::ref());
         ref /= rel_out;
-        BOOST_TEST_CHECKPOINT("Parsing: " << in );
+        INFO("Parsing: " << in );
         {
           auto f = ixxx::util::mmap_file(in.generic_string());
           grammar::asn1::mini::Parser parser(std::move(g));
@@ -489,7 +482,7 @@ BOOST_AUTO_TEST_SUITE(grammar_)
           grammar::asn1::add_terminals(g);
           g.init_links();
         }
-        BOOST_TEST_CHECKPOINT("Writing: " << out);
+        INFO("Writing: " << out);
         {
           ofstream f(out.generic_string(), ios_base::out | ios_base::binary);
           grammar::xml::xsd::Printer p(f);
@@ -497,17 +490,17 @@ BOOST_AUTO_TEST_SUITE(grammar_)
           p.set_comment(string());
           p << g;
         }
-        BOOST_TEST_CHECKPOINT("Comparing: " << ref << " vs. " << out);
+        INFO("Comparing: " << ref << " vs. " << out);
         {
           auto a = ixxx::util::mmap_file(ref.generic_string());
           auto b = ixxx::util::mmap_file(out.generic_string());
-          BOOST_REQUIRE(bf::file_size(ref) && bf::file_size(out));
+          REQUIRE(bf::file_size(ref) == bf::file_size(out));
           bool are_equal = std::equal(a.begin(), a.end(), b.begin(), b.end());
-          BOOST_CHECK(are_equal);
+          CHECK(are_equal);
         }
       }
 
-      BOOST_AUTO_TEST_CASE(erase_unreachable)
+      TEST_CASE("mini_parser" "erase_unreachable", "[asn1][parser]")
       {
         grammar::Grammar g;
         bf::path in(test::path::in());
@@ -515,12 +508,12 @@ BOOST_AUTO_TEST_SUITE(grammar_)
         string rel_out("unreachable/asn1/notification.asn1");
         bf::path out(test::path::out());
         out /= rel_out;
-        BOOST_TEST_CHECKPOINT("Removing: " << out);
+        INFO("Removing: " << out);
         bf::remove(out);
         bf::create_directories(out.parent_path());
         bf::path ref(test::path::ref());
         ref /= rel_out;
-        BOOST_TEST_CHECKPOINT("Parsing: " << in );
+        INFO("Parsing: " << in );
         {
           auto f = ixxx::util::mmap_file(in.generic_string());
           grammar::asn1::mini::Parser parser(std::move(g));
@@ -530,26 +523,19 @@ BOOST_AUTO_TEST_SUITE(grammar_)
           g.init_links();
           grammar::erase_unreachable_symbols(g);
         }
-        BOOST_TEST_CHECKPOINT("Writing: " << out);
+        INFO("Writing: " << out);
         {
           ofstream f(out.generic_string(), ios_base::out | ios_base::binary);
           grammar::asn1::Printer p(f);
           p << g;
         }
-        BOOST_TEST_CHECKPOINT("Comparing: " << ref << " vs. " << out);
+        INFO("Comparing: " << ref << " vs. " << out);
         {
           auto a = ixxx::util::mmap_file(ref.generic_string());
           auto b = ixxx::util::mmap_file(out.generic_string());
-          BOOST_REQUIRE(bf::file_size(ref) && bf::file_size(out));
+          REQUIRE(bf::file_size(ref) == bf::file_size(out));
           bool are_equal = std::equal(a.begin(), a.end(), b.begin(), b.end());
-          BOOST_CHECK(are_equal);
+          CHECK(are_equal);
         }
       }
 
-
-    BOOST_AUTO_TEST_SUITE_END() // mini_parser
-
-  BOOST_AUTO_TEST_SUITE_END() //asn1_
-
-
-BOOST_AUTO_TEST_SUITE_END() // grammar_

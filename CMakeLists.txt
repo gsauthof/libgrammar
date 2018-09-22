@@ -82,7 +82,7 @@ target_link_libraries(ged
 IF(${CMAKE_PROJECT_NAME} STREQUAL "libgrammar")
 
   add_executable(ut
-    test/main.cc
+    test/catch_main.cc
     test/test.cc
     test/asn1/identity.cc
     test/asn1/compare.cc
@@ -97,6 +97,7 @@ IF(${CMAKE_PROJECT_NAME} STREQUAL "libgrammar")
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/libixxx
     ${CMAKE_CURRENT_SOURCE_DIR}/libixxxutil
+    ${CMAKE_CURRENT_SOURCE_DIR}/Catch2/single_include
     )
   target_link_libraries(ut
     ${Boost_FILESYSTEM_LIBRARY}

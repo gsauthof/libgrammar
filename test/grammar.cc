@@ -18,8 +18,9 @@
     along with libgrammar.  If not, see <http://www.gnu.org/licenses/>.
 
 }}} */
-#include <boost/test/unit_test.hpp>
 
+#include <catch2/catch.hpp>
+#include <sstream>
 #include <grammar/grammar.hh>
 #include <grammar/tsort.hh>
 #include <grammar/asn1/grammar.hh>
@@ -27,16 +28,11 @@
 using namespace std;
 
 
-BOOST_AUTO_TEST_SUITE(grammar_)
 
   using namespace grammar;
 
 
-  BOOST_AUTO_TEST_SUITE(grammar_)
-
-   BOOST_AUTO_TEST_SUITE(links)
-
-    BOOST_AUTO_TEST_CASE(basic)
+    TEST_CASE("grammar" "basic links", "[grammar][links]")
     {
       Grammar g;
       auto root = make_unique<Symbol::NT>("root");
@@ -45,16 +41,16 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       root->set_rule(std::move(s));
       g.push(std::move(root));
       g.push(make_unique<Symbol::Terminal>("OCTET STRING"));
-      BOOST_CHECK_THROW(
+      REQUIRE_THROWS_AS(
           g.name_to_nt("root").rule().refs().front()->symbol(),
           grammar::Runtime_Error);
       g.init_links();
-      BOOST_CHECK_EQUAL(
-          g.name_to_nt("root").rule().refs().front()->symbol().name(),
+      CHECK(
+          g.name_to_nt("root").rule().refs().front()->symbol().name() ==
           "OCTET STRING");
     }
 
-    BOOST_AUTO_TEST_CASE(missing_symbol)
+    TEST_CASE("grammar" "links missing_symbol", "[grammar][links]")
     {
       Grammar g;
       auto root = make_unique<Symbol::NT>("root");
@@ -62,15 +58,10 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       s->push(Reference("OCTET STRING"));
       root->set_rule(std::move(s));
       g.push(std::move(root));
-      BOOST_CHECK_THROW(g.init_links(), grammar::Runtime_Error);
+      REQUIRE_THROWS_AS(g.init_links(), grammar::Runtime_Error);
     }
 
-   BOOST_AUTO_TEST_SUITE_END()
-
-
-   BOOST_AUTO_TEST_SUITE(derive_tags_)
-
-    BOOST_AUTO_TEST_CASE(is_set)
+    TEST_CASE("grammar" "derive tags is_set", "[grammar][derive]")
     {
       Grammar g;
       auto root = make_unique<Symbol::NT>("root");
@@ -81,14 +72,14 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       g.push(make_unique<Symbol::Terminal>("OCTET STRING",
             Coordinates(23u, 1u)));
       g.init_links();
-      BOOST_CHECK_EQUAL(g.name_to_nt("root").coord().tag(), 0u);
-      BOOST_CHECK_EQUAL(g.name_to_nt("root").coord().klasse(), 0u);
+      CHECK(g.name_to_nt("root").coord().tag() == 0u);
+      CHECK(g.name_to_nt("root").coord().klasse() == 0u);
       derive_tags(g);
-      BOOST_CHECK_EQUAL(g.name_to_nt("root").coord().tag(), 17u);
-      BOOST_CHECK_EQUAL(g.name_to_nt("root").coord().klasse(), 0u);
+      CHECK(g.name_to_nt("root").coord().tag() == 17u);
+      CHECK(g.name_to_nt("root").coord().klasse() == 0u);
     }
 
-    BOOST_AUTO_TEST_CASE(basic)
+    TEST_CASE("grammar" "basic derive tags", "[grammar][derive]")
     {
       Grammar g;
       auto root = make_unique<Symbol::NT>("root");
@@ -99,14 +90,14 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       g.push(make_unique<Symbol::Terminal>("OCTET STRING",
             Coordinates(23u, 1u)));
       g.init_links();
-      BOOST_CHECK_EQUAL(g.name_to_nt("root").coord().tag(), 0u);
-      BOOST_CHECK_EQUAL(g.name_to_nt("root").coord().klasse(), 0u);
+      CHECK(g.name_to_nt("root").coord().tag() == 0u);
+      CHECK(g.name_to_nt("root").coord().klasse() == 0u);
       derive_tags(g);
-      BOOST_CHECK_EQUAL(g.name_to_nt("root").coord().tag(), 23u);
-      BOOST_CHECK_EQUAL(g.name_to_nt("root").coord().klasse(), 1u);
+      CHECK(g.name_to_nt("root").coord().tag() == 23u);
+      CHECK(g.name_to_nt("root").coord().klasse() == 1u);
     }
 
-    BOOST_AUTO_TEST_CASE(loop)
+    TEST_CASE("grammar" "derive tags loop", "[grammar][derive]")
     {
       Grammar g;
       auto root = make_unique<Symbol::NT>("root");
@@ -117,10 +108,10 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       g.push(std::move(other));
       g.init_links();
       derive_tags(g);
-      BOOST_CHECK(true);
+      CHECK(true);
     }
 
-    BOOST_AUTO_TEST_CASE(in_constructed)
+    TEST_CASE("grammar" "derive tags in_constructed", "[grammar][derive]")
     {
       Grammar g;
       auto root = make_unique<Symbol::NT>("root");
@@ -132,22 +123,19 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       g.push(make_unique<Symbol::Terminal>("OCTET STRING", Coordinates(4u, 0u)));
       g.push(make_unique<Symbol::Terminal>("INTEGER", Coordinates(2u, 0u)));
       g.init_links();
-      BOOST_CHECK_EQUAL(g.name_to_nt("root").coord().tag(), 0u);
-      BOOST_CHECK_EQUAL(g.name_to_nt("root").coord().klasse(), 0u);
+      CHECK(g.name_to_nt("root").coord().tag() == 0u);
+      CHECK(g.name_to_nt("root").coord().klasse() == 0u);
       derive_tags(g);
-      BOOST_CHECK_EQUAL(g.name_to_nt("root").coord().tag(), 0u);
-      BOOST_CHECK_EQUAL(g.name_to_nt("root").coord().klasse(), 0u);
-      BOOST_CHECK_EQUAL(g.name_to_nt("root").rule().refs().front()->coord().tag(), 2u);
-      BOOST_CHECK_EQUAL(g.name_to_nt("root").rule().refs().front()->coord().klasse(), 0u);
-      BOOST_CHECK_EQUAL(g.name_to_nt("root").rule().refs().back()->coord().tag(), 4u);
-      BOOST_CHECK_EQUAL(g.name_to_nt("root").rule().refs().back()->coord().klasse(), 0u);
+      CHECK(g.name_to_nt("root").coord().tag() == 0u);
+      CHECK(g.name_to_nt("root").coord().klasse() == 0u);
+      CHECK(g.name_to_nt("root").rule().refs().front()->coord().tag() == 2u);
+      CHECK(g.name_to_nt("root").rule().refs().front()->coord().klasse() == 0u);
+      CHECK(g.name_to_nt("root").rule().refs().back()->coord().tag() == 4u);
+      CHECK(g.name_to_nt("root").rule().refs().back()->coord().klasse() == 0u);
     }
 
-   BOOST_AUTO_TEST_SUITE_END()
 
-   BOOST_AUTO_TEST_SUITE(tag_translations_)
-
-    BOOST_AUTO_TEST_CASE(print)
+    TEST_CASE("grammar" "tag translate print", "[grammar][translate]")
     {
       Grammar g;
       g.push(make_unique<Symbol::NT>("foo", Coordinates(23, 1)));
@@ -164,14 +152,10 @@ BOOST_AUTO_TEST_SUITE(grammar_)
 "13,baz\n"
 "23,foo\n"
 ;
-      BOOST_CHECK_EQUAL(o.str(), ref);
+      CHECK(o.str() == ref);
     }
 
-   BOOST_AUTO_TEST_SUITE_END() // tag_translations_
-
-   BOOST_AUTO_TEST_SUITE(tag_closure)
-
-    BOOST_AUTO_TEST_CASE(print)
+    TEST_CASE("grammar" "tag closure print", "[grammar][closure]")
     {
       Grammar g;
       g.push(make_unique<Symbol::NT>("root"));
@@ -197,10 +181,10 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       ostringstream o;
       print_tag_closure(o, g, "INTEGER" ,1);
       const char ref[] = "INTEGER,13,24\n";
-      BOOST_CHECK_EQUAL(o.str(), ref);
+      CHECK(o.str() == ref);
     }
 
-    BOOST_AUTO_TEST_CASE(empty)
+    TEST_CASE("grammar" "tag closure empty", "[grammar][closure]")
     {
       // empty because foo and baz have to parents
       Grammar g;
@@ -221,10 +205,10 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       ostringstream o;
       print_tag_closure(o, g, "INTEGER" ,1);
       const char ref[] = "INTEGER\n";
-      BOOST_CHECK_EQUAL(o.str(), ref);
+      CHECK(o.str() == ref);
     }
 
-    BOOST_AUTO_TEST_CASE(loop)
+    TEST_CASE("grammar" "tag closure loop", "[grammar][closure]")
     {
       Grammar g;
       g.push(make_unique<Symbol::NT>("root"));
@@ -250,28 +234,23 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       ostringstream o;
       print_tag_closure(o, g, "baz" ,1);
       const char ref[] = "baz,13\n";
-      BOOST_CHECK_EQUAL(o.str(), ref);
+      CHECK(o.str() == ref);
     }
 
-   BOOST_AUTO_TEST_SUITE_END() // tag_closure
-
-
-   BOOST_AUTO_TEST_SUITE(misc)
-
-     BOOST_AUTO_TEST_CASE(duplicate_symbol)
+     TEST_CASE("grammar" "duplicate_symbol", "[grammar][misc]")
      {
        Grammar g;
        g.push(make_unique<Symbol::NT>("foo"));
-       BOOST_CHECK_THROW(g.push(make_unique<Symbol::NT>("foo")),
+       REQUIRE_THROWS_AS(g.push(make_unique<Symbol::NT>("foo")),
            grammar::Parse_Error);
-       BOOST_CHECK_THROW(g.push(make_unique<Symbol::Terminal>("foo")),
+       REQUIRE_THROWS_AS(g.push(make_unique<Symbol::Terminal>("foo")),
            grammar::Parse_Error);
        g.push(make_unique<Symbol::Terminal>("OCTET STRING"));
-       BOOST_CHECK_THROW(g.push(make_unique<Symbol::Terminal>("OCTET STRING")),
+       REQUIRE_THROWS_AS(g.push(make_unique<Symbol::Terminal>("OCTET STRING")),
            grammar::Parse_Error);
      }
 
-     BOOST_AUTO_TEST_CASE(eff_symbol)
+     TEST_CASE("grammar" "eff_symbol", "[grammar][misc]")
      {
       Grammar g;
       g.push(make_unique<Symbol::NT>("root"));
@@ -292,18 +271,18 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       g.name_to_nt("blub").set_rule(make_unique<Rule::Link>("INTEGER"));
       grammar::asn1::add_terminals(g);
       g.init_links();
-      BOOST_CHECK_EQUAL(
-          effective_symbol(*g.name_to_nt("root").rule().refs().at(0)).name(),
+      CHECK(
+          effective_symbol(*g.name_to_nt("root").rule().refs().at(0)).name() ==
           "OCTET STRING");
-      BOOST_CHECK_EQUAL(
-          effective_symbol(*g.name_to_nt("root").rule().refs().at(1)).name(),
+      CHECK(
+          effective_symbol(*g.name_to_nt("root").rule().refs().at(1)).name() ==
           "INTEGER");
-      BOOST_CHECK_EQUAL(
-          effective_symbol(*g.name_to_nt("root").rule().refs().at(2)).name(),
+      CHECK(
+          effective_symbol(*g.name_to_nt("root").rule().refs().at(2)).name() ==
           "INTEGER");
      }
 
-     BOOST_AUTO_TEST_CASE(unreachable)
+     TEST_CASE("grammar" "unreachable", "[grammar][misc]")
      {
       Grammar g;
       g.push(make_unique<Symbol::NT>("root"));
@@ -325,18 +304,18 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       grammar::asn1::add_terminals(g);
       g.init_links();
       auto r = unreachable_symbols(g);
-      BOOST_CHECK_EQUAL(r.count("foo"), 0u);
-      BOOST_CHECK_EQUAL(r.count("bar"), 0u);
-      BOOST_CHECK_EQUAL(r.count("baz"), 0u);
-      BOOST_CHECK_EQUAL(r.count("INTEGER"), 0u);
-      BOOST_CHECK_EQUAL(r.count("OCTET STRING"), 0u);
-      BOOST_CHECK_EQUAL(r.count("BOOLEAN"), 1u);
-      BOOST_CHECK_EQUAL(r.count("NULL"), 1u);
-      BOOST_CHECK_EQUAL(r.count("blah"), 1u);
-      BOOST_CHECK_EQUAL(r.count("blub"), 1u);
+      CHECK(r.count("foo") == 0u);
+      CHECK(r.count("bar") == 0u);
+      CHECK(r.count("baz") == 0u);
+      CHECK(r.count("INTEGER") == 0u);
+      CHECK(r.count("OCTET STRING") == 0u);
+      CHECK(r.count("BOOLEAN") == 1u);
+      CHECK(r.count("NULL") == 1u);
+      CHECK(r.count("blah") == 1u);
+      CHECK(r.count("blub") == 1u);
      }
 
-     BOOST_AUTO_TEST_CASE(erase_unreachable)
+     TEST_CASE("grammar" "erase_unreachable", "[grammar][misc]")
      {
       Grammar g;
       g.push(make_unique<Symbol::NT>("root"));
@@ -357,16 +336,16 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       g.name_to_nt("blub").set_rule(make_unique<Rule::Link>("BOOLEAN"));
       grammar::asn1::add_terminals(g);
       g.init_links();
-      BOOST_CHECK_EQUAL(g.symbols().size(), 41u);
-      BOOST_CHECK_EQUAL(g.nts().size(), 6u);
-      BOOST_CHECK_EQUAL(g.terminals().size(), 35u);
+      CHECK(g.symbols().size() == 41u);
+      CHECK(g.nts().size() == 6u);
+      CHECK(g.terminals().size() == 35u);
       erase_unreachable_symbols(g);
-      BOOST_CHECK_EQUAL(g.symbols().size(), 6u);
-      BOOST_CHECK_EQUAL(g.nts().size(), 4u);
-      BOOST_CHECK_EQUAL(g.terminals().size(), 2u);
+      CHECK(g.symbols().size() == 6u);
+      CHECK(g.nts().size() == 4u);
+      CHECK(g.terminals().size() == 2u);
      }
 
-     BOOST_AUTO_TEST_CASE(topological_sort)
+     TEST_CASE("grammar" "topological_sort", "[grammar][misc]")
      {
       Grammar g;
       g.push(make_unique<Symbol::NT>("foo"));
@@ -388,17 +367,17 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       g.set_axiom("root");
       grammar::asn1::add_terminals(g);
       g.init_links();
-      BOOST_CHECK_EQUAL(g.symbols().size(), 41u);
-      BOOST_CHECK_EQUAL(g.nts().size(), 6u);
-      BOOST_CHECK_EQUAL(g.terminals().size(), 35u);
+      CHECK(g.symbols().size() == 41u);
+      CHECK(g.nts().size() == 6u);
+      CHECK(g.terminals().size() == 35u);
       tsort(g);
-      BOOST_CHECK_EQUAL(g.symbols().size(), 41u);
-      BOOST_CHECK_EQUAL(g.nts().size(), 6u);
-      BOOST_CHECK_EQUAL(g.terminals().size(), 35u);
-      BOOST_CHECK_EQUAL(g.nts().front()->name(), "root");
+      CHECK(g.symbols().size() == 41u);
+      CHECK(g.nts().size() == 6u);
+      CHECK(g.terminals().size() == 35u);
+      CHECK(g.nts().front()->name() == "root");
      }
 
-     BOOST_AUTO_TEST_CASE(topological_sort_axiom_first)
+     TEST_CASE("grammar" "topological_sort_axiom_first", "[grammar][misc]")
      {
       Grammar g;
       g.push(make_unique<Symbol::NT>("foo"));
@@ -420,20 +399,13 @@ BOOST_AUTO_TEST_SUITE(grammar_)
       //g.set_axiom("root"); // axiom is foo
       grammar::asn1::add_terminals(g);
       g.init_links();
-      BOOST_CHECK_EQUAL(g.symbols().size(), 41u);
-      BOOST_CHECK_EQUAL(g.nts().size(), 6u);
-      BOOST_CHECK_EQUAL(g.terminals().size(), 35u);
+      CHECK(g.symbols().size() == 41u);
+      CHECK(g.nts().size() == 6u);
+      CHECK(g.terminals().size() == 35u);
       tsort(g);
-      BOOST_CHECK_EQUAL(g.symbols().size(), 41u);
-      BOOST_CHECK_EQUAL(g.nts().size(), 6u);
-      BOOST_CHECK_EQUAL(g.terminals().size(), 35u);
-      BOOST_CHECK_EQUAL(g.nts().front()->name(), "foo");
+      CHECK(g.symbols().size() == 41u);
+      CHECK(g.nts().size() == 6u);
+      CHECK(g.terminals().size() == 35u);
+      CHECK(g.nts().front()->name() == "foo");
      }
-
-   BOOST_AUTO_TEST_SUITE_END() // misc
-
-  BOOST_AUTO_TEST_SUITE_END() // grammar_
-
-
-BOOST_AUTO_TEST_SUITE_END() // grammar_
 

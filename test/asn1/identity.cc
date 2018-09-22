@@ -18,10 +18,9 @@
     along with libgrammar.  If not, see <http://www.gnu.org/licenses/>.
 
 }}} */
-#include "identity.hh"
 
-#include <boost/test/unit_test.hpp>
-#include <boost/test/parameterized_test.hpp>
+#include <catch2/catch.hpp>
+
 #include <boost/filesystem.hpp>
 
 #include <test/test.hh>
@@ -29,13 +28,13 @@
 #include <ixxx/ixxx.hh>
 #include <ixxx/util.hh>
 
-
 #include <grammar/asn1/mini_parser.hh>
 #include <grammar/asn1/grammar.hh>
 
 #include <fstream>
 #include <iostream>
 #include <array>
+#include <string>
 
 using namespace std;
 using namespace grammar::asn1::mini;
@@ -51,15 +50,15 @@ static void compare_identity(const char *rel_filename_str)
   out /= "identity";
   out /= rel_filename;
 
-  BOOST_TEST_MESSAGE("in: " << in);
-  BOOST_TEST_MESSAGE("out: " << out);
+  CAPTURE(in);
+  CAPTURE(out);
 
-  BOOST_TEST_CHECKPOINT("remove: " << out);
+  INFO("remove: " << out);
   bf::remove(out);
-  BOOST_TEST_CHECKPOINT("create directory: " << out.parent_path());
+  INFO("create directory: " << out.parent_path());
   bf::create_directories(out.parent_path());
 
-  BOOST_TEST_CHECKPOINT("map file: " << in.generic_string());
+  INFO("map file: " << in.generic_string());
   auto f = ixxx::util::mmap_file(in.generic_string());
   Parser parser;
   parser.read(f.s_begin(), f.s_end());
@@ -75,16 +74,16 @@ static void compare_identity(const char *rel_filename_str)
   o << endl;
   }
 
-  BOOST_TEST_CHECKPOINT("comparing files");
+  INFO("comparing files");
   auto o = ixxx::util::mmap_file(out.generic_string());
   bool are_equal = std::equal(f.begin(), f.end(), o.begin(), o.end());
   if (!are_equal) {
-    cerr << "Files are not equal: " << in << " vs. " << out << '\n';
+    FAIL_CHECK("Files are not equal: " << in << " vs. " << out);
   }
-  BOOST_CHECK(are_equal);
+  CHECK(are_equal);
 }
 
-boost::unit_test::test_suite *create_asn1_id_suite()
+TEST_CASE("identity", "[asn1][id]")
 {
   const array<const char*, 5> filenames = {
     "asn1/record.asn1",
@@ -93,12 +92,11 @@ boost::unit_test::test_suite *create_asn1_id_suite()
     "asn1/LDAP_simplified_mini.asn1",
     "asn1/tap_3_12_strip.asn1"
   };
-  auto grammar_ = BOOST_TEST_SUITE("grammar_");
-  auto asn1_ = BOOST_TEST_SUITE("asn1_");
-  auto asn1_id = BOOST_TEST_SUITE("identity");
-  asn1_id->add(BOOST_PARAM_TEST_CASE(&compare_identity,
-        filenames.begin(), filenames.end()));
-  grammar_->add(asn1_);
-  asn1_->add(asn1_id);
-  return grammar_;
+  size_t i = 0;
+  for (auto filename : filenames) {
+      SECTION(string("compare-") + to_string(i)) {
+          compare_identity(filename);
+      }
+      ++i;
+  }
 }

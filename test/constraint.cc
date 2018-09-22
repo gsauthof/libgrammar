@@ -19,7 +19,7 @@
     along with libgrammar.  If not, see <http://www.gnu.org/licenses/>.
 
 }}} */
-#include <boost/test/unit_test.hpp>
+#include <catch2/catch.hpp>
 #include <test/test.hh>
 
 #include <grammar/grammar.hh>
@@ -36,11 +36,8 @@ struct Access_Pattern {
   string operator()(const grammar::Constraint::Pattern &b) const { return b.str(); }
 };
 
-BOOST_AUTO_TEST_SUITE(grammar_)
 
-  BOOST_AUTO_TEST_SUITE(constraint_)
-
-    BOOST_AUTO_TEST_CASE(basic)
+    TEST_CASE("constraint " "basic", "[constraint]")
     {
       boost::filesystem::path cs_file(test::path::in());
       cs_file /= "../../grammar/xml/tap_3_12_constraints.zsv";
@@ -51,31 +48,27 @@ BOOST_AUTO_TEST_SUITE(grammar_)
 
 
       auto r = m.at("CalledNumber").accept(Access_Pattern());
-      BOOST_CHECK_EQUAL(r, "[0-9]+");
+      CHECK(r == "[0-9]+");
 
       auto s = m.at("ChargedPartyIdType").accept(Access_Pattern());
-      BOOST_CHECK_EQUAL(s, "base");
+      CHECK(s == "base");
 
     }
 
-    BOOST_AUTO_TEST_CASE(tadig)
+    TEST_CASE("constraint " "tadig", "[constraint]")
     {
       boost::filesystem::path cs_file(test::path::in());
       cs_file /= "../../grammar/xml/tadig_codes.zsv";
 
       auto v = grammar::read_constraints(cs_file.generic_string());
 
-      BOOST_REQUIRE(v.enums.at("Sender").values().size() > 2);
-      BOOST_REQUIRE(v.enums.at("Recipient").values().size() > 2);
+      REQUIRE(v.enums.at("Sender").values().size() > 2);
+      REQUIRE(v.enums.at("Recipient").values().size() > 2);
 
-      BOOST_CHECK_EQUAL(v.enums.at("Sender").values()[0], "AAAOA");
-      BOOST_CHECK_EQUAL(v.enums.at("Recipient").values()[1], "AAAOW");
+      CHECK(v.enums.at("Sender").values()[0] == "AAAOA");
+      CHECK(v.enums.at("Recipient").values()[1] == "AAAOW");
 
     }
 
-  BOOST_AUTO_TEST_SUITE_END() // constraint_
-
-
-BOOST_AUTO_TEST_SUITE_END() // grammar_
 
 

@@ -18,10 +18,8 @@
     along with libgrammar.  If not, see <http://www.gnu.org/licenses/>.
 
 }}} */
-#include "identity.hh"
 
-#include <boost/test/unit_test.hpp>
-#include <boost/test/parameterized_test.hpp>
+#include <catch2/catch.hpp>
 #include <boost/filesystem.hpp>
 
 #include <test/test.hh>
@@ -68,15 +66,15 @@ static void compare(const char *suffix,
   ref /= rel_filename;
   ref.replace_extension("out");
 
-  BOOST_TEST_MESSAGE("in: " << in);
-  BOOST_TEST_MESSAGE("out: " << out);
+  CAPTURE(in);
+  CAPTURE(out);
 
-  BOOST_TEST_CHECKPOINT("remove: " << out);
+  INFO("remove: " << out);
   bf::remove(out);
-  BOOST_TEST_CHECKPOINT("create directory: " << out.parent_path());
+  INFO("create directory: " << out.parent_path());
   bf::create_directories(out.parent_path());
 
-  BOOST_TEST_CHECKPOINT("map file: " << in.generic_string());
+  INFO("map file: " << in.generic_string());
   auto f = ixxx::util::mmap_file(in.generic_string());
   Parser parser;
   parser.read(f.s_begin(), f.s_end());
@@ -90,7 +88,7 @@ static void compare(const char *suffix,
     print_fn(o, g);
   }
 
-  BOOST_TEST_CHECKPOINT("comparing files: " << ref << " vs. " << out);
+  INFO("comparing files: " << ref << " vs. " << out);
   if (bf::file_size(ref)) {
     // mmap of zero-length file fails as specified by POSIX ...
     auto r = ixxx::util::mmap_file(ref.generic_string());
@@ -99,9 +97,9 @@ static void compare(const char *suffix,
     if (!are_equal) {
       cerr << "Files are not equal: " << ref << " vs. " << out << "\n";
     }
-    BOOST_CHECK(are_equal);
+    CHECK(are_equal);
   } else {
-    BOOST_CHECK(!bf::file_size(out));
+    CHECK(bf::file_size(out) == 0);
   }
 }
 
@@ -241,58 +239,62 @@ static void compare_capnp(const char *rel_filename_str)
   compare("capnp", print_capnp, rel_filename_str);
 }
 
-boost::unit_test::test_suite *create_asn1_compare_suite()
+
+
+static const array<const char*, 5> filenames = {
+"asn1/record.asn1",
+"asn1/set.asn1",
+"asn1/rfc3525-MEDIA-GATEWAY-CONTROL_mini.asn1",
+"asn1/LDAP_simplified_mini.asn1",
+"asn1/tap_3_12_strip.asn1"
+};
+
+template<typename F, typename C>
+static void map_test(F f, const C &filenames)
 {
-  const array<const char*, 5> filenames = {
-    "asn1/record.asn1",
-    "asn1/set.asn1",
-    "asn1/rfc3525-MEDIA-GATEWAY-CONTROL_mini.asn1",
-    "asn1/LDAP_simplified_mini.asn1",
-    "asn1/tap_3_12_strip.asn1"
-  };
-  auto grammar_ = BOOST_TEST_SUITE("grammar_");
-  auto asn1_ = BOOST_TEST_SUITE("asn1_");
-  auto cmp = BOOST_TEST_SUITE("cmp");
-  auto tt = BOOST_TEST_SUITE("tag_translate");
-  tt->add(BOOST_PARAM_TEST_CASE(&compare_tag_translate,
-        filenames.begin(), filenames.end()));
-  auto closure = BOOST_TEST_SUITE("tag_closure");
-  closure->add(BOOST_PARAM_TEST_CASE(&compare_tag_closure,
-        filenames.begin(), filenames.end()));
-  auto unreachable = BOOST_TEST_SUITE("unreachable");
-  unreachable->add(BOOST_PARAM_TEST_CASE(&compare_unreachable,
-        filenames.begin(), filenames.end()));
-
-  auto primitive = BOOST_TEST_SUITE("primitive");
-  primitive->add(BOOST_PARAM_TEST_CASE(&compare_primitive,
-        filenames.begin(), filenames.end()));
-
-  auto name_map = BOOST_TEST_SUITE("name_map");
-  name_map->add(BOOST_PARAM_TEST_CASE(&compare_name_map,
-        filenames.begin(), filenames.end()));
-
-  auto tsort = BOOST_TEST_SUITE("tsort");
-  tsort->add(BOOST_PARAM_TEST_CASE(&compare_tsort,
-        filenames.begin(), filenames.end()));
-  auto xsd = BOOST_TEST_SUITE("xsd");
-  xsd->add(BOOST_PARAM_TEST_CASE(&compare_xsd,
-        filenames.begin(), filenames.end()));
-  auto rng = BOOST_TEST_SUITE("rng");
-  rng->add(BOOST_PARAM_TEST_CASE(&compare_rng,
-        filenames.begin(), filenames.end()));
-  auto capnp = BOOST_TEST_SUITE("capnp");
-  capnp->add(BOOST_PARAM_TEST_CASE(&compare_capnp,
-        filenames.begin(), filenames.end()));
-  grammar_->add(asn1_);
-  asn1_->add(cmp);
-  cmp->add(tt);
-  cmp->add(closure);
-  cmp->add(unreachable);
-  cmp->add(primitive);
-  cmp->add(name_map);
-  cmp->add(tsort);
-  cmp->add(xsd);
-  cmp->add(rng);
-  cmp->add(capnp);
-  return grammar_;
+  size_t i = 0;
+  for (auto filename : filenames) {
+      SECTION(string("compare-") + to_string(i)) {
+          f(filename);
+      }
+      ++i;
+  }
 }
+
+TEST_CASE("compare tag translate", "[asn1][cmp]")
+{
+    map_test(compare_tag_translate, filenames);
+}
+TEST_CASE("compare tag closure", "[asn1][cmp]")
+{
+    map_test(compare_tag_closure, filenames);
+}
+TEST_CASE("compare unreachable", "[asn1][cmp]")
+{
+    map_test(compare_unreachable, filenames);
+}
+TEST_CASE("compare primitive", "[asn1][cmp]")
+{
+    map_test(compare_primitive, filenames);
+}
+TEST_CASE("compare name map", "[asn1][cmp]")
+{
+    map_test(compare_name_map, filenames);
+}
+TEST_CASE("compare tsort", "[asn1][cmp]")
+{
+    map_test(compare_tsort, filenames);
+}
+TEST_CASE("compare xsd", "[asn1][cmp]")
+{
+    map_test(compare_xsd, filenames);
+}
+TEST_CASE("compare rng", "[asn1][cmp]")
+{
+    map_test(compare_rng, filenames);
+}
+TEST_CASE("compare capnp", "[asn1][cmp]")
+{
+    map_test(compare_capnp, filenames);
+}
+
