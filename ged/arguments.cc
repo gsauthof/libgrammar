@@ -214,7 +214,7 @@ namespace ged {
         ++i;
         if (i >= argc)
           throw Argument_Error("filename argument is missing");
-        ixxx::util::Mapped_File f(argv[i]);
+        auto f = ixxx::util::mmap_file(argv[i]);
         if (!first_grammar_)
           g.set_ignore_duplicates(true);
         grammar::asn1::mini::Parser parser(std::move(g));
