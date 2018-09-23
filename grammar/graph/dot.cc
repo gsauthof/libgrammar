@@ -107,7 +107,7 @@ namespace grammar {
         o.print(nt);
         return o;
       }
-      Printer &operator<<(Printer &o, const Symbol::Terminal &terminal)
+      Printer &operator<<(Printer &o, const Symbol::Terminal &)
       {
         return o;
       }
@@ -116,27 +116,27 @@ namespace grammar {
         rule.accept(o);
         return o;
       }
-      Printer &operator<<(Printer &o, const Rule::Link &rule)
+      Printer &operator<<(Printer &o, const Rule::Link &)
       {
         return o;
       }
-      Printer &operator<<(Printer &o, const Rule::Sequence &rule)
+      Printer &operator<<(Printer &o, const Rule::Sequence &)
       {
         return o;
       }
-      Printer &operator<<(Printer &o, const Rule::List &rule)
+      Printer &operator<<(Printer &o, const Rule::List &)
       {
         return o;
       }
-      Printer &operator<<(Printer &o, const Rule::Set &rule)
+      Printer &operator<<(Printer &o, const Rule::Set &)
       {
         return o;
       }
-      Printer &operator<<(Printer &o, const Rule::Choice &rule)
+      Printer &operator<<(Printer &o, const Rule::Choice &)
       {
         return o;
       }
-      Printer &operator<<(Printer &o, const Rule::All &rule)
+      Printer &operator<<(Printer &o, const Rule::All &)
       {
         return o;
       }

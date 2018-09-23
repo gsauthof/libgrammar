@@ -331,9 +331,9 @@ namespace grammar {
     Base::~Base()
     {
     }
-    void Base::push(Reference &&ref)
+    void Base::push(std::unique_ptr<Reference> &&ref)
     {
-      refs_.emplace_back(make_unique<Reference>(std::move(ref)));
+      refs_.push_back(std::move(ref));
       refs_.back()->set_parent(*this);
     }
     const std::deque<unique_ptr<Reference> > &Base::refs() const
@@ -736,82 +736,83 @@ namespace grammar {
     nts_ = std::move(nts);
   }
 
-  void Visitor::visit(Grammar &r)
+  Visitor::~Visitor() =default;
+  void Visitor::visit(Grammar &)
   {
   }
-  void Visitor::visit(Symbol::NT &r)
+  void Visitor::visit(Symbol::NT &)
   {
   }
-  void Visitor::visit(Symbol::Terminal &r)
+  void Visitor::visit(Symbol::Terminal &)
   {
   }
-  void Visitor::visit(const Grammar &r)
+  void Visitor::visit(const Grammar &)
   {
   }
-  void Visitor::visit(const Symbol::NT &r)
+  void Visitor::visit(const Symbol::NT &)
   {
   }
-  void Visitor::visit(const Symbol::Terminal &r)
+  void Visitor::visit(const Symbol::Terminal &)
   {
   }
-  void Visitor::visit(Rule::Choice &r)
+  void Visitor::visit(Rule::Choice &)
   {
   }
-  void Visitor::visit(Rule::Sequence &r)
+  void Visitor::visit(Rule::Sequence &)
   {
   }
-  void Visitor::visit(Rule::All &r)
+  void Visitor::visit(Rule::All &)
   {
   }
-  void Visitor::visit(Rule::List &r)
+  void Visitor::visit(Rule::List &)
   {
   }
-  void Visitor::visit(Rule::Set &r)
+  void Visitor::visit(Rule::Set &)
   {
   }
-  void Visitor::visit(Rule::Link &r)
+  void Visitor::visit(Rule::Link &)
   {
   }
-  void Visitor::visit(const Rule::Choice &r)
+  void Visitor::visit(const Rule::Choice &)
   {
   }
-  void Visitor::visit(const Rule::Sequence &r)
+  void Visitor::visit(const Rule::Sequence &)
   {
   }
-  void Visitor::visit(const Rule::All &r)
+  void Visitor::visit(const Rule::All &)
   {
   }
-  void Visitor::visit(const Rule::List &r)
+  void Visitor::visit(const Rule::List &)
   {
   }
-  void Visitor::visit(const Rule::Set &r)
+  void Visitor::visit(const Rule::Set &)
   {
   }
-  void Visitor::visit(const Rule::Link &r)
+  void Visitor::visit(const Rule::Link &)
   {
   }
-  void Visitor::visit(Constraint::Size &r)
+  void Visitor::visit(Constraint::Size &)
   {
   }
-  void Visitor::visit(Constraint::Domain &r)
+  void Visitor::visit(Constraint::Domain &)
   {
   }
-  void Visitor::visit(Constraint::Pattern &r)
+  void Visitor::visit(Constraint::Pattern &)
   {
   }
-  void Visitor::visit(Constraint::Enum &r)
+  void Visitor::visit(Constraint::Enum &)
   {
   }
-  void Visitor::visit(const Constraint::Size &r)
+  void Visitor::visit(const Constraint::Size &)
   {
   }
-  void Visitor::visit(const Constraint::Domain &r)
+  void Visitor::visit(const Constraint::Domain &)
   {
   }
-  void Visitor::visit(const Constraint::Pattern &r)
+  void Visitor::visit(const Constraint::Pattern &)
   {
   }
-  void Visitor::visit(const Constraint::Enum &r)
+  void Visitor::visit(const Constraint::Enum &)
   {
   }
 

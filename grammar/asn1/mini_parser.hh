@@ -36,6 +36,8 @@ namespace grammar {
           Parser(Grammar &&g, std::ostream &error_stream = std::cerr);
           Parser(std::ostream &error_stream = std::cerr);
           Parser(const std::string &filename, std::ostream &error_stream = std::cerr);
+          Parser(const Parser &) =delete;
+          Parser &operator=(const Parser &) =delete;
           void read(const char *begin, const char *end);
           void restart();
 
@@ -55,7 +57,7 @@ namespace grammar {
           grammar::Grammar grammar_;
           std::unique_ptr<Symbol::NT> nt_;
           std::unique_ptr<Rule::Base> rule_;
-          Reference ref_;
+          std::unique_ptr<Reference> ref_;
           bool sequence_ {true};
           int klasse_ {0};
           Coordinates coord_;

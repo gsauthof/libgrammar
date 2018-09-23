@@ -32,7 +32,7 @@ using namespace std;
 struct Access_Pattern {
   using result_type = string;
 
-  string operator()(const grammar::Constraint::Base &b) const { return "base"; }
+  string operator()(const grammar::Constraint::Base &) const { return "base"; }
   string operator()(const grammar::Constraint::Pattern &b) const { return b.str(); }
 };
 

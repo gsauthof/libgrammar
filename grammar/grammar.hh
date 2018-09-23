@@ -172,6 +172,8 @@ namespace grammar {
     public:
       Reference();
       Reference(std::string &&symbol_name);
+      Reference(const Reference &) =delete;
+      Reference &operator=(const Reference &) =delete;
       void set_name(std::string &&name);
       void set_symbol_name(std::string &&name);
       const std::string &name() const;
@@ -213,7 +215,7 @@ namespace grammar {
         Symbol::NT *parent_ {nullptr};
       public:
         virtual ~Base();
-        void push(Reference &&ref);
+        void push(std::unique_ptr<Reference> &&ref);
         const std::deque<std::unique_ptr<Reference> > &refs() const;
         std::deque<std::unique_ptr<Reference> > &refs();
         virtual void accept(Visitor &v) const = 0;
@@ -353,6 +355,7 @@ namespace grammar {
 
   class Visitor {
     public:
+      virtual ~Visitor();
       virtual void visit(Grammar &r);
       virtual void visit(Symbol::NT &r);
       virtual void visit(Symbol::Terminal &r);

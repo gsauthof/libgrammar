@@ -95,7 +95,7 @@ name_ident = ( lc_ident - 'SIZE' )
 
 
 optional_clause =  'OPTIONAL'
-  %{ ref_.set_optional(true); }
+  %{ ref_->set_optional(true); }
 ;
 
 naked_constraint = 'SIZE' ws? '(' ws? number
@@ -109,7 +109,7 @@ naked_constraint = 'SIZE' ws? '(' ws? number
   }
   )? ws? ')'
   @{
-     ref_.push(make_unique<Constraint::Size>(
+     ref_->push(make_unique<Constraint::Size>(
                  make_pair(size_t(size_.first), size_t(size_.second))));
   }
   ;
@@ -122,7 +122,7 @@ number_constraint = number
   ws? '..' ws? number
   %{
      size_.second = boost::lexical_cast<size_t>(string(last, p));
-     ref_.push(make_unique<Constraint::Domain>(size_.first, size_.second));
+     ref_->push(make_unique<Constraint::Domain>(size_.first, size_.second));
   }
   ;
 
@@ -157,11 +157,11 @@ tag = '[' @{ klasse_ = asn1::CONTEXT_SPECIFIC; } (klasse ws)? number
 # i.e. named type reference
 named_type = ( name_ident ws
   >{
-     ref_.set_name(string(last, p));
+     ref_->set_name(string(last, p));
   }
-  ( tag %{ ref_.set_coord(coord_); } )? type_ident
+  ( tag %{ ref_->set_coord(coord_); } )? type_ident
   %{
-     ref_.set_symbol_name(string(type_ident.first, type_ident.second));
+     ref_->set_symbol_name(string(type_ident.first, type_ident.second));
   }
    ( (constraint ws? optional_clause?) | (ws optional_clause)?  ) )
   |
@@ -172,11 +172,11 @@ simple_type = type_ident
   %{
       rule_ = make_unique<Rule::Link>(
                 string(type_ident.first, type_ident.second));
-      ref_ = Reference();
+      ref_ = make_unique<Reference>();
   }
   ( ws ? '(' naked_constraint ws ? ')' 
   %{
-     rule_->refs().front()->set_constraints(std::move(ref_.constraints()));
+     rule_->refs().front()->set_constraints(std::move(ref_->constraints()));
   }
   ) ?
   ;
@@ -200,18 +200,18 @@ sequence_set_choice =
   | 'CHOICE' %{ rule_ = make_unique<Rule::Choice>(); } )
   ws? '{'
   %{
-     ref_ = Reference();
+     ref_ = make_unique<Reference>();
      coord_ = Coordinates();
   }
   ws? named_type ( ws? ','
   %{
      rule_->push(std::move(ref_));
-     ref_ = Reference();
+     ref_ = make_unique<Reference>();
      coord_ = Coordinates();
   }
   ws? named_type)* ws? '}'
   %{
-     if (!ref_.name().empty())
+     if (!ref_->name().empty())
        rule_->push(std::move(ref_));
   }
 ;
@@ -224,7 +224,7 @@ sequence_set_of = ( 'SEQUENCE' %{ sequence_ = true; }
      else
        rule_ = make_unique<Rule::Set>();
    }
-  ws type_ident %{ rule_->push(Reference(string(type_ident.first, type_ident.second))); } ;
+  ws type_ident %{ rule_->push(make_unique<Reference>(string(type_ident.first, type_ident.second))); } ;
 
 
 ##component_type = sequence | sequence_of | set | choice ;
